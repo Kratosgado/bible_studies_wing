@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
           restorationScopeId: 'app',
           title: "Bible Studies Wing",
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            useMaterial3: true,
+            primarySwatch: Colors.purple,
             primaryColor: Colors.red,
           ),
           darkTheme: ThemeData.dark(),
