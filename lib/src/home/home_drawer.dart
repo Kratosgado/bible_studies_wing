@@ -1,8 +1,14 @@
+import 'package:bible_studies_wing/src/home/home_view.dart';
+import 'package:bible_studies_wing/src/screens/program_outline.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../screens/about_us.dart';
+import '../screens/living_stream.dart';
+import '../screens/my_people.dart';
+import '../screens/register.dart';
 
-Drawer homeDrawer() {
+Drawer homeDrawer(context) {
   return Drawer(
     elevation: 50,
     shadowColor: Colors.blue,
@@ -12,17 +18,33 @@ Drawer homeDrawer() {
       ),
       child: ListView(
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
+          DrawerHeader(
+            decoration: const BoxDecoration(
               color: Colors.transparent, // Transparent background for the header
             ),
             child: Center(
-              child: Text(
-                'Bible Studies Wing',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.restorablePushNamed(context, HomeView.routeName),
+                    child: const Text(
+                      'Bible Studies Wing',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 100,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/logo.jpg'),
+                          fit: BoxFit.contain,
+                        ),
+                        shape: BoxShape.circle),
+                  ),
+                ],
               ),
             ),
           ),
@@ -38,7 +60,7 @@ Drawer homeDrawer() {
               ),
             ),
             onTap: () {
-              // Handle navigation to Screen 1
+              Navigator.restorablePushNamed(context, MyPeople.routeName);
             },
           ),
           ListTile(
@@ -53,7 +75,7 @@ Drawer homeDrawer() {
               ),
             ),
             onTap: () {
-              // Handle navigation to Screen 2
+              Navigator.restorablePushNamed(context, ProgramOutlineScreen.routeName);
             },
           ),
           ListTile(
@@ -68,7 +90,7 @@ Drawer homeDrawer() {
               ),
             ),
             onTap: () {
-              // Handle navigation to Screen 2
+              Navigator.restorablePushNamed(context, LivingStream.routeName);
             },
           ),
           ListTile(
@@ -83,7 +105,7 @@ Drawer homeDrawer() {
               ),
             ),
             onTap: () {
-              // Handle navigation to Screen 2
+              Navigator.restorablePushNamed(context, RegisterScreen.routeName);
             },
           ),
           ListTile(
@@ -98,7 +120,7 @@ Drawer homeDrawer() {
               ),
             ),
             onTap: () {
-              // Handle navigation to Screen 2
+              Navigator.restorablePushNamed(context, AboutUs.routeName);
             },
           ),
         ],

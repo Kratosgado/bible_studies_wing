@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('The Word'),
         ),
-        drawer: homeDrawer(),
+        drawer: homeDrawer(context),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(10),
           child: Container(

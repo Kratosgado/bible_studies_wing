@@ -1,8 +1,10 @@
 import 'package:bible_studies_wing/src/home/home_view.dart';
+import 'package:bible_studies_wing/src/screens/about_us.dart';
+import 'package:bible_studies_wing/src/screens/living_stream.dart';
+import 'package:bible_studies_wing/src/screens/my_people.dart';
+import 'package:bible_studies_wing/src/screens/program_outline.dart';
+import 'package:bible_studies_wing/src/screens/register.dart';
 import 'package:flutter/material.dart';
-
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -45,9 +47,16 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemDetailsView.routeName:
-                    return const SampleItemDetailsView();
-                  case SampleItemListView.routeName:
+                  case AboutUs.routeName:
+                    return const AboutUs();
+                  case LivingStream.routeName:
+                    return const LivingStream();
+                  case MyPeople.routeName:
+                    return const MyPeople();
+                  case ProgramOutlineScreen.routeName:
+                    return const ProgramOutlineScreen();
+                  case RegisterScreen.routeName:
+                    return const RegisterScreen();
                   case HomeView.routeName:
                     return const HomeView();
                   default:
