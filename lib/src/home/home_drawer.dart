@@ -20,8 +20,11 @@ Drawer homeDrawer(context) {
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(
-              color: Colors.transparent, // Transparent background for the header
-            ),
+                image: DecorationImage(
+                  image: AssetImage('assets/images/background.jpg'),
+                  fit: BoxFit.contain,
+                ),
+                shape: BoxShape.circle),
             child: Center(
               child: Column(
                 children: [
