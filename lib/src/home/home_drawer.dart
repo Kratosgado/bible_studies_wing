@@ -20,11 +20,11 @@ Drawer homeDrawer(context) {
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/background.jpg'),
-                  fit: BoxFit.contain,
-                ),
-                shape: BoxShape.circle),
+              image: DecorationImage(
+                image: AssetImage('assets/images/background.jpg'),
+                fit: BoxFit.fill,
+              ),
+            ),
             child: Center(
               child: Column(
                 children: [
@@ -38,15 +38,6 @@ Drawer homeDrawer(context) {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 100,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/logo.jpg'),
-                          fit: BoxFit.contain,
-                        ),
-                        shape: BoxShape.circle),
-                  ),
                 ],
               ),
             ),
@@ -54,12 +45,12 @@ Drawer homeDrawer(context) {
           ListTile(
             leading: const Icon(
               Icons.people,
-              color: Colors.white,
+              color: Colors.black,
             ),
             title: const Text(
               'My People',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             onTap: () {
@@ -69,12 +60,12 @@ Drawer homeDrawer(context) {
           ListTile(
             leading: const Icon(
               Icons.list_alt_rounded,
-              color: Colors.white,
+              color: Colors.black,
             ),
             title: const Text(
               'Program Outline',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             onTap: () {
@@ -84,12 +75,12 @@ Drawer homeDrawer(context) {
           ListTile(
             leading: const Icon(
               Icons.water_drop_outlined,
-              color: Colors.white,
+              color: Colors.black,
             ),
             title: const Text(
               'Living Stream Summary',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             onTap: () {
@@ -99,12 +90,12 @@ Drawer homeDrawer(context) {
           ListTile(
             leading: const Icon(
               Icons.local_post_office_sharp,
-              color: Colors.white,
+              color: Colors.black,
             ),
             title: const Text(
               'Register a Member',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             onTap: () {
@@ -114,12 +105,12 @@ Drawer homeDrawer(context) {
           ListTile(
             leading: const Icon(
               Icons.info_rounded,
-              color: Colors.white,
+              color: Colors.black,
             ),
             title: const Text(
               'About Us',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
             onTap: () {

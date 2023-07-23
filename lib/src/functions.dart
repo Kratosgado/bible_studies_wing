@@ -1,7 +1,11 @@
+import 'package:bible_studies_wing/src/member/member_registration_form.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
+
+import 'member/member.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -25,27 +29,51 @@ void signInWithGoogle(BuildContext context) async {
 
     debugPrint("checking credentials");
     if (user != null) {
-      //check is already sign up
-      debugPrint("getting info from database");
+      // Check if user data already exists in Firestore
       final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection("users")
+          .collection("members")
           .where('id', isEqualTo: user.uid)
           .get();
       final List<DocumentSnapshot> documents = result.docs;
+      debugPrint("checking documents");
       if (documents.isEmpty) {
-        //update data to server if new user
-        FirebaseFirestore.instance.collection('users').doc(user.uid).set(
-          {
-            'nickname': user.displayName,
-            'photoUrl': user.photoURL,
-            'id': user.uid,
-          },
-        );
+        // User data doesn't exist, save it to Firestore
+        await saveFormData(user);
+        debugPrint("saved form data");
       }
-      // Navigator.pushReplacementNamed(context, ConversationPage.routename);
+
+      // Navigate to the MemberRegistrationForm and pass user data as arguments
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MemberRegistrationForm(
+            user: user,
+          ),
+        ),
+      );
     }
   } catch (e) {
     Text(e.toString());
     debugPrint(e.toString());
   }
+}
+
+Future saveFormData(User user) async {
+  final firestore = FirebaseFirestore.instance;
+
+  Member newMember = Member(
+    id: user.uid,
+    name: user.displayName ?? 'Unknown',
+    photoUrl: user.photoURL ?? '',
+    birthdate: DateTime(4),
+    contact: user.phoneNumber ?? '',
+    executive: false,
+    hall: '',
+    programme: '', // Fallback to 'Unknown' if displayName is null
+    // Initialize other member attributes here based on form values
+  );
+
+  // Convert Member object to a Map and save it to Firestore
+  final memberData = newMember.toMap();
+  await firestore.collection('members').doc(user.uid).set(memberData);
 }

@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
                     return const RegisterScreen();
                   case HomeView.routeName:
                     return const HomeView();
+
                   default:
                     return const HomeView();
                 }

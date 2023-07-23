@@ -17,6 +17,10 @@ class HomeView extends StatelessWidget {
       body: Center(
         child: verseCard(context),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
