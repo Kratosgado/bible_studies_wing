@@ -1,4 +1,5 @@
 import 'package:bible_studies_wing/src/home/home_view.dart';
+import 'package:bible_studies_wing/src/lesson/lesson_creator.dart';
 import 'package:bible_studies_wing/src/screens/about_us.dart';
 import 'package:bible_studies_wing/src/screens/living_stream.dart';
 import 'package:bible_studies_wing/src/screens/my_people.dart';
@@ -58,10 +59,11 @@ class MyApp extends StatelessWidget {
                   case RegisterScreen.routeName:
                     return const RegisterScreen();
                   case HomeView.routeName:
-                    return const HomeView();
-
+                    return HomeView();
+                  case LessonCreator.routeName:
+                    return const LessonCreator();
                   default:
-                    return const HomeView();
+                    return HomeView();
                 }
               },
             );

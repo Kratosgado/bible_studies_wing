@@ -11,6 +11,7 @@ class MemberProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Member Profile'),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.edit))],
       ),
       body: SingleChildScrollView(
         child: Center(
