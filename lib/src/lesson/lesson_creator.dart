@@ -157,6 +157,7 @@ class LessonCreatorState extends State<LessonCreator> {
       final TaskSnapshot storageSnapshot = await uploadTask;
       imageUrl = await storageSnapshot.ref.getDownloadURL();
       const uuid = Uuid();
+      final DateTime now = DateTime.now();
       final newLesson = Lesson(
         id: uuid.v4(),
         topic: topicController.text,
@@ -165,7 +166,7 @@ class LessonCreatorState extends State<LessonCreator> {
         verses: versesController.text.split(',').map((verse) => verse.trim()).toList(),
         body: bodyController.document.toDelta().toJson(),
         imageUrl: imageUrl!,
-        date: DateTime.now(),
+        date: DateTime(now.year, now.month, now.day),
       );
 
       final lessonData = newLesson.toMap();

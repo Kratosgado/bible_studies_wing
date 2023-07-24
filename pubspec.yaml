@@ -10,12 +10,14 @@ environment:
   sdk: '>=3.0.3 <4.0.0'
 
 dependencies:
+  cached_network_image: ^3.2.3
   cloud_firestore: ^4.8.3
   firebase_auth: ^4.7.0
   firebase_core: ^2.15.0
   firebase_storage: ^11.2.5
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   flutter_quill: ^7.2.17
   flutter_riverpod: ^2.3.6
   google_sign_in: ^6.1.4
