@@ -183,13 +183,15 @@ class LessonCreatorState extends State<LessonCreator> {
         imageUrl = null;
       });
 
-      // Navigate to LessonDetail screen with the created lesson
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LessonDetail(lesson: newLesson),
-        ),
-      );
+      if (mounted) {
+        // Navigate to LessonDetail screen with the created lesson
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LessonDetail(lesson: newLesson),
+          ),
+        );
+      }
     }
   }
 }

@@ -43,14 +43,16 @@ void signInWithGoogle(BuildContext context) async {
       }
 
       // Navigate to the MemberRegistrationForm and pass user data as arguments
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MemberRegistrationForm(
-            user: user,
+      if (context.mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MemberRegistrationForm(
+              user: user,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   } catch (e) {
     Text(e.toString());

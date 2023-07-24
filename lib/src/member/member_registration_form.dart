@@ -248,12 +248,14 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     _hallController.clear();
     _executiveController.clear();
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => MemberProfileScreen(
-          member: newMember,
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => MemberProfileScreen(
+            member: newMember,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
