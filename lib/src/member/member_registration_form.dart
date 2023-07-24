@@ -27,8 +27,8 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
   final _contactController = TextEditingController();
   final _programmeController = TextEditingController();
   final _hallController = TextEditingController();
-  final _executiveController = TextEditingController();
   final _verifierController = TextEditingController();
+  bool executiveStatus = false;
 
   bool _isExecutive = false;
 
@@ -46,7 +46,6 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     _contactController.dispose();
     _programmeController.dispose();
     _hallController.dispose();
-    _executiveController.dispose();
     super.dispose();
   }
 
@@ -169,9 +168,11 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                     validator: (value) {
                       // Add your verifier code validation logic here
                       if (value != '1234') {
+                        executiveStatus = false;
                         return 'Incorrect code';
                       }
-                      return _executiveController.text = 'true';
+                      executiveStatus = true;
+                      return null; // Validation passes, return null.
                     },
                   ),
 
@@ -221,7 +222,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
       contact: _contactController.text,
       programme: _programmeController.text,
       hall: _hallController.text,
-      executive: _executiveController.text == 'true' ? true : false,
+      executive: executiveStatus,
     );
 
     // Convert Member object to a Map and save it to Firestore
@@ -246,7 +247,6 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     _contactController.clear();
     _programmeController.clear();
     _hallController.clear();
-    _executiveController.clear();
 
     if (mounted) {
       Navigator.of(context).pushReplacement(

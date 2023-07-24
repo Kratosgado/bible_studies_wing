@@ -8,6 +8,7 @@ import 'package:bible_studies_wing/src/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -63,7 +64,12 @@ class MyApp extends StatelessWidget {
                   case LessonCreator.routeName:
                     return const LessonCreator();
                   default:
-                    return HomeView();
+                    // Check if the user is authenticated (signed in)
+                    if (FirebaseAuth.instance.currentUser != null) {
+                      return HomeView(); // If authenticated, return HomeView
+                    } else {
+                      return const RegisterScreen(); // If not authenticated, return RegisterScreen
+                    }
                 }
               },
             );
