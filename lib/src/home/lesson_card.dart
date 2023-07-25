@@ -1,10 +1,16 @@
 import 'package:bible_studies_wing/src/home/comments_sheet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../lesson/lesson.dart';
 
 Widget lessonCard(BuildContext context, Lesson lesson) {
+  void shareLesson(Lesson lesson) {
+    Share.share(
+        'Check out this lesson on ${lesson.topic} at ${lesson.imageUrl} \n\nShared via Bible Studies Wing');
+  }
+
   return SizedBox(
     height: 300,
     width: 350,
@@ -37,7 +43,7 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => shareLesson(lesson),
                       icon: const Icon(Icons.share),
                       iconSize: 35,
                     ),
