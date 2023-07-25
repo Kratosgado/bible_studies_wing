@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'lesson.dart';
 
 class LessonDetail extends StatelessWidget {
   final Lesson lesson;
+
+  static const routeName = '/LessonDetail';
 
   const LessonDetail({super.key, required this.lesson});
 
@@ -19,6 +22,15 @@ class LessonDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  child: CachedNetworkImage(
+                    imageUrl: lesson.imageUrl,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  )),
               Text(
                 'Subtopic: ${lesson.subtopic}',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -29,15 +41,6 @@ class LessonDetail extends StatelessWidget {
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
-              Container(
-                alignment: Alignment.center,
-                child: Image.network(
-                  lesson.imageUrl,
-                  height: 200,
-                  width: 200,
-                  fit: BoxFit.contain,
-                ),
-              ),
               const SizedBox(height: 16),
               quill.QuillEditor(
                 expands: false,

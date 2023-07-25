@@ -138,7 +138,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _hallController,
-                  decoration: const InputDecoration(labelText: 'Hall'),
+                  decoration: const InputDecoration(labelText: 'Hall/Hostel'),
                   validator: (value) {
                     // Add your hall validation logic here
                     return null;

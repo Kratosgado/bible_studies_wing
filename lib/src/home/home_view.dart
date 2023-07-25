@@ -126,12 +126,18 @@ class HomeView extends StatelessWidget {
                     title: const Text('The Word'),
                   ),
                   drawer: homeDrawer(context),
-                  body: Center(
-                    child: lessonTodayOrYesterday != null
-                        ? lessonCard(
-                            context, lessonTodayOrYesterday) // Pass the lesson to LessonCard
-                        : const Text(
-                            'No lesson for today or yesterday'), // Pass the lesson to LessonCard
+                  body: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      lessonTodayOrYesterday != null
+                          ? lessonCard(
+                              context, lessonTodayOrYesterday) // Pass the lesson to LessonCard
+                          : const Text('No lesson for today or yesterday'),
+                      const SizedBox(
+                        height: 200,
+                      )
+                    ],
                   ),
                   floatingActionButton: member.executive
                       ? FloatingActionButton(
