@@ -241,13 +241,6 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     }
     await firestore.collection('members').doc(widget.user.uid).set(memberData);
 
-    // Reset form fields after submission
-    _nameController.clear();
-    _birthdateController.clear();
-    _contactController.clear();
-    _programmeController.clear();
-    _hallController.clear();
-
     if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(

@@ -133,7 +133,7 @@ class HomeView extends StatelessWidget {
                       lessonTodayOrYesterday != null
                           ? lessonCard(
                               context, lessonTodayOrYesterday) // Pass the lesson to LessonCard
-                          : const Text('No lesson for today or yesterday'),
+                          : const Center(child: Text('No lesson for today or yesterday')),
                       const SizedBox(
                         height: 200,
                       )
