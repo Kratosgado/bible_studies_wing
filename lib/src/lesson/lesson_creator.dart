@@ -173,17 +173,6 @@ class LessonCreatorState extends State<LessonCreator> {
 
       await firestore.collection('lessons').add(lessonData);
 
-      // Reset form fields after submission
-      topicController.clear();
-      subtopicController.clear();
-      anchorScriptureController.clear();
-      versesController.clear();
-
-      setState(() {
-        imageFile = null;
-        imageUrl = null;
-      });
-
       if (mounted) {
         // Navigate to LessonDetail screen with the created lesson
         Navigator.push(

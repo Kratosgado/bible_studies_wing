@@ -211,44 +211,40 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     }
   }
 
-  void _saveFormData() async {
-    final firestore = FirebaseFirestore.instance;
+  Future<void> _saveFormData() async {
+    if (_formKey.currentState!.validate()) {
+      final firestore = FirebaseFirestore.instance;
+      if (_imageFile != null) {
+        final Reference storageRef =
+            FirebaseStorage.instance.ref().child('profile_images').child('${widget.user.uid}.jpg');
 
-    Member newMember = Member(
-      id: widget.user.uid,
-      name: _nameController.text,
-      photoUrl: widget.user.photoURL!, // will be back
-      birthdate: DateTime.parse(_birthdateController.text),
-      contact: _contactController.text,
-      programme: _programmeController.text,
-      hall: _hallController.text,
-      executive: executiveStatus,
-    );
+        final UploadTask uploadTask = storageRef.putFile(_imageFile!);
 
-    // Convert Member object to a Map and save it to Firestore
-    final memberData = newMember.toMap();
-
-    if (_imageFile != null) {
-      final Reference storageRef =
-          FirebaseStorage.instance.ref().child('profile_images').child('${widget.user.uid}.jpg');
-
-      final UploadTask uploadTask = storageRef.putFile(_imageFile!);
-
-      final TaskSnapshot storageSnapshot = await uploadTask;
-      final String downloadUrl = await storageSnapshot.ref.getDownloadURL();
-
-      memberData['photoUrl'] = downloadUrl;
-    }
-    await firestore.collection('members').doc(widget.user.uid).set(memberData);
-
-    if (mounted) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => MemberProfileScreen(
-            member: newMember,
-          ),
-        ),
-      );
+        final TaskSnapshot storageSnapshot = await uploadTask;
+        final String photoUrl = await storageSnapshot.ref.getDownloadURL();
+        Member newMember = Member(
+          id: widget.user.uid,
+          name: _nameController.text,
+          photoUrl: photoUrl, // will be back
+          birthdate: DateTime.parse(_birthdateController.text),
+          contact: _contactController.text,
+          programme: _programmeController.text,
+          hall: _hallController.text,
+          executive: executiveStatus,
+        );
+        // Convert Member object to a Map and save it to Firestore
+        final memberData = newMember.toMap();
+        await firestore.collection('members').doc(widget.user.uid).set(memberData);
+        if (mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MemberProfileScreen(
+                member: newMember,
+              ),
+            ),
+          );
+        }
+      }
     }
   }
 }
