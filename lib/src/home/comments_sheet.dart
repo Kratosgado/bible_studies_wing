@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-void showCommentSheet(BuildContext context) {
+import '../lesson/lesson.dart';
+
+void showCommentSheet(BuildContext context, Lesson lesson) {
+  final commentController = TextEditingController();
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -10,18 +13,46 @@ void showCommentSheet(BuildContext context) {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Add the content of the bottom sheet here
-            const Text(
-              'This is the bottom sheet content.',
-              style: TextStyle(fontSize: 18),
+            Expanded(
+              child: ListView.builder(
+                itemCount: lesson.comments.length,
+                itemBuilder: (context, index) {
+                  final comment = lesson.comments[index];
+                  return ListTile(
+                    leading: const CircleAvatar(
+                      backgroundImage: AssetImage(
+                          'path/to/profile_image.png'), // Replace with the actual profile image
+                    ),
+                    title: Text(comment.userId),
+                    subtitle: Text(comment.comment),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // Add any actions you want to perform when the button is pressed
-                Navigator.pop(context); // Close the bottom sheet
-              },
-              child: const Text('Close'),
+            Row(
+              children: [
+                const CircleAvatar(
+                  backgroundImage: AssetImage(
+                      'path/to/profile_image.png'), // Replace with the actual profile image of the current user
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextFormField(
+                    controller: commentController,
+                    decoration: const InputDecoration(labelText: 'Add a comment'),
+                    // Add any logic to save the user's input here
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // lesson.saveComment();
+                    // Add any logic to save the comment and close the bottom sheet here
+                    Navigator.pop(context); // Close the bottom sheet
+                  },
+                  child: const Text('Send'),
+                ),
+              ],
             ),
           ],
         ),

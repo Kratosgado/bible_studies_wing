@@ -53,7 +53,7 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
                       iconSize: 35,
                     ),
                     IconButton(
-                      onPressed: () => showCommentSheet(context),
+                      onPressed: () => showCommentSheet(context, lesson),
                       icon: const Icon(Icons.message_rounded),
                       iconSize: 35,
                     ),
