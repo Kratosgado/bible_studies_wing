@@ -54,7 +54,7 @@ Drawer homeDrawer(context) {
               ),
             ),
             onTap: () {
-              Navigator.restorablePushNamed(context, MyPeople.routeName);
+              Navigator.restorablePushNamed(context, MyPeopleScreen.routeName);
             },
           ),
           ListTile(

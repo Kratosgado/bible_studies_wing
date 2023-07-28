@@ -242,7 +242,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     await firestore.collection('members').doc(widget.user.uid).set(memberData);
 
     if (mounted) {
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MemberProfileScreen(
             member: newMember,

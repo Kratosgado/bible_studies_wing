@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_studies_wing/src/member/member.dart';
 
@@ -21,7 +22,7 @@ class MemberProfileScreen extends StatelessWidget {
               const SizedBox(height: 20),
               CircleAvatar(
                 radius: 80,
-                backgroundImage: NetworkImage(member.photoUrl),
+                backgroundImage: CachedNetworkImageProvider(member.photoUrl),
               ),
               const SizedBox(height: 20),
               Text(

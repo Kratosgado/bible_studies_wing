@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           title: "Bible Studies Wing",
           theme: ThemeData(
             useMaterial3: true,
-            primarySwatch: Colors.purple,
+            primarySwatch: Colors.blue,
             primaryColor: Colors.red,
           ),
           darkTheme: ThemeData.dark(),
@@ -53,8 +53,8 @@ class MyApp extends StatelessWidget {
                     return const AboutUs();
                   case LivingStream.routeName:
                     return const LivingStream();
-                  case MyPeople.routeName:
-                    return const MyPeople();
+                  case MyPeopleScreen.routeName:
+                    return const MyPeopleScreen();
                   case ProgramOutlineScreen.routeName:
                     return const ProgramOutlineScreen();
                   case RegisterScreen.routeName:
