@@ -18,9 +18,6 @@ class HomeView extends StatelessWidget {
   late final memberData =
       FirebaseFirestore.instance.collection('members').doc(currentUserUid).get();
 
-  // Get lessons from firestore
-  final lessonsCollection = FirebaseFirestore.instance.collection('lessons');
-
   // Create a member object from the data
   static const routeName = "/HomeView";
 
@@ -53,18 +50,16 @@ class HomeView extends StatelessWidget {
           // Data has been successfully fetched
           final member = Member.fromMap(currentUserUid, snapshot.data!.data()!);
 
-          // Get today's date and yesterday's date
-          final DateTime now = DateTime.now();
-          final DateTime today = DateTime(now.year, now.month, now.day);
-          final DateTime yesterday = today.subtract(const Duration(days: 1));
-
-          // Query lessons for today and yesterday
-          final todayAndYesterdayLessons = lessonsCollection
-              .where('date', isGreaterThanOrEqualTo: yesterday, isLessThanOrEqualTo: today)
+          // get last posted lesson from firebase
+          // Get lesson from firestore
+          final lastPostedLesson = FirebaseFirestore.instance
+              .collection('lessons')
+              .orderBy('date', descending: true)
+              .limit(1)
               .get();
 
           return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            future: todayAndYesterdayLessons,
+            future: lastPostedLesson,
             builder: (context, lessonSnapshot) {
               if (lessonSnapshot.connectionState == ConnectionState.waiting) {
                 // While waiting for lessons data, show a loading indicator or some placeholder widget
@@ -110,16 +105,8 @@ class HomeView extends StatelessWidget {
                 final lessons = lessonSnapshot.data!.docs
                     .map((doc) => Lesson.fromMap(doc.id, doc.data()))
                     .toList();
-
-                // Filter the lessons to get the one made today or yesterday
-                Lesson? lessonTodayOrYesterday;
-                for (final lesson in lessons) {
-                  if (lesson.date.isAfter(yesterday) &&
-                      lesson.date.isBefore(today.add(const Duration(days: 1)))) {
-                    lessonTodayOrYesterday = lesson;
-                    break;
-                  }
-                }
+                // get first lesson from lessons
+                final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;
 
                 return Scaffold(
                   appBar: AppBar(
@@ -130,9 +117,9 @@ class HomeView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      lessonTodayOrYesterday != null
-                          ? lessonCard(
-                              context, lessonTodayOrYesterday) // Pass the lesson to LessonCard
+                      lastPostedLesson != null
+                          ? lessonCard(context, lastPostedLesson,
+                              member.photoUrl) // Pass the lesson to LessonCard
                           : const Center(child: Text('No lesson for today or yesterday')),
                       const SizedBox(
                         height: 200,

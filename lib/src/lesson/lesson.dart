@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 class Comment {
   final String id;
   final String userId;
+  final String username;
+  final String photoUrl;
   final String comment;
 
   Comment({
     required this.id,
     required this.userId,
     required this.comment,
+    required this.username,
+    required this.photoUrl,
   });
 }
 
@@ -75,6 +79,8 @@ class Lesson {
         return Comment(
           id: doc.id,
           userId: doc.data()['userId'],
+          username: doc.data()['username'],
+          photoUrl: doc.data()['photoUrl'],
           comment: doc.data()['comment'],
         );
       }).toList();
@@ -91,6 +97,8 @@ class Lesson {
       final commentData = {
         'userId': comment.userId,
         'comment': comment.comment,
+        'username': comment.username,
+        'photoUrl': comment.photoUrl,
       };
 
       await FirebaseFirestore.instance
@@ -99,6 +107,7 @@ class Lesson {
           .collection('comments')
           .doc(comment.id) // Use the comment's id as the document id in the subcollection
           .set(commentData);
+      await getComments();
     } catch (e) {
       debugPrint('Error saving comment: $e');
     }

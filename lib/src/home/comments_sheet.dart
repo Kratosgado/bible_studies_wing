@@ -1,10 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../lesson/lesson.dart';
 
-void showCommentSheet(BuildContext context, Lesson lesson) {
+void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
   final commentController = TextEditingController();
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
   showModalBottomSheet(
+    elevation: 20,
+    showDragHandle: true,
+    useSafeArea: true,
+    enableDrag: true,
     context: context,
     builder: (BuildContext context) {
       return Container(
@@ -13,17 +22,17 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
+            Flexible(
+              fit: FlexFit.loose,
               child: ListView.builder(
                 itemCount: lesson.comments.length,
                 itemBuilder: (context, index) {
                   final comment = lesson.comments[index];
                   return ListTile(
-                    leading: const CircleAvatar(
-                      backgroundImage: AssetImage(
-                          'path/to/profile_image.png'), // Replace with the actual profile image
+                    leading: CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(comment.photoUrl),
                     ),
-                    title: Text(comment.userId),
+                    title: Text(comment.username),
                     subtitle: Text(comment.comment),
                   );
                 },
@@ -32,25 +41,40 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
             const SizedBox(height: 16),
             Row(
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage(
-                      'path/to/profile_image.png'), // Replace with the actual profile image of the current user
+                CircleAvatar(
+                  backgroundImage: CachedNetworkImageProvider(currentUserProfile),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextFormField(
                     controller: commentController,
-                    decoration: const InputDecoration(labelText: 'Add a comment'),
+                    // give a rounded input decoration
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                      ),
+                      hintText: 'Add a question/comment',
+                    ),
                     // Add any logic to save the user's input here
                   ),
                 ),
-                ElevatedButton(
+                IconButton(
                   onPressed: () {
                     // lesson.saveComment();
+
+                    final newComment = Comment(
+                      id: const Uuid().v1(),
+                      userId: currentUser.uid,
+                      comment: commentController.text,
+                      username: currentUser.displayName!,
+                      photoUrl: currentUser.photoURL!,
+                    );
+
+                    lesson.saveComment(newComment);
                     // Add any logic to save the comment and close the bottom sheet here
                     Navigator.pop(context); // Close the bottom sheet
                   },
-                  child: const Text('Send'),
+                  icon: const Icon(Icons.send),
                 ),
               ],
             ),

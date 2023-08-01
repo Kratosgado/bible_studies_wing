@@ -10,9 +10,11 @@ void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
 
