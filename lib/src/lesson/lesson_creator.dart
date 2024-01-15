@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter/material.dart';
 
 import 'lesson.dart';
@@ -26,14 +26,14 @@ class LessonCreatorState extends State<LessonCreator> {
   final anchorScriptureController = TextEditingController();
   final versesController = TextEditingController();
 
-  late quill.QuillController bodyController;
+  late QuillController bodyController;
   // get current member from firebase
   final auth = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
     super.initState();
-    bodyController = quill.QuillController.basic();
+    bodyController = QuillController.basic();
   }
 
   File? imageFile;
@@ -93,7 +93,8 @@ class LessonCreatorState extends State<LessonCreator> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: anchorScriptureController,
-                  decoration: const InputDecoration(labelText: 'Anchor Scripture'),
+                  decoration:
+                      const InputDecoration(labelText: 'Anchor Scripture'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the anchor scripture';
@@ -114,12 +115,15 @@ class LessonCreatorState extends State<LessonCreator> {
                 ),
                 const SizedBox(height: 16),
                 const Text('Body'),
-                quill.QuillToolbar.basic(controller: bodyController),
+                QuillToolbar.simple(
+                  configurations: QuillSimpleToolbarConfigurations(
+                      controller: bodyController),
+                ),
                 SizedBox(
                   height: 300,
-                  child: quill.QuillEditor.basic(
-                    controller: bodyController,
-                    readOnly: false,
+                  child: QuillEditor.basic(
+                    configurations: QuillEditorConfigurations(
+                        controller: bodyController, readOnly: true),
                   ),
                 ),
               ],
@@ -136,7 +140,8 @@ class LessonCreatorState extends State<LessonCreator> {
   }
 
   Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -163,7 +168,10 @@ class LessonCreatorState extends State<LessonCreator> {
         topic: topicController.text,
         subtopic: subtopicController.text,
         anchorScripture: anchorScriptureController.text,
-        verses: versesController.text.split(',').map((verse) => verse.trim()).toList(),
+        verses: versesController.text
+            .split(',')
+            .map((verse) => verse.trim())
+            .toList(),
         body: bodyController.document.toDelta().toJson(),
         imageUrl: imageUrl!,
         date: DateTime(now.year, now.month, now.day),

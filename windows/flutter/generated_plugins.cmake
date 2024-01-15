@@ -3,10 +3,14 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  cloud_firestore
   file_selector_windows
+  firebase_auth
   firebase_core
-  pasteboard
+  firebase_storage
+  irondash_engine_context
   share_plus
+  super_native_extensions
   url_launcher_windows
 )
 
