@@ -1,12 +1,12 @@
-import 'package:bible_studies_wing/src/home/home_drawer.dart';
-import 'package:bible_studies_wing/src/home/lesson_card.dart'; // Import LessonCard widget
+import 'package:bible_studies_wing/src/screens/home/home_drawer.dart';
+import 'package:bible_studies_wing/src/screens/home/lesson_card.dart'; // Import LessonCard widget
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../lesson/lesson_creator.dart';
-import '../lesson/lesson.dart'; // Import Lesson model
-import '../member/member.dart';
+import '../../data/models/lesson.dart'; // Import Lesson model
+import '../../data/models/member.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});

@@ -1,20 +1,21 @@
-import 'package:bible_studies_wing/src/home/home_view.dart';
-import 'package:bible_studies_wing/src/screens/program_outline.dart';
+import 'package:bible_studies_wing/src/resources/styles_manager.dart';
+import 'package:bible_studies_wing/src/screens/home/home_view.dart';
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:bible_studies_wing/src/screens/program_outline/program_outline.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../constants.dart';
-import '../screens/about_us.dart';
-import '../screens/living_stream.dart';
-import '../screens/my_people.dart';
-import '../screens/register.dart';
+import '../about_us/about_us_screen.dart';
+import '../my_people/my_people.dart';
+import '../auth/register.dart';
 
 Drawer homeDrawer(context) {
   return Drawer(
     elevation: 50,
     shadowColor: Colors.blue,
     child: Container(
-      decoration: const BoxDecoration(
-        gradient: myGradient,
+      decoration: BoxDecoration(
+        gradient: StyleManager.boxDecoration.gradient,
       ),
       child: ListView(
         children: [
@@ -84,7 +85,7 @@ Drawer homeDrawer(context) {
               ),
             ),
             onTap: () {
-              Navigator.restorablePushNamed(context, LivingStream.routeName);
+              Get.toNamed(Routes.livingStreamRoute);
             },
           ),
           ListTile(
@@ -114,7 +115,7 @@ Drawer homeDrawer(context) {
               ),
             ),
             onTap: () {
-              Navigator.restorablePushNamed(context, AboutUs.routeName);
+              Navigator.restorablePushNamed(context, AboutUsScreen.routeName);
             },
           ),
         ],

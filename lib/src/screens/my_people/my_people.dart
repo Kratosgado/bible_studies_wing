@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
 
-import '../member/member_profile.dart';
-import '../member/member.dart';
+import 'member_profile.dart';
+import '../../data/models/member.dart';
 
 class MyPeopleScreen extends StatelessWidget {
   static const routeName = '/myPeople';

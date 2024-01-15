@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../functions.dart';
+import '../../functions.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -13,6 +13,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register A Member"),
+        shape: StadiumBorder(),
       ),
       body: Container(
         width: double.infinity,

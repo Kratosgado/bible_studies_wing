@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
 
-import 'member.dart';
-import 'member_profile.dart';
+import '../../data/models/member.dart';
+import '../my_people/member_profile.dart';
 
 class MemberRegistrationForm extends StatefulWidget {
   final User user; // Receive user data as an argument

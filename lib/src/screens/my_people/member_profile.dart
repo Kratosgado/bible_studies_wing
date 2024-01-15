@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:bible_studies_wing/src/member/member.dart';
+import 'package:bible_studies_wing/src/data/models/member.dart';
 
 class MemberProfileScreen extends StatelessWidget {
   final Member member;

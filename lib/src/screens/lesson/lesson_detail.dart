@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'lesson.dart';
+import '../../data/models/lesson.dart';
 
 class LessonDetail extends StatelessWidget {
   final Lesson lesson;

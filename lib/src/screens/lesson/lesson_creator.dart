@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter/material.dart';
 
-import 'lesson.dart';
+import '../../data/models/lesson.dart';
 import 'lesson_detail.dart'; // Import LessonDetail screen
 
 class LessonCreator extends StatefulWidget {

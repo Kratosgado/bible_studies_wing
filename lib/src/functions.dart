@@ -1,11 +1,11 @@
-import 'package:bible_studies_wing/src/member/member_registration_form.dart';
+import 'package:bible_studies_wing/src/screens/auth/member_registration_form.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 
-import 'member/member.dart';
+import 'data/models/member.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();

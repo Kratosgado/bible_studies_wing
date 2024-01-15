@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../lesson/lesson_detail.dart';
-import '../lesson/lesson.dart';
+import '../../data/models/lesson.dart';
 
-class LivingStream extends StatelessWidget {
-  const LivingStream({super.key});
+class LivingStreamScreen extends StatelessWidget {
+  const LivingStreamScreen({super.key});
 
-  static const routeName = '/living_stream';
 
   @override
   Widget build(BuildContext context) {
