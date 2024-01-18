@@ -1,8 +1,9 @@
-import 'package:bible_studies_wing/src/screens/about_us/about_us_screen.dart';
+import 'package:bible_studies_wing/src/screens/about_us/about.us.screen.dart';
+import 'package:bible_studies_wing/src/screens/home/home.screen.dart';
 import 'package:bible_studies_wing/src/screens/living_stream/living_stream.dart';
 import 'package:bible_studies_wing/src/screens/my_people/my_people.dart';
 import 'package:bible_studies_wing/src/screens/program_outline/program_outline.dart';
-import 'package:bible_studies_wing/src/screens/auth/register.dart';
+import 'package:bible_studies_wing/src/screens/auth/register.screen.dart';
 import 'package:bible_studies_wing/src/screens/splash/splash.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +21,7 @@ class Routes {
 
 List<GetPage> getRoutes() => [
       GetPage(name: Routes.splashRoute, page: () => const SplashScreen()),
+      GetPage(name: Routes.homeRoute, page: () => HomeScreen()),
       // GetPage(name: Routes.settingsRoute, page: ()=> SettingsScreen(controller: controller))
       GetPage(name: Routes.aboutUsRoute, page: () => const AboutUsScreen()),
       GetPage(name: Routes.livingStreamRoute, page: () => const LivingStreamScreen()),

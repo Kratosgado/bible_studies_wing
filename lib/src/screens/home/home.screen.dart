@@ -1,5 +1,5 @@
-import 'package:bible_studies_wing/src/screens/home/home_drawer.dart';
-import 'package:bible_studies_wing/src/screens/home/lesson_card.dart'; // Import LessonCard widget
+import 'package:bible_studies_wing/src/screens/home/home.drawer.dart';
+import 'package:bible_studies_wing/src/screens/home/lesson.card.dart'; // Import LessonCard widget
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +8,8 @@ import '../lesson/lesson_creator.dart';
 import '../../data/models/lesson.dart'; // Import Lesson model
 import '../../data/models/member.dart';
 
-class HomeView extends StatelessWidget {
-  HomeView({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
   // Get auth from firebase
   final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
@@ -17,9 +17,6 @@ class HomeView extends StatelessWidget {
   // Get member data from firestore
   late final memberData =
       FirebaseFirestore.instance.collection('members').doc(currentUserUid).get();
-
-  // Create a member object from the data
-  static const routeName = "/HomeView";
 
   @override
   Widget build(BuildContext context) {

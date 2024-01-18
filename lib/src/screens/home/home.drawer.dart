@@ -1,13 +1,8 @@
+import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/styles_manager.dart';
-import 'package:bible_studies_wing/src/screens/home/home_view.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
-import 'package:bible_studies_wing/src/screens/program_outline/program_outline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../about_us/about_us_screen.dart';
-import '../my_people/my_people.dart';
-import '../auth/register.dart';
 
 Drawer homeDrawer(context) {
   return Drawer(
@@ -22,7 +17,7 @@ Drawer homeDrawer(context) {
           DrawerHeader(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
+                image: AssetImage(ImageAssets.background),
                 fit: BoxFit.fill,
               ),
             ),
@@ -30,7 +25,7 @@ Drawer homeDrawer(context) {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.restorablePushNamed(context, HomeView.routeName),
+                    onTap: () => Get.toNamed(Routes.homeRoute),
                     child: const Text(
                       'Bible Studies Wing',
                       style: TextStyle(
@@ -54,9 +49,7 @@ Drawer homeDrawer(context) {
                 color: Colors.black,
               ),
             ),
-            onTap: () {
-              Navigator.restorablePushNamed(context, MyPeopleScreen.routeName);
-            },
+            onTap: () => Get.toNamed(Routes.myPeopleRoute),
           ),
           ListTile(
             leading: const Icon(
@@ -69,9 +62,7 @@ Drawer homeDrawer(context) {
                 color: Colors.black,
               ),
             ),
-            onTap: () {
-              Navigator.restorablePushNamed(context, ProgramOutlineScreen.routeName);
-            },
+            onTap: () => Get.toNamed(Routes.programOutlineRoute),
           ),
           ListTile(
             leading: const Icon(
@@ -99,9 +90,7 @@ Drawer homeDrawer(context) {
                 color: Colors.black,
               ),
             ),
-            onTap: () {
-              Navigator.restorablePushNamed(context, RegisterScreen.routeName);
-            },
+            onTap: () => Get.toNamed(Routes.registerRoute),
           ),
           ListTile(
             leading: const Icon(
@@ -114,9 +103,7 @@ Drawer homeDrawer(context) {
                 color: Colors.black,
               ),
             ),
-            onTap: () {
-              Navigator.restorablePushNamed(context, AboutUsScreen.routeName);
-            },
+            onTap: () => Get.toNamed(Routes.aboutUsRoute),
           ),
         ],
       ),

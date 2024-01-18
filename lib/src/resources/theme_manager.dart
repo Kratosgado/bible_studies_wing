@@ -23,7 +23,7 @@ ThemeData getApplicationTheme() {
       // card view theme
       cardTheme: CardTheme(
         color: Colors.blueAccent.shade100,
-        shadowColor: ColorManager.grey,
+        shadowColor: Colors.blue,
         elevation: Spacing.s4,
       ),
       // App bar theme

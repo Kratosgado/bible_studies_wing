@@ -1,4 +1,4 @@
-import 'package:bible_studies_wing/src/screens/home/comments_sheet.dart';
+import 'package:bible_studies_wing/src/screens/home/comment.sheet.dart';
 import 'package:bible_studies_wing/src/screens/lesson/lesson_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
