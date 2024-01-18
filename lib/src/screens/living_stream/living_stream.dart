@@ -40,7 +40,7 @@ class LivingStreamScreen extends StatelessWidget {
               itemCount: lessonDocs.length,
               itemBuilder: (context, index) {
                 final lessonData = lessonDocs[index].data();
-                final lesson = Lesson.fromMap(lessonData['id'], lessonData);
+                final lesson = Lesson.fromJson(lessonData);
                 return ListTile(
                   title: Text(lessonData['topic']),
                   subtitle: Text(lessonData['subtopic']),

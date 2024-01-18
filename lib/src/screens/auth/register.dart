@@ -13,7 +13,6 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register A Member"),
-        shape: StadiumBorder(),
       ),
       body: Container(
         width: double.infinity,

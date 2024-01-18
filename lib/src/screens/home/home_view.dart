@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
           );
         } else {
           // Data has been successfully fetched
-          final member = Member.fromMap(currentUserUid, snapshot.data!.data()!);
+          final member = Member.fromJson(snapshot.data!.data()!);
 
           // get last posted lesson from firebase
           // Get lesson from firestore
@@ -103,7 +103,7 @@ class HomeView extends StatelessWidget {
               } else {
                 // Data has been successfully fetched
                 final lessons = lessonSnapshot.data!.docs
-                    .map((doc) => Lesson.fromMap(doc.id, doc.data()))
+                    .map((doc) => Lesson.fromJson( doc.data()))
                     .toList();
                 // get first lesson from lessons
                 final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;

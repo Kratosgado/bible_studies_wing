@@ -22,18 +22,18 @@ ThemeData getApplicationTheme() {
       secondaryHeaderColor: ColorManager.grey,
       // card view theme
       cardTheme: CardTheme(
-          color: Colors.blueAccent.shade100,
-          shadowColor: ColorManager.grey,
-          elevation: Spacing.s4,
-          shape: const StadiumBorder()),
+        color: Colors.blueAccent.shade100,
+        shadowColor: ColorManager.grey,
+        elevation: Spacing.s4,
+      ),
       // App bar theme
       appBarTheme: AppBarTheme(
-          centerTitle: true,
-          color: Colors.blue.shade700,
-          shape: const StadiumBorder(),
-          elevation: Spacing.s8,
-          shadowColor: Colors.blue.shade400,
-          ),
+        centerTitle: true,
+        color: Colors.blue.shade700,
+        shape: const StadiumBorder(),
+        elevation: Spacing.s8,
+        shadowColor: Colors.blue.shade400,
+      ),
       // Button theme
       buttonTheme: ButtonThemeData(
           shape: const StadiumBorder(),

@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/resources/theme_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/home_view.dart';
 import 'package:bible_studies_wing/src/screens/lesson/lesson_creator.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
@@ -28,11 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: "Bible Studies Wing",
       
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.red,
-      ),
+      theme: getApplicationTheme(),
       darkTheme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.splashRoute,

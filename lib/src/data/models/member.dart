@@ -1,4 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'member.g.dart';
+
+@JsonSerializable()
 
 class Member {
   final String id;
@@ -22,30 +26,6 @@ class Member {
   });
 
   // Method to convert Member object to a Map (for Firestore)
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'photoUrl': photoUrl,
-      'birthdate': Timestamp.fromDate(birthdate),
-      'contact': contact,
-      'programme': programme,
-      'hall': hall,
-      'executive': executive,
-    };
-  }
-
-  // Static method to convert Firestore data to Member object
-  static Member fromMap(String id, Map<String, dynamic> data) {
-    return Member(
-      id: id,
-      name: data['name'],
-      photoUrl: data['photoUrl'],
-      birthdate: (data['birthdate'] as Timestamp).toDate(),
-      contact: data['contact'],
-      programme: data['programme'],
-      hall: data['hall'],
-      executive: data['executive'],
-    );
-  }
+  Map<String, dynamic> toJson()  => _$MemberToJson(this);
+  factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 }

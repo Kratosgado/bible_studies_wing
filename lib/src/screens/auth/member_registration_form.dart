@@ -233,7 +233,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
           executive: executiveStatus,
         );
         // Convert Member object to a Map and save it to Firestore
-        final memberData = newMember.toMap();
+        final memberData = newMember.toJson();
         await firestore.collection('members').doc(widget.user.uid).set(memberData);
         if (mounted) {
           Navigator.of(context).push(

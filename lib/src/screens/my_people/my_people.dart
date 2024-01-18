@@ -29,7 +29,7 @@ class MyPeopleScreen extends StatelessWidget {
           }
 
           final data = snapshot.data!;
-          final members = data.docs.map((doc) => Member.fromMap(doc.id, doc.data())).toList();
+          final members = data.docs.map((doc) => Member.fromJson(doc.data())).toList();
 
           final executives = members.where((member) => member.executive).toList();
           final nonExecutives = members.where((member) => !member.executive).toList();

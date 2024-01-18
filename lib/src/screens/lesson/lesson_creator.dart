@@ -177,9 +177,8 @@ class LessonCreatorState extends State<LessonCreator> {
         date: DateTime(now.year, now.month, now.day),
       );
 
-      final lessonData = newLesson.toMap();
 
-      await firestore.collection('lessons').add(lessonData);
+      await firestore.collection('lessons').add(newLesson.toJson());
 
       if (mounted) {
         // Navigate to LessonDetail screen with the created lesson

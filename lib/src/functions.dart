@@ -76,6 +76,5 @@ Future saveFormData(User user) async {
   );
 
   // Convert Member object to a Map and save it to Firestore
-  final memberData = newMember.toMap();
-  await firestore.collection('members').doc(user.uid).set(memberData);
+  await firestore.collection('members').doc(user.uid).set(newMember.toJson());
 }
