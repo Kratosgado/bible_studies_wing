@@ -1,9 +1,10 @@
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
+import 'package:get/get.dart';
 
-import 'member_profile.dart';
 import '../../data/models/member.dart';
 
 class MyPeopleScreen extends StatelessWidget {
@@ -82,13 +83,14 @@ class MyPeopleScreen extends StatelessWidget {
             )
           : null,
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => MemberProfileScreen(
-              member: member,
-            ),
-          ),
-        );
+        Get.toNamed(Routes.memberProfileRoute, arguments: member);
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => MemberProfileScreen(
+        //       member: member,
+        //     ),
+        //   ),
+        // );
       },
     );
   }

@@ -1,7 +1,8 @@
-import 'package:bible_studies_wing/src/screens/auth/member_registration_form.dart';
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ Future handleSignout() async {
   await googleSignIn.disconnect();
 }
 
-void signInWithGoogle(BuildContext context) async {
+void signInWithGoogle() async {
   try {
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
@@ -43,16 +44,7 @@ void signInWithGoogle(BuildContext context) async {
       }
 
       // Navigate to the MemberRegistrationForm and pass user data as arguments
-      if (context.mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MemberRegistrationForm(
-              user: user,
-            ),
-          ),
-        );
-      }
+      Get.offNamed(Routes.membershipFormRoute, arguments: user);
     }
   } catch (e) {
     Text(e.toString());

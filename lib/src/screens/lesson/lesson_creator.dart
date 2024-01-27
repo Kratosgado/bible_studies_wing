@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,18 +10,15 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/lesson.dart';
-import 'lesson_detail.dart'; // Import LessonDetail screen
 
-class LessonCreator extends StatefulWidget {
-  const LessonCreator({super.key});
-
-  static const routeName = "/lessonCreator";
+class LessonCreatorScreen extends StatefulWidget {
+  const LessonCreatorScreen({super.key});
 
   @override
-  LessonCreatorState createState() => LessonCreatorState();
+  LessonCreatorScreenState createState() => LessonCreatorScreenState();
 }
 
-class LessonCreatorState extends State<LessonCreator> {
+class LessonCreatorScreenState extends State<LessonCreatorScreen> {
   final formKey = GlobalKey<FormState>();
   final topicController = TextEditingController();
   final subtopicController = TextEditingController();
@@ -178,17 +177,7 @@ class LessonCreatorState extends State<LessonCreator> {
       );
 
 
-      await firestore.collection('lessons').add(newLesson.toJson());
-
-      if (mounted) {
-        // Navigate to LessonDetail screen with the created lesson
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LessonDetail(lesson: newLesson),
-          ),
-        );
-      }
+      await firestore.collection('lessons').add(newLesson.toJson()).then((_) => Get.toNamed(Routes.lessonDetailRoute, arguments: newLesson));
     }
   }
 }

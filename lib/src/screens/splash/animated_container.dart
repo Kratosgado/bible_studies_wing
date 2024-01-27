@@ -63,24 +63,16 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
               ],
             ),
             child: Container(
+              
               alignment: Alignment.center,
               decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage(ImageAssets.bslogo),
+                  
+                  fit: BoxFit.cover,
+                ),
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(30),
-              ),
-              child: Image.asset(
-                ImageAssets.bslogo,
-                height: Responsive.isLargeMobile(context)
-                    ? MediaQuery.sizeOf(context).width * 0.2
-                    : Responsive.isTablet(context)
-                        ? MediaQuery.sizeOf(context).width * 0.14
-                        : 200,
-                width: Responsive.isLargeMobile(context)
-                    ? MediaQuery.sizeOf(context).width * 0.2
-                    : Responsive.isTablet(context)
-                        ? MediaQuery.sizeOf(context).width * 0.14
-                        : 200,
-                fit: BoxFit.cover,
               ),
             ),
           ),

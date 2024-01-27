@@ -10,7 +10,7 @@ environment:
   sdk: ">=3.0.3 <4.0.0"
 
 dependencies:
-  cached_network_image:
+  cached_network_image: ^3.3.1
   json_annotation: ^4.8.1
   cloud_firestore: ^4.8.3
   shared_preferences: ^2.0.8
@@ -26,9 +26,10 @@ dependencies:
   google_sign_in: ^6.1.4
   image_picker: ^1.0.1
   intl: ^0.18.1
-  share_plus: ^7.0.2
+  # share_plus: ^7.0.2
   uuid: ^4.3.3
   get: ^4.6.6
+  flutter_cache_manager: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -49,3 +50,4 @@ flutter:
     - assets/images/cards/
     - assets/images/googleimage.png
     - assets/images/bslogo.jpg
+    - assets/images/background.jpg

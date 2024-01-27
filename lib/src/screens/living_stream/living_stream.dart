@@ -1,5 +1,7 @@
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../lesson/lesson_detail.dart';
 import '../../data/models/lesson.dart';
@@ -44,16 +46,7 @@ class LivingStreamScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(lessonData['topic']),
                   subtitle: Text(lessonData['subtopic']),
-                  onTap: () {
-                    // Navigate to the lesson detail screen when tapped
-                    // Replace `LessonDetailScreen` with the appropriate screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LessonDetail(lesson: lesson),
-                      ),
-                    );
-                  },
+                  onTap: () => Get.toNamed(Routes.lessonDetailRoute, arguments: lesson),
                 );
               },
             );

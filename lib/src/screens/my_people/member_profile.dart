@@ -1,11 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
+import 'package:get/get.dart';
 
 class MemberProfileScreen extends StatelessWidget {
-  final Member member;
+  final Member member = Get.arguments;
 
-  const MemberProfileScreen({super.key, required this.member});
+  MemberProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class MemberProfileScreen extends StatelessWidget {
               const SizedBox(height: 20),
               CircleAvatar(
                 radius: 80,
-                backgroundImage: CachedNetworkImageProvider(member.photoUrl),
+                backgroundImage: NetworkImage(member.photoUrl),
               ),
               const SizedBox(height: 20),
               Text(

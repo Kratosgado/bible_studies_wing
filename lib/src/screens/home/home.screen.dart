@@ -1,10 +1,11 @@
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/home.drawer.dart';
 import 'package:bible_studies_wing/src/screens/home/lesson.card.dart'; // Import LessonCard widget
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../lesson/lesson_creator.dart';
 import '../../data/models/lesson.dart'; // Import Lesson model
 import '../../data/models/member.dart';
 
@@ -15,35 +16,25 @@ class HomeScreen extends StatelessWidget {
   final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
 
   // Get member data from firestore
-  late final memberData =
+  late final getCurrentUser =
       FirebaseFirestore.instance.collection('members').doc(currentUserUid).get();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-      future: memberData,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // While waiting for data, show a loading indicator or some placeholder widget
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('The Word'),
-            ),
-            body: const Center(
+        future: getCurrentUser,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // While waiting for data, show a loading indicator or some placeholder widget
+            return const Center(
               child: CircularProgressIndicator(),
-            ),
-          );
-        } else if (snapshot.hasError) {
-          // If an error occurred while fetching data, handle it accordingly
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('The Word'),
-            ),
-            body: const Center(
+            );
+          } else if (snapshot.hasError) {
+            // If an error occurred while fetching data, handle it accordingly
+            return const Center(
               child: Text('Error fetching data'),
-            ),
-          );
-        } else {
+            );
+          }
           // Data has been successfully fetched
           final member = Member.fromJson(snapshot.data!.data()!);
 
@@ -55,62 +46,33 @@ class HomeScreen extends StatelessWidget {
               .limit(1)
               .get();
 
-          return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            future: lastPostedLesson,
-            builder: (context, lessonSnapshot) {
-              if (lessonSnapshot.connectionState == ConnectionState.waiting) {
-                // While waiting for lessons data, show a loading indicator or some placeholder widget
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('The Word'),
-                  ),
-                  drawer: homeDrawer(context),
-                  body: const Center(
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('The Word'),
+            ),
+            drawer: homeDrawer(context),
+            body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              future: lastPostedLesson,
+              builder: (context, lessonSnapshot) {
+                if (lessonSnapshot.connectionState == ConnectionState.waiting) {
+                  // While waiting for lessons data, show a loading indicator or some placeholder widget
+                  return const Center(
                     child: CircularProgressIndicator(),
-                  ),
-                  floatingActionButton: member.executive
-                      ? FloatingActionButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(LessonCreator.routeName);
-                          },
-                          child: const Icon(Icons.add),
-                        )
-                      : null,
-                );
-              } else if (lessonSnapshot.hasError || !snapshot.hasData) {
-                debugPrint(lessonSnapshot.error.toString());
-                // If an error occurred while fetching lessons data, handle it accordingly
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('The Word'),
-                  ),
-                  drawer: homeDrawer(context),
-                  body: const Center(
+                  );
+                } else if (lessonSnapshot.hasError || !snapshot.hasData) {
+                  debugPrint(lessonSnapshot.error.toString());
+                  // If an error occurred while fetching lessons data, handle it accordingly
+                  return const Center(
                     child: Text('Error fetching lessons data'),
-                  ),
-                  floatingActionButton: member.executive
-                      ? FloatingActionButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(LessonCreator.routeName);
-                          },
-                          child: const Icon(Icons.add),
-                        )
-                      : null,
-                );
-              } else {
-                // Data has been successfully fetched
-                final lessons = lessonSnapshot.data!.docs
-                    .map((doc) => Lesson.fromJson( doc.data()))
-                    .toList();
-                // get first lesson from lessons
-                final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;
+                  );
+                } else {
+                  // Data has been successfully fetched
+                  final lessons =
+                      lessonSnapshot.data!.docs.map((doc) => Lesson.fromJson(doc.data())).toList();
+                  // get first lesson from lessons
+                  final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;
 
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('The Word'),
-                  ),
-                  drawer: homeDrawer(context),
-                  body: Column(
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -122,21 +84,24 @@ class HomeScreen extends StatelessWidget {
                         height: 200,
                       )
                     ],
-                  ),
-                  floatingActionButton: member.executive
-                      ? FloatingActionButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(LessonCreator.routeName);
-                          },
-                          child: const Icon(Icons.add),
-                        )
-                      : null,
-                );
-              }
-            },
+                  );
+                }
+              },
+            ),
+            floatingActionButton: member.executive
+                ? FloatingActionButton(
+                    onPressed: () => Get.offNamed(Routes.lessonCreatorRoute),
+                    child: const Icon(Icons.add),
+                  )
+                : null,
           );
-        }
-      },
-    );
+        });
   }
 }
+
+// floatingActionButton: member.executive
+//                         ? FloatingActionButton(
+//                             onPressed: () => Get.offNamed(Routes.lessonCreatorRoute),
+//                             child: const Icon(Icons.add),
+//                           )
+//                         : null,

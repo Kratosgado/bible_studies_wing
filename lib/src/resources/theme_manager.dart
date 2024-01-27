@@ -11,7 +11,7 @@ ThemeData getApplicationTheme() {
       disabledColor: ColorManager.grey1,
       colorScheme: ColorScheme.dark(
         background: ColorManager.bgColor,
-        primary: Colors.blue.shade700,
+        primary: Colors.blueAccent.shade400,
         onPrimary: ColorManager.lightGrey,
         secondary: ColorManager.secondaryColor,
         onSecondary: ColorManager.grey2,
@@ -22,29 +22,29 @@ ThemeData getApplicationTheme() {
       secondaryHeaderColor: ColorManager.grey,
       // card view theme
       cardTheme: CardTheme(
-        color: Colors.blueAccent.shade100,
+        color: Colors.blueAccent.shade400,
         shadowColor: Colors.blue,
         elevation: Spacing.s4,
       ),
       // App bar theme
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        color: Colors.blue.shade700,
-        shape: const StadiumBorder(),
+        color: Colors.blueAccent.shade400,
+        foregroundColor: ColorManager.bgColor,
         elevation: Spacing.s8,
         shadowColor: Colors.blue.shade400,
       ),
       // Button theme
       buttonTheme: ButtonThemeData(
-          shape: const StadiumBorder(),
-          disabledColor: ColorManager.grey1,
-          buttonColor: Colors.blue.shade700,
-          splashColor: ColorManager.bgColor),
+        shape: const StadiumBorder(),
+        disabledColor: ColorManager.grey1,
+        buttonColor: Colors.blueAccent.shade400,
+      ),
 
       // elevated button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue.shade700,
+            backgroundColor: Colors.blueAccent.shade400,
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
             splashFactory: InkSparkle.splashFactory),

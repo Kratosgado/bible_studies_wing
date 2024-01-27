@@ -1,18 +1,19 @@
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
 
 import '../../data/models/member.dart';
-import '../my_people/member_profile.dart';
 
 class MemberRegistrationForm extends StatefulWidget {
-  final User user; // Receive user data as an argument
+  final User user = Get.arguments; // Receive user data as an argument
 
-  const MemberRegistrationForm({super.key, required this.user});
+  MemberRegistrationForm({super.key});
 
   @override
   MemberRegistrationFormState createState() => MemberRegistrationFormState();
@@ -72,22 +73,18 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
           child: Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
-                  child: _imageFile != null
-                      ? Image.file(
-                          _imageFile!,
-                          height: 200,
-                          width: 200,
-                        ) // Show the selected image if available
-                      : const SizedBox.shrink(),
-                ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _pickImage, // Call the _pickImage method when the button is pressed
-                    child: const Text('Select Image'),
-                  ),
+                _imageFile != null
+                    ? Image.file(
+                        _imageFile!,
+                        height: 200,
+                        width: 200,
+                      ) // Show the selected image if available
+                    : const SizedBox.shrink(),
+                ElevatedButton(
+                  onPressed: _pickImage, // Call the _pickImage method when the button is pressed
+                  child: const Text('Select Image'),
                 ),
                 // Otherwise, hide the Image widget
                 const SizedBox(height: 16),
@@ -233,17 +230,11 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
           executive: executiveStatus,
         );
         // Convert Member object to a Map and save it to Firestore
-        final memberData = newMember.toJson();
-        await firestore.collection('members').doc(widget.user.uid).set(memberData);
-        if (mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MemberProfileScreen(
-                member: newMember,
-              ),
-            ),
-          );
-        }
+        await firestore
+            .collection('members')
+            .doc(widget.user.uid)
+            .set(newMember.toJson())
+            .then((_) => Get.offNamed(Routes.memberProfileRoute, arguments: newMember));
       }
     }
   }

@@ -8,8 +8,6 @@ import '../../functions.dart';
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
-  static const routeName = '/signinpage';
-
   @override
   Widget build(BuildContext context) {
     // final appState = ref.read(applicationState.notifier);
@@ -17,21 +15,9 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Register A Member"),
       ),
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        // decoration: const BoxDecoration(
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       Color.fromARGB(255, 202, 214, 224),
-        //       Colors.white,
-        //       Colors.white,
-        //       Colors.white,
-        //     ],
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //   ),
-        // ),
         child: Card(
           margin: const EdgeInsets.symmetric(vertical: 200, horizontal: 30),
           elevation: 20,
@@ -76,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
                     ],
                   ),
                   onPressed: () {
-                    signInWithGoogle(context);
+                    signInWithGoogle();
                     // appState.signInWithGoogle(context);
                   },
                 ),

@@ -1,7 +1,9 @@
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/comment.sheet.dart';
 import 'package:bible_studies_wing/src/screens/lesson/lesson_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../data/models/lesson.dart';
 
@@ -19,16 +21,14 @@ Widget lessonCard(BuildContext context, Lesson lesson, String currentUserProfile
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => LessonDetail(lesson: lesson))),
+              onTap: () => Get.toNamed(Routes.lessonDetailRoute, arguments: lesson),
               child: SizedBox(
                 height: 220,
                 width: 350,
-                child: CachedNetworkImage(
-                  imageUrl: lesson.imageUrl,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                child: Image.network(
+                  lesson.imageUrl,
+                  // loadingBuilder: (context, _, __) => const CircularProgressIndicator(),
+                  // errorBuilder: (context, url, error) => const Icon(Icons.error),
                   fit: BoxFit.cover,
                 ),
               ),

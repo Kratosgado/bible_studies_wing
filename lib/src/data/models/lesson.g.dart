@@ -31,7 +31,7 @@ Lesson _$LessonFromJson(Map<String, dynamic> json) => Lesson(
           (json['verses'] as List<dynamic>).map((e) => e as String).toList(),
       body: json['body'] as List<dynamic>,
       imageUrl: json['imageUrl'] as String,
-      date: DateTime.parse(json['date'] as String),
+      date: dateTimeFromTimestamp(json['date'] as Timestamp),
     );
 
 Map<String, dynamic> _$LessonToJson(Lesson instance) => <String, dynamic>{
@@ -42,5 +42,5 @@ Map<String, dynamic> _$LessonToJson(Lesson instance) => <String, dynamic>{
       'verses': instance.verses,
       'body': instance.body,
       'imageUrl': instance.imageUrl,
-      'date': instance.date.toIso8601String(),
+      'date': dateTimeAsIs(instance.date),
     };

@@ -10,7 +10,8 @@ Member _$MemberFromJson(Map<String, dynamic> json) => Member(
       id: json['id'] as String,
       photoUrl: json['photoUrl'] as String,
       name: json['name'] as String,
-      birthdate: DateTime.parse(json['birthdate'] as String),
+      birthdate:
+          const TimestampConverter().fromJson(json['birthdate'] as Timestamp),
       contact: json['contact'] as String,
       programme: json['programme'] as String,
       hall: json['hall'] as String,
@@ -21,7 +22,7 @@ Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
       'id': instance.id,
       'photoUrl': instance.photoUrl,
       'name': instance.name,
-      'birthdate': instance.birthdate.toIso8601String(),
+      'birthdate': const TimestampConverter().toJson(instance.birthdate),
       'contact': instance.contact,
       'programme': instance.programme,
       'hall': instance.hall,

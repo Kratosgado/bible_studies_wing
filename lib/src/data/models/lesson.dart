@@ -33,6 +33,7 @@ class Lesson {
   final List<String> verses;
   final List<dynamic> body;
   final String imageUrl;
+  @JsonKey(fromJson: dateTimeFromTimestamp, toJson: dateTimeAsIs)
   final DateTime date;
   final List<Comment> comments = [];
 
@@ -82,3 +83,8 @@ class Lesson {
     }
   }
 }
+
+DateTime dateTimeFromTimestamp(Timestamp timestamp) =>
+    DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
+
+DateTime dateTimeAsIs(DateTime dateTime) => dateTime;

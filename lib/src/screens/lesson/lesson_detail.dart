@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:get/get.dart';
 import '../../data/models/lesson.dart';
 
-class LessonDetail extends StatelessWidget {
-  final Lesson lesson;
+class LessonDetailScreen extends StatelessWidget {
+  final Lesson lesson = Get.arguments;
 
-  static const routeName = '/LessonDetail';
-
-  const LessonDetail({super.key, required this.lesson});
+  LessonDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
