@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -30,7 +29,7 @@ void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
                   final comment = lesson.comments[index];
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(comment.photoUrl),
+                      backgroundImage: NetworkImage(comment.photoUrl),
                     ),
                     title: Text(comment.username),
                     subtitle: Text(comment.comment),
@@ -42,7 +41,7 @@ void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(currentUserProfile),
+                  backgroundImage: NetworkImage(currentUserProfile),
                 ),
                 const SizedBox(width: 8),
                 Expanded(

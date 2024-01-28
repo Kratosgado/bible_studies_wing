@@ -1,5 +1,4 @@
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
@@ -72,7 +71,7 @@ class MyPeopleScreen extends StatelessWidget {
   Widget _buildMemberTile(BuildContext context, Member member) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: CachedNetworkImageProvider(member.photoUrl),
+        backgroundImage: NetworkImage(member.photoUrl),
       ),
       title: Text(member.name),
       subtitle: Text(member.programme),

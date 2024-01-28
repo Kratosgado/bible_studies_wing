@@ -45,14 +45,18 @@ class HomeScreen extends StatelessWidget {
               .orderBy('date', descending: true)
               .limit(1)
               .get();
+          final streamLessons = FirebaseFirestore.instance
+              .collection('lessons')
+              .orderBy('date', descending: true)
+              .snapshots();
 
           return Scaffold(
             appBar: AppBar(
               title: const Text('The Word'),
             ),
             drawer: homeDrawer(context),
-            body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              future: lastPostedLesson,
+            body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: streamLessons,
               builder: (context, lessonSnapshot) {
                 if (lessonSnapshot.connectionState == ConnectionState.waiting) {
                   // While waiting for lessons data, show a loading indicator or some placeholder widget
@@ -67,31 +71,30 @@ class HomeScreen extends StatelessWidget {
                   );
                 } else {
                   // Data has been successfully fetched
-                  final lessons =
-                      lessonSnapshot.data!.docs.map((doc) => Lesson.fromJson(doc.data())).toList();
+                  // final lessons =
+                      // lessonSnapshot.data!.docs.map((doc) => Lesson.fromJson(doc.data())).toList();
                   // get first lesson from lessons
-                  final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;
+                  // final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;
 
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      lastPostedLesson != null
-                          ? lessonCard(context, lastPostedLesson,
-                              member.photoUrl) // Pass the lesson to LessonCard
-                          : const Center(child: Text('No lesson for today or yesterday')),
-                      const SizedBox(
-                        height: 200,
-                      )
-                    ],
+                  return ListView.builder(
+                    itemCount: lessonSnapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      final lesson = Lesson.fromJson(lessonSnapshot.data!.docs[index].data());
+                      return lessonCard(
+                          context, lesson, member.photoUrl); // Pass the lesson to LessonCard
+                    },
                   );
                 }
               },
             ),
             floatingActionButton: member.executive
                 ? FloatingActionButton(
-                    onPressed: () => Get.offNamed(Routes.lessonCreatorRoute),
-                    child: const Icon(Icons.add),
+                    tooltip: 'Create a lesson',
+                    onPressed: () => Get.toNamed(Routes.lessonCreatorRoute),
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
                   )
                 : null,
           );

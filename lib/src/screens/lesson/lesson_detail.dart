@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -23,26 +22,32 @@ class LessonDetailScreen extends StatelessWidget {
             children: [
               Container(
                   padding: const EdgeInsets.all(8),
-                  child: CachedNetworkImage(
-                    imageUrl: lesson.imageUrl,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>
-                            CircularProgressIndicator(
-                                value: downloadProgress.progress),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                  child: Image.network(
+                    lesson.imageUrl,
+                    loadingBuilder: (context, url, imageChunkEvent) {
+                      if (imageChunkEvent == null) {
+                        return const CircularProgressIndicator();
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: imageChunkEvent.expectedTotalBytes != null
+                              ? imageChunkEvent.cumulativeBytesLoaded /
+                                  imageChunkEvent.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, url, error) => const Icon(Icons.error),
                     fit: BoxFit.cover,
                   )),
               Text(
                 'Subtopic: ${lesson.subtopic}',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
                 'Anchor Scripture: ${lesson.anchorScripture}',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               const SizedBox(height: 16),
@@ -64,8 +69,7 @@ class LessonDetailScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 'Date: ${lesson.date.toLocal().toString()}',
-                style:
-                    const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
               ),
             ],
           ),

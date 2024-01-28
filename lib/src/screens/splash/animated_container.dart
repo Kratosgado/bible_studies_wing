@@ -4,8 +4,6 @@ import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
-import '../../resources/responsive.dart';
-
 class AnimatedImageContainer extends StatefulWidget {
   final double? width;
   final double? height;

@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../lesson/lesson_detail.dart';
 import '../../data/models/lesson.dart';
 
 class LivingStreamScreen extends StatelessWidget {
@@ -41,11 +40,10 @@ class LivingStreamScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: lessonDocs.length,
               itemBuilder: (context, index) {
-                final lessonData = lessonDocs[index].data();
-                final lesson = Lesson.fromJson(lessonData);
+                final lesson = Lesson.fromJson(lessonDocs[index].data());
                 return ListTile(
-                  title: Text(lessonData['topic']),
-                  subtitle: Text(lessonData['subtopic']),
+                  title: Text(lesson.topic),
+                  subtitle: Text(lesson.subtopic),
                   onTap: () => Get.toNamed(Routes.lessonDetailRoute, arguments: lesson),
                 );
               },
