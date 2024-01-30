@@ -2,14 +2,13 @@ import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/backdrop.layer.dart';
-import 'package:bible_studies_wing/src/screens/home/lesson.card.dart'; // Import LessonCard widget
+import 'package:bible_studies_wing/src/screens/home/front.layer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/models/lesson.dart'; // Import Lesson model
 import '../../data/models/member.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -41,18 +40,6 @@ class HomeScreen extends StatelessWidget {
           // Data has been successfully fetched
           final member = Member.fromJson(snapshot.data!.data()!);
 
-          // get last posted lesson from firebase
-          // Get lesson from firestore
-          // final lastPostedLesson = FirebaseFirestore.instance
-          //     .collection('lessons')
-          //     .orderBy('date', descending: true)
-          //     .limit(1)
-          //     .get();
-          final streamLessons = FirebaseFirestore.instance
-              .collection('lessons')
-              .orderBy('date', descending: true)
-              .snapshots();
-
           return Container(
             height: Get.height,
             width: Get.width,
@@ -73,18 +60,12 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              // drawer: homeDrawer(context),
               stickyFrontLayer: true,
               backgroundColor: Colors.transparent,
               frontLayerBackgroundColor: Colors.white,
 
               backLayer: backDropLayer(),
-              frontLayer: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: streamLessons,
-                builder: (context, lessonSnapshot) {
-                  return const Text("Front Layer");
-                },
-              ),
+              frontLayer: frontLayer(context, member.photoUrl),
               // bottomNavigationBar: BottomNavigationBar(),
               floatingActionButton: member.executive
                   ? FloatingActionButton(

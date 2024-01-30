@@ -7,19 +7,9 @@ class ColorManager {
   static final Color topColor = Colors.blue.shade700;
   static final Color bottomColor = Colors.teal.shade400;
 
-  static Color primary = HexColor.fromHex("#ED9728");
-  static Color darkGrey = HexColor.fromHex("#525252");
-  static Color grey = HexColor.fromHex("#737477");
-  static Color lightGrey = HexColor.fromHex("#9E9E9E");
-  static Color primaryOpacity70 = HexColor.fromHex("#B3ED9728");
-
-  // new colors
-  static Color darkPrimary = HexColor.fromHex("#d17d11");
-  static Color grey1 = HexColor.fromHex("#707070");
-  static Color grey2 = HexColor.fromHex("#797979");
-  static Color white = HexColor.fromHex("#FFFFFF");
-  static Color error = HexColor.fromHex("#e61f34");
-  static Color black = HexColor.fromHex("#000000"); // red color
+  static final deepBblue = HexColor.fromHex('#1f2544');
+  static final mediumBlue = HexColor.fromHex('#0c2d57');
+  static final faintWhite = HexColor.fromHex('#dbe3ed');
 }
 
 extension HexColor on Color {

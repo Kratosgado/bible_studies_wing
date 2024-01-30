@@ -1,5 +1,3 @@
-
-
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,5 +27,4 @@ class AppPreferences {
   Future<void> logout() async {
     await _preferences.setBool('isUserLoggedIn', false);
   }
-
 }

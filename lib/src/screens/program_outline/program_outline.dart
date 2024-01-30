@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:backdrop/backdrop.dart';
 
 class ProgramOutlineScreen extends StatelessWidget {
   const ProgramOutlineScreen({super.key});
@@ -7,11 +8,12 @@ class ProgramOutlineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return BackdropScaffold(
+      appBar: BackdropAppBar(
         title: const Text('Program Outline'),
       ),
-      body: const Center(
+      backLayer: const SizedBox(),
+      frontLayer: const Center(
         child: Text('Program Outline'),
       ),
     );

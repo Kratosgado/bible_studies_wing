@@ -4,17 +4,13 @@ import 'values_manager.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
-      // main colors of the app
-      // primaryColor: ColorManager.primary,
-      // primaryColorLight: ColorManager.primaryOpacity70,
-      // primaryColorDark: ColorManager.darkPrimary,
-      disabledColor: ColorManager.grey1,
+      disabledColor: Colors.grey.shade400,
       colorScheme: ColorScheme.dark(
         background: Colors.white,
-        primary: Colors.blueAccent.shade400,
-        onPrimary: ColorManager.lightGrey,
+        primary: ColorManager.mediumBlue,
         secondary: ColorManager.secondaryColor,
-        onSecondary: ColorManager.grey2,
+        onSecondary: Colors.grey.shade400,
+        tertiary: Colors.amber,
       ),
       // ripple color
       splashColor: Colors.teal,
@@ -28,16 +24,15 @@ ThemeData getApplicationTheme() {
       ),
 
       // will be used incase of disabled button for example
-      secondaryHeaderColor: ColorManager.grey,
       // card view theme
       cardTheme: CardTheme(
-        color: Colors.blueAccent.shade400,
-        shadowColor: Colors.blue,
-        elevation: Spacing.s4,
+        color: ColorManager.faintWhite,
+        // shadowColor: ColorManager.deepBblue,
+
+        elevation: Spacing.s8,
       ),
       // App bar theme
       appBarTheme: AppBarTheme(
-        centerTitle: true,
         color: Colors.blueAccent.shade400,
         foregroundColor: ColorManager.bgColor,
         elevation: Spacing.s8,
@@ -46,7 +41,7 @@ ThemeData getApplicationTheme() {
       // Button theme
       buttonTheme: ButtonThemeData(
         shape: const StadiumBorder(),
-        disabledColor: ColorManager.grey1,
+        disabledColor: Colors.grey,
         buttonColor: Colors.blueAccent.shade400,
       ),
 
@@ -86,14 +81,14 @@ ThemeData getApplicationTheme() {
 
         // error border
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.error, width: Spacing.s1_5),
+          borderSide: BorderSide(color: Colors.redAccent.shade400, width: Spacing.s1_5),
           borderRadius: const BorderRadius.all(
             Radius.circular(Spacing.s8),
           ),
         ),
         // focused error border
         focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: ColorManager.primary, width: Spacing.s1_5),
+            borderSide: BorderSide(color: Colors.blueAccent.shade400, width: Spacing.s1_5),
             borderRadius: const BorderRadius.all(Radius.circular(Spacing.s8))),
       ));
 }
