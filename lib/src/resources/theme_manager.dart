@@ -10,7 +10,7 @@ ThemeData getApplicationTheme() {
       // primaryColorDark: ColorManager.darkPrimary,
       disabledColor: ColorManager.grey1,
       colorScheme: ColorScheme.dark(
-        background: ColorManager.bgColor,
+        background: Colors.white,
         primary: Colors.blueAccent.shade400,
         onPrimary: ColorManager.lightGrey,
         secondary: ColorManager.secondaryColor,
@@ -18,6 +18,15 @@ ThemeData getApplicationTheme() {
       ),
       // ripple color
       splashColor: Colors.teal,
+      listTileTheme: ListTileThemeData(
+        selectedTileColor: Colors.blueAccent.shade400,
+        titleTextStyle: const TextStyle(fontSize: Spacing.s20),
+        iconColor: Colors.white,
+        selectedColor: Colors.white,
+        contentPadding: const EdgeInsets.all(Spacing.s8),
+        // shape: const StadiumBorder(),
+      ),
+
       // will be used incase of disabled button for example
       secondaryHeaderColor: ColorManager.grey,
       // card view theme

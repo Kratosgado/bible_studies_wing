@@ -59,7 +59,8 @@ class MyPeopleScreen extends StatelessWidget {
     return ExpandablePanel(
       collapsed: Center(child: Text("List of all $title members")),
       header: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title:
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
         onTap: () {}, // You can add any desired behavior when the header is tapped
       ),
       expanded: Column(
@@ -70,6 +71,7 @@ class MyPeopleScreen extends StatelessWidget {
 
   Widget _buildMemberTile(BuildContext context, Member member) {
     return ListTile(
+      textColor: Colors.black,
       leading: CircleAvatar(
         backgroundImage: NetworkImage(member.photoUrl),
       ),

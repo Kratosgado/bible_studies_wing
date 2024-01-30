@@ -39,12 +39,12 @@ void signInWithGoogle() async {
       debugPrint("checking documents");
       if (documents.isEmpty) {
         // User data doesn't exist, save it to Firestore
-        await saveFormData(user);
+        // await saveFormData(user);
+        // Navigate to the MemberRegistrationForm and pass user data as arguments
+        Get.offNamed(Routes.membershipFormRoute, arguments: user);
         debugPrint("saved form data");
       }
-
-      // Navigate to the MemberRegistrationForm and pass user data as arguments
-      Get.offNamed(Routes.membershipFormRoute, arguments: user);
+      Get.offNamed(Routes.homeRoute);
     }
   } catch (e) {
     Text(e.toString());

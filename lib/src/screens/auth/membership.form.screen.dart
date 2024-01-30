@@ -20,7 +20,7 @@ class MemberRegistrationForm extends StatefulWidget {
 }
 
 class MemberRegistrationFormState extends State<MemberRegistrationForm> {
-  final auth = FirebaseAuth.instance.currentUser;
+  // final auth = FirebaseAuth.instance.currentUser;
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();

@@ -1,8 +1,11 @@
+import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
-import 'package:bible_studies_wing/src/screens/home/home.drawer.dart';
+import 'package:bible_studies_wing/src/resources/values_manager.dart';
+import 'package:bible_studies_wing/src/screens/home/backdrop.layer.dart';
 import 'package:bible_studies_wing/src/screens/home/lesson.card.dart'; // Import LessonCard widget
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,71 +43,61 @@ class HomeScreen extends StatelessWidget {
 
           // get last posted lesson from firebase
           // Get lesson from firestore
-          final lastPostedLesson = FirebaseFirestore.instance
-              .collection('lessons')
-              .orderBy('date', descending: true)
-              .limit(1)
-              .get();
+          // final lastPostedLesson = FirebaseFirestore.instance
+          //     .collection('lessons')
+          //     .orderBy('date', descending: true)
+          //     .limit(1)
+          //     .get();
           final streamLessons = FirebaseFirestore.instance
               .collection('lessons')
               .orderBy('date', descending: true)
               .snapshots();
 
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('The Word'),
+          return Container(
+            height: Get.height,
+            width: Get.width,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(ImageAssets.background),
+                fit: BoxFit.fill,
+              ),
             ),
-            drawer: homeDrawer(context),
-            body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: streamLessons,
-              builder: (context, lessonSnapshot) {
-                if (lessonSnapshot.connectionState == ConnectionState.waiting) {
-                  // While waiting for lessons data, show a loading indicator or some placeholder widget
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (lessonSnapshot.hasError || !snapshot.hasData) {
-                  debugPrint(lessonSnapshot.error.toString());
-                  // If an error occurred while fetching lessons data, handle it accordingly
-                  return const Center(
-                    child: Text('Error fetching lessons data'),
-                  );
-                } else {
-                  // Data has been successfully fetched
-                  // final lessons =
-                      // lessonSnapshot.data!.docs.map((doc) => Lesson.fromJson(doc.data())).toList();
-                  // get first lesson from lessons
-                  // final lastPostedLesson = lessons.isNotEmpty ? lessons.first : null;
-
-                  return ListView.builder(
-                    itemCount: lessonSnapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      final lesson = Lesson.fromJson(lessonSnapshot.data!.docs[index].data());
-                      return lessonCard(
-                          context, lesson, member.photoUrl); // Pass the lesson to LessonCard
-                    },
-                  );
-                }
-              },
-            ),
-            floatingActionButton: member.executive
-                ? FloatingActionButton(
-                    tooltip: 'Create a lesson',
-                    onPressed: () => Get.toNamed(Routes.lessonCreatorRoute),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
+            child: BackdropScaffold(
+              appBar: BackdropAppBar(
+                toolbarHeight: Spacing.s90,
+                backgroundColor: Colors.transparent,
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('The Word', style: Theme.of(context).textTheme.titleLarge),
                   )
-                : null,
+                ],
+              ),
+              // drawer: homeDrawer(context),
+              stickyFrontLayer: true,
+              backgroundColor: Colors.transparent,
+              frontLayerBackgroundColor: Colors.white,
+
+              backLayer: backDropLayer(),
+              frontLayer: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: streamLessons,
+                builder: (context, lessonSnapshot) {
+                  return const Text("Front Layer");
+                },
+              ),
+              // bottomNavigationBar: BottomNavigationBar(),
+              floatingActionButton: member.executive
+                  ? FloatingActionButton(
+                      tooltip: 'Create a lesson',
+                      onPressed: () => Get.toNamed(Routes.lessonCreatorRoute),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    )
+                  : null,
+            ),
           );
         });
   }
 }
-
-// floatingActionButton: member.executive
-//                         ? FloatingActionButton(
-//                             onPressed: () => Get.offNamed(Routes.lessonCreatorRoute),
-//                             child: const Icon(Icons.add),
-//                           )
-//                         : null,
