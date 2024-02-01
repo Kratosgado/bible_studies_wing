@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/screens/home/components/background.image.dart';
 import 'package:flutter/material.dart';
 
 import 'src/app/app.dart';
@@ -10,5 +11,5 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(const BackgroundImage(child: MyApp()));
 }

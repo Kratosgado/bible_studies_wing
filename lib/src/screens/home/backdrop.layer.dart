@@ -1,16 +1,11 @@
 import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:bible_studies_wing/src/screens/home/components/background.image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Container backDropLayer() {
-  return Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(ImageAssets.background),
-        fit: BoxFit.fill,
-      ),
-    ),
+BackgroundImage backDropLayer() {
+  return BackgroundImage(
     child: ListView(
       children: [
         ListTile(

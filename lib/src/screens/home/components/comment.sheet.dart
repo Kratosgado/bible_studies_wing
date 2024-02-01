@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../data/models/lesson.dart';
+import '../../../data/models/lesson.dart';
 
 void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
   final commentController = TextEditingController();

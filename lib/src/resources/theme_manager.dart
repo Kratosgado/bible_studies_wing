@@ -6,10 +6,10 @@ ThemeData getApplicationTheme() {
   return ThemeData(
       disabledColor: Colors.grey.shade400,
       colorScheme: ColorScheme.dark(
-        background: Colors.white,
+        background: Colors.transparent,
         primary: ColorManager.mediumBlue,
         secondary: ColorManager.secondaryColor,
-        onSecondary: Colors.grey.shade400,
+        // onSecondary: Colors.grey.shade400,
         tertiary: Colors.amber,
       ),
       // ripple color
@@ -22,7 +22,7 @@ ThemeData getApplicationTheme() {
         contentPadding: const EdgeInsets.all(Spacing.s8),
         // shape: const StadiumBorder(),
       ),
-
+      scaffoldBackgroundColor: Colors.transparent,
       // will be used incase of disabled button for example
       // card view theme
       cardTheme: CardTheme(
@@ -33,7 +33,7 @@ ThemeData getApplicationTheme() {
       ),
       // App bar theme
       appBarTheme: AppBarTheme(
-        color: Colors.blueAccent.shade400,
+        color: Colors.transparent,
         foregroundColor: ColorManager.bgColor,
         elevation: Spacing.s8,
         shadowColor: Colors.blue.shade400,

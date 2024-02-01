@@ -1,4 +1,5 @@
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
@@ -13,11 +14,10 @@ class MyPeopleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My People'),
-      ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+    return CurvedScaffold(
+      title: "My People",
+      // backLayer: backDropLayer(),
+      child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance.collection('members').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -57,7 +57,12 @@ class MyPeopleScreen extends StatelessWidget {
     required List<Widget> children,
   }) {
     return ExpandablePanel(
-      collapsed: Center(child: Text("List of all $title members")),
+      collapsed: Center(
+        child: Text(
+          "List of all $title members",
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
       header: ListTile(
         title:
             Text(title, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),

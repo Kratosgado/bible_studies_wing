@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:get/get.dart';
@@ -9,12 +10,13 @@ class MemberProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Member Profile'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.edit))],
-      ),
-      body: SingleChildScrollView(
+    return CurvedScaffold(
+      title: "Member Profile",
+      // appBar: AppBar(
+      //   title: const Text('Member Profile'),
+      //   actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.edit))],
+      // ),
+      child: SingleChildScrollView(
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,5 +1,7 @@
+
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:backdrop/backdrop.dart';
+import 'package:get/get.dart';
 
 class ProgramOutlineScreen extends StatelessWidget {
   const ProgramOutlineScreen({super.key});
@@ -8,13 +10,19 @@ class ProgramOutlineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropScaffold(
-      appBar: BackdropAppBar(
-        title: const Text('Program Outline'),
-      ),
-      backLayer: const SizedBox(),
-      frontLayer: const Center(
-        child: Text('Program Outline'),
+    return CurvedScaffold(
+      title: "Program Outline",
+      child: Container(
+        height: context.height,
+        width: context.width,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child: const Center(child: Text('Program Outline')),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:bible_studies_wing/src/data/models/lesson.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
-import 'package:bible_studies_wing/src/screens/home/lesson.card.dart';
+import 'package:bible_studies_wing/src/screens/home/components/lesson.card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,9 +24,10 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
         ),
         Text(
           "Today's Living Stream",
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: ColorManager.deepBblue,
-              ),
+          style: Theme.of(context)
+              .textTheme
+              .headlineMedium
+              ?.copyWith(color: ColorManager.deepBblue, fontWeight: FontWeight.bold),
         ),
         Container(
           decoration: BoxDecoration(
@@ -39,7 +40,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
           child: FutureBuilder(
               future: lastPostedLesson,
               builder: (_, snapShot) {
-                if (snapShot.connectionState == ConnectionState.waiting) {
+                if (snapShot.connectionState == ConnectionState.waiting || !snapShot.hasData) {
                   // While waiting for data, show a loading indicator or some placeholder widget
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -68,7 +69,15 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
               ),
               width: Get.width * 0.4 + Spacing.s16,
               height: Get.height * 0.25,
-              child: const Text("Today's Living Stream"),
+              child: const Text(
+                "Tuesday's Event",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: Spacing.s20,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.darkColor,
+                ),
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -77,7 +86,15 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
               ),
               width: Get.width * 0.4 + Spacing.s16,
               height: Get.height * 0.25,
-              child: const Text("Today's Living Stream"),
+              child: const Text(
+                "Announcement",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: Spacing.s20,
+                  fontWeight: FontWeight.bold,
+                  color: ColorManager.darkColor,
+                ),
+              ),
             ),
           ],
         )
