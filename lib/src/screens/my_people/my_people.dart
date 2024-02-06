@@ -1,5 +1,6 @@
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
@@ -78,7 +79,7 @@ class MyPeopleScreen extends StatelessWidget {
     return ListTile(
       textColor: Colors.black,
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(member.photoUrl),
+        backgroundImage: CachedNetworkImageProvider(member.photoUrl),
       ),
       title: Text(member.name),
       subtitle: Text(member.programme),

@@ -1,5 +1,3 @@
-import 'package:bible_studies_wing/src/resources/values_manager.dart';
-import 'package:bible_studies_wing/src/screens/home/components/curved.clip.dart';
 import 'package:flutter/material.dart';
 
 class CurvedScaffold extends StatelessWidget {
@@ -10,9 +8,15 @@ class CurvedScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CurvedAppBar(
-        height: Spacing.s90,
-        title: title,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+          )
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(

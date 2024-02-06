@@ -1,5 +1,6 @@
 import 'package:bible_studies_wing/src/screens/about_us/about.us.screen.dart';
 import 'package:bible_studies_wing/src/screens/auth/membership.form.screen.dart';
+import 'package:bible_studies_wing/src/screens/gallery/gallery.screen.dart';
 import 'package:bible_studies_wing/src/screens/home/home.screen.dart';
 import 'package:bible_studies_wing/src/screens/lesson/lesson_creator.dart';
 import 'package:bible_studies_wing/src/screens/lesson/lesson_detail.dart';
@@ -25,6 +26,7 @@ class Routes {
   static const String livingStreamRoute = '/living-stream';
   static const String myPeopleRoute = '/my-people';
   static const String programOutlineRoute = '/program-outline';
+  static const String galleryRoute = '/gallery';
 
   // lesson
   static const String lessonCreatorRoute = '/lesson-creator';
@@ -32,10 +34,10 @@ class Routes {
 }
 
 List<GetPage> getRoutes() => [
-    // auth
+      // auth
       GetPage(name: Routes.splashRoute, page: () => const SplashScreen()),
-      GetPage(name: Routes.membershipFormRoute, page: ( ) =>  MemberRegistrationForm()),
-      GetPage(name: Routes.memberProfileRoute, page: () =>  MemberProfileScreen()),
+      GetPage(name: Routes.membershipFormRoute, page: () => MemberRegistrationForm()),
+      GetPage(name: Routes.memberProfileRoute, page: () => MemberProfileScreen()),
       // GetPage(name: Routes.settingsRoute, page: ()=> SettingsScreen(controller: controller))
 
       // home
@@ -46,8 +48,9 @@ List<GetPage> getRoutes() => [
       GetPage(name: Routes.myPeopleRoute, page: () => const MyPeopleScreen()),
       GetPage(name: Routes.programOutlineRoute, page: () => const ProgramOutlineScreen()),
       GetPage(name: Routes.registerRoute, page: () => const RegisterScreen()),
+      GetPage(name: Routes.galleryRoute, page: () => const GalleryScreen()),
 
       // lesson
-      GetPage(name: Routes.lessonCreatorRoute, page: () =>  const LessonCreatorScreen()),
-      GetPage(name: Routes.lessonDetailRoute, page: () =>  LessonDetailScreen()),
+      GetPage(name: Routes.lessonCreatorRoute, page: () => const LessonCreatorScreen()),
+      GetPage(name: Routes.lessonDetailRoute, page: () => LessonDetailScreen()),
     ];

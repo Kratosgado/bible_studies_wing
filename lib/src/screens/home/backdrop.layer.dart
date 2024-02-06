@@ -31,10 +31,10 @@ BackgroundImage backDropLayer() {
           title: const Text('Register a Member'),
           onTap: () => Get.toNamed(Routes.registerRoute),
         ),
-        const ListTile(
-          leading: Icon(Icons.picture_in_picture),
-          title: Text('Gallery'),
-          // TODO: Add gallery route
+        ListTile(
+          leading: const Icon(Icons.picture_in_picture),
+          title: const Text('Gallery'),
+          onTap: () => Get.toNamed(Routes.galleryRoute),
         ),
         ListTile(
           leading: const Icon(Icons.info_rounded),

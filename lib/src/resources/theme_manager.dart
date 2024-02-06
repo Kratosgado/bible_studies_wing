@@ -32,11 +32,10 @@ ThemeData getApplicationTheme() {
         elevation: Spacing.s8,
       ),
       // App bar theme
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         color: Colors.transparent,
-        foregroundColor: ColorManager.bgColor,
+        foregroundColor: Colors.white,
         elevation: Spacing.s8,
-        shadowColor: Colors.blue.shade400,
       ),
       // Button theme
       buttonTheme: ButtonThemeData(

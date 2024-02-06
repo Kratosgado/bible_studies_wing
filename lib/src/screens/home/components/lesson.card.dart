@@ -1,5 +1,6 @@
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/comment.sheet.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,10 +18,14 @@ Widget lessonCard(BuildContext context, Lesson lesson, String currentUserProfile
           child: SizedBox(
             height: 220,
             width: 350,
-            child: Image.network(
-              lesson.imageUrl,
-              // loadingBuilder: (context, _, __) => const CircularProgressIndicator(),
-              // errorBuilder: (context, url, error) => const Icon(Icons.error),
+            child: CachedNetworkImage(
+              imageUrl: lesson.imageUrl,
+              progressIndicatorBuilder: (context, _, downloadProgress) {
+                return Center(
+                  child: CircularProgressIndicator(value: downloadProgress.progress),
+                );
+              },
+              errorWidget: (context, url, error) => const Icon(Icons.error),
               fit: BoxFit.cover,
             ),
           ),

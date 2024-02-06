@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,10 @@ class GalleryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Gallery')),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('images').snapshots(),
+    return CurvedScaffold(
+      title: 'Gallery',
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('gallery').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const CircularProgressIndicator();
           return GridView.builder(
@@ -28,7 +29,11 @@ class GalleryScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ImageScreen(snapshot.data?.docs[index]['url']))),
-                  child: Image.network(snapshot.data?.docs[index]['url']),
+                  child: CachedNetworkImage(
+                    imageUrl: snapshot.data?.docs[index]['url'],
+                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
                 ),
               );
             },

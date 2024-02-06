@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -21,12 +22,18 @@ class LessonDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Image.network(
-                    lesson.imageUrl,
-                    errorBuilder: (context, url, error) => const Icon(Icons.error),
-                    fit: BoxFit.cover,
-                  )),
+                padding: const EdgeInsets.all(8),
+                child: CachedNetworkImage(
+                  imageUrl: lesson.imageUrl,
+                  progressIndicatorBuilder: (context, _, downloadProgress) {
+                    return Center(
+                      child: CircularProgressIndicator(value: downloadProgress.progress),
+                    );
+                  },
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                ),
+              ),
               Text(
                 'Subtopic: ${lesson.subtopic}',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

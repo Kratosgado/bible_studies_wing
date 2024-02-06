@@ -13,13 +13,14 @@ class CurvedAppBar extends StatelessWidget implements PreferredSizeWidget {
       painter: CurvedPainter(),
       child: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
         elevation: 0,
         actions: [
-            TextButton(
-              onPressed: () {},
-              child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-            )
-          ],
+          TextButton(
+            onPressed: () {},
+            child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+          )
+        ],
       ),
     );
   }
