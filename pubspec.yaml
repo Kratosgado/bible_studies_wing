@@ -53,3 +53,7 @@ flutter:
     - assets/images/googleimage.png
     - assets/images/bslogo.jpg
     - assets/images/background.png
+
+    # icons
+    - assets/icons/megaphone.png
+    - assets/icons/meeting.png
