@@ -12,17 +12,15 @@ environment:
 dependencies:
   cached_network_image:
   json_annotation: ^4.8.1
-  cloud_firestore: ^4.8.3
   shared_preferences: ^2.0.8
   expandable: ^5.0.1
-  firebase_auth: ^4.7.0
-  firebase_core: ^2.15.0
+  # firebase_auth: ^4.7.0
+  # firebase_core: ^2.15.0
   firebase_storage: ^11.2.5
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
   flutter_quill: ^9.2.5
-  flutter_riverpod: ^2.3.6
   google_sign_in: ^6.1.4
   image_picker: ^1.0.1
   intl: ^0.18.1
@@ -32,6 +30,10 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   backdrop: ^0.9.1
   get_storage: ^2.1.1
+  cloud_firestore:
+  firebase_auth: ^4.17.3
+  firebase_core: ^2.25.3
+  path_provider:
 
 dev_dependencies:
   flutter_test:

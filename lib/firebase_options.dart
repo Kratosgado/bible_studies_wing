@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93150933206',
     projectId: 'biblestudywing-32f3b',
     storageBucket: 'biblestudywing-32f3b.appspot.com',
+    androidClientId: '93150933206-0lin8ti09tvaf457kmt5urj5reegh4u9.apps.googleusercontent.com',
     iosClientId: '93150933206-5chpp3g7n6qf6gdt2u58820b2ln486ij.apps.googleusercontent.com',
     iosBundleId: 'com.example.bibleStudiesWing',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '93150933206',
     projectId: 'biblestudywing-32f3b',
     storageBucket: 'biblestudywing-32f3b.appspot.com',
+    androidClientId: '93150933206-0lin8ti09tvaf457kmt5urj5reegh4u9.apps.googleusercontent.com',
     iosClientId: '93150933206-sa89gmmbb1ubgpn8deqoim3fo9dcpp91.apps.googleusercontent.com',
     iosBundleId: 'com.example.bibleStudiesWing.RunnerTests',
   );
