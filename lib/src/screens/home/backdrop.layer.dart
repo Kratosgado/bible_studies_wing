@@ -1,8 +1,9 @@
-import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/background.image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:bible_studies_wing/src/functions.dart' show handleSignout;
 
 BackgroundImage backDropLayer() {
   return BackgroundImage(
@@ -43,7 +44,7 @@ BackgroundImage backDropLayer() {
         ListTile(
           leading: const Icon(Icons.logout),
           title: const Text('Logout'),
-          onTap: () => Get.toNamed(Routes.registerRoute),
+          onTap: () async => await handleSignout(),
         ),
       ],
     ),

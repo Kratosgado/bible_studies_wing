@@ -24,19 +24,6 @@ class LessonDetailScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   child: Image.network(
                     lesson.imageUrl,
-                    loadingBuilder: (context, url, imageChunkEvent) {
-                      if (imageChunkEvent == null) {
-                        return const CircularProgressIndicator();
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: imageChunkEvent.expectedTotalBytes != null
-                              ? imageChunkEvent.cumulativeBytesLoaded /
-                                  imageChunkEvent.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    },
                     errorBuilder: (context, url, error) => const Icon(Icons.error),
                     fit: BoxFit.cover,
                   )),

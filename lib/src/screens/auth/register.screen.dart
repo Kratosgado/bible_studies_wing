@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
 
 import '../../functions.dart';
@@ -11,11 +12,9 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final appState = ref.read(applicationState.notifier);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register A Member"),
-      ),
-      body: SizedBox(
+    return CurvedScaffold(
+      title: "Register a Member",
+      child: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Card(

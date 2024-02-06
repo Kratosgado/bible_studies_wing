@@ -14,7 +14,8 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 Future handleSignout() async {
   await auth.signOut();
   await googleSignIn.signOut();
-  await googleSignIn.disconnect();
+  // await googleSignIn.disconnect();
+  await Get.offNamed(Routes.registerRoute);
 }
 
 void signInWithGoogle() async {
