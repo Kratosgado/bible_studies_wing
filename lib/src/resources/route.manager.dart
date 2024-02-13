@@ -10,6 +10,8 @@ import 'package:bible_studies_wing/src/screens/my_people/my_people.dart';
 import 'package:bible_studies_wing/src/screens/program_outline/program_outline.dart';
 import 'package:bible_studies_wing/src/screens/auth/register.screen.dart';
 import 'package:bible_studies_wing/src/screens/splash/splash.dart';
+import 'package:bible_studies_wing/src/screens/todays_event/add.todays.event.dart';
+import 'package:bible_studies_wing/src/screens/todays_event/todays.event.dart';
 import 'package:get/get.dart';
 
 class Routes {
@@ -31,6 +33,10 @@ class Routes {
   // lesson
   static const String lessonCreatorRoute = '/lesson-creator';
   static const String lessonDetailRoute = '/lesson-detail';
+
+  // today's event
+  static const String todaysEventRoute = '/todays-event';
+  static const String addtodaysEventRoute = '/add-todays-event';
 }
 
 List<GetPage> getRoutes() => [
@@ -53,4 +59,8 @@ List<GetPage> getRoutes() => [
       // lesson
       GetPage(name: Routes.lessonCreatorRoute, page: () => const LessonCreatorScreen()),
       GetPage(name: Routes.lessonDetailRoute, page: () => LessonDetailScreen()),
+
+      // today's event
+      GetPage(name: Routes.todaysEventRoute, page: () =>  TodayEventScreen()),
+      GetPage(name: Routes.addtodaysEventRoute, page: () => const AddEventScreen()),
     ];

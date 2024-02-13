@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/data/models/lesson.dart';
 import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/lesson.card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -84,20 +85,25 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: ColorManager.faintWhite,
-                borderRadius: BorderRadius.circular(Spacing.s16),
-              ),
-              width: Get.width * 0.4 + Spacing.s16,
-              height: Get.height * 0.25,
-              child: Center(
-                child: ImageIcon(
-                  const AssetImage(
-                    IconAssets.meeting,
+            InkResponse(
+              onTap: () {
+                Get.toNamed(Routes.todaysEventRoute);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorManager.faintWhite,
+                  borderRadius: BorderRadius.circular(Spacing.s16),
+                ),
+                width: Get.width * 0.4 + Spacing.s16,
+                height: Get.height * 0.25,
+                child: Center(
+                  child: ImageIcon(
+                    const AssetImage(
+                      IconAssets.meeting,
+                    ),
+                    color: ColorManager.deepBblue,
+                    size: Spacing.s100,
                   ),
-                  color: ColorManager.deepBblue,
-                  size: Spacing.s100,
                 ),
               ),
             ),
