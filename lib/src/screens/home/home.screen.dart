@@ -1,8 +1,6 @@
-import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/backdrop.layer.dart';
-import 'package:bible_studies_wing/src/screens/home/components/background.image.dart';
 import 'package:bible_studies_wing/src/screens/home/front.layer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

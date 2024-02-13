@@ -25,6 +25,11 @@ ThemeData getApplicationTheme() {
       scaffoldBackgroundColor: Colors.transparent,
       // will be used incase of disabled button for example
       // card view theme
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: ColorManager.deepBblue,
+        splashColor: Colors.blueAccent.shade400,
+        foregroundColor: Colors.white,
+      ),
       cardTheme: CardTheme(
         color: ColorManager.faintWhite,
         // shadowColor: ColorManager.deepBblue,

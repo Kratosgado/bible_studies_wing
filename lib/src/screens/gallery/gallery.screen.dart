@@ -4,6 +4,8 @@ import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.d
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -13,34 +15,56 @@ class GalleryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedScaffold(
-      title: 'Gallery',
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('gallery').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return const CircularProgressIndicator();
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-            itemCount: snapshot.data?.docs.length,
-            itemBuilder: (context, index) {
-              return Hero(
-                tag: snapshot.data?.docs[index]['url'],
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ImageScreen(snapshot.data?.docs[index]['url']))),
-                  child: CachedNetworkImage(
-                    imageUrl: snapshot.data?.docs[index]['url'],
-                    placeholder: (context, url) => const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+        title: 'Gallery',
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () async {
+            // select multiple images and upload to firestore
+            final picker = ImagePicker();
+            final pickedFile = await picker.pickMultiImage();
+            if (pickedFile.isNotEmpty) {
+              for (var image in pickedFile) {
+                var file = File(image.path);
+                var ref = FirebaseStorage.instance.ref().child(image.path);
+                await ref.putFile(file);
+                var url = await ref.getDownloadURL();
+                await FirebaseFirestore.instance.collection('gallery').add({'url': url});
+              }
+            }
+          },
+        ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('gallery').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (context, index) {
+                final imageUrl = snapshot.data?.docs[index]['url'] as String;
+                return Hero(
+                  tag: imageUrl,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => ImageScreen(imageUrl))),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      filterQuality: FilterQuality.medium,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
+                );
+              },
+            );
+          },
+        ));
   }
 }
 
@@ -51,25 +75,28 @@ class ImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Image')),
-      body: Center(
-        child: Hero(
-          tag: url,
-          child: Image.network(url),
-        ),
-      ),
+    return CurvedScaffold(
+      title: 'Image',
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.download),
         onPressed: () async {
-          var ref = FirebaseStorage.instance.ref().child(url);
+          var ref = FirebaseStorage.instance.refFromURL(url);
           var bytes = await ref.getData();
-          var dir = await path_provider.getApplicationDocumentsDirectory();
-          File file = File('${dir.path}/image.jpg');
+          var dir = await path_provider.getExternalStorageDirectory();
+          debugPrint('dir: $dir');
+          File file = File('${dir!.path}/${ref.name}.jpg');
           await file.writeAsBytes(bytes!);
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Image downloaded')));
+          Get.snackbar('Download', 'Image downloaded');
         },
+      ),
+      child: Center(
+        child: Hero(
+          tag: url,
+          child: CachedNetworkImage(
+            imageUrl: url,
+            filterQuality: FilterQuality.high,
+          ),
+        ),
       ),
     );
   }

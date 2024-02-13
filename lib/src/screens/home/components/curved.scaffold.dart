@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class CurvedScaffold extends StatelessWidget {
   final Widget child;
   final String title;
-  const CurvedScaffold({super.key, required this.child, required this.title});
+  final FloatingActionButton? floatingActionButton;
+  const CurvedScaffold(
+      {super.key, required this.child, required this.title, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class CurvedScaffold extends StatelessWidget {
         ),
         child: child,
       ),
+      floatingActionButton: floatingActionButton,
     );
   }
 }

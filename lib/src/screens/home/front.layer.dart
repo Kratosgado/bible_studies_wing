@@ -1,4 +1,5 @@
 import 'package:bible_studies_wing/src/data/models/lesson.dart';
+import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/lesson.card.dart';
@@ -59,6 +60,27 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
         const SizedBox(
           height: Spacing.s16,
         ),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Today's Event",
+              style: TextStyle(
+                fontSize: Spacing.s20,
+                fontWeight: FontWeight.bold,
+                color: ColorManager.darkColor,
+              ),
+            ),
+            Text(
+              "Announcement",
+              style: TextStyle(
+                fontSize: Spacing.s20,
+                fontWeight: FontWeight.bold,
+                color: ColorManager.darkColor,
+              ),
+            ),
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -69,13 +91,13 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
               ),
               width: Get.width * 0.4 + Spacing.s16,
               height: Get.height * 0.25,
-              child: const Text(
-                "Tuesday's Event",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: Spacing.s20,
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.darkColor,
+              child: Center(
+                child: ImageIcon(
+                  const AssetImage(
+                    IconAssets.meeting,
+                  ),
+                  color: ColorManager.deepBblue,
+                  size: Spacing.s100,
                 ),
               ),
             ),
@@ -86,13 +108,13 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
               ),
               width: Get.width * 0.4 + Spacing.s16,
               height: Get.height * 0.25,
-              child: const Text(
-                "Announcement",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: Spacing.s20,
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.darkColor,
+              child: Center(
+                child: ImageIcon(
+                  const AssetImage(
+                    IconAssets.megaphone,
+                  ),
+                  color: ColorManager.deepBblue,
+                  size: Spacing.s100,
                 ),
               ),
             ),
