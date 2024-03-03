@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 part 'member.g.dart';
 
 @JsonSerializable()
-
 class Member {
   final String id;
   final String photoUrl;
@@ -28,17 +27,16 @@ class Member {
   });
 
   // Method to convert Member object to a Map (for Firestore)
-  Map<String, dynamic> toJson()  => _$MemberToJson(this);
-  factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
+  Map<String, dynamic> toJson( {bool convert= true}) => _$MemberToJson(this, convert);
+  factory Member.fromJson(Map<String, dynamic> json, {converted = false}) => _$MemberFromJson(json, converted);
 }
-
 
 class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
   const TimestampConverter();
 
   @override
   DateTime fromJson(Timestamp timestamp) {
-    return timestamp.toDate();
+    return DateTime.parse(timestamp.toDate().toString());
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AppPreferences {
@@ -12,12 +13,12 @@ class AppPreferences {
   }
 
   Future<void> setCurrentMember(Member member) async {
-    await storage.write('currentMember', member.toJson());
+    await storage.write('currentMember', member.toJson(convert: false));
   }
 
   Member getCurrentMember() {
     final member = storage.read('currentMember');
-    return Member.fromJson(member);
+    return Member.fromJson(member, converted: true);
   }
 
   Future<void> login() async {

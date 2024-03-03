@@ -6,23 +6,22 @@ part of 'member.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Member _$MemberFromJson(Map<String, dynamic> json) => Member(
+Member _$MemberFromJson(Map<String, dynamic> json, bool converted) => Member(
       id: json['id'] as String,
       photoUrl: json['photoUrl'] as String,
       name: json['name'] as String,
-      birthdate:
-          const TimestampConverter().fromJson(json['birthdate'] as Timestamp),
+      birthdate: !converted ? const TimestampConverter().fromJson(json['birthdate'] as Timestamp) : DateTime.parse(json['birthdate'] as String),
       contact: json['contact'] as String,
       programme: json['programme'] as String,
       hall: json['hall'] as String,
       executive: json['executive'] as bool,
     );
 
-Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
+Map<String, dynamic> _$MemberToJson(Member instance, bool convert) => <String, dynamic>{
       'id': instance.id,
       'photoUrl': instance.photoUrl,
       'name': instance.name,
-      'birthdate': const TimestampConverter().toJson(instance.birthdate),
+      'birthdate': convert ? const TimestampConverter().toJson(instance.birthdate) : instance.birthdate.toString(),
       'contact': instance.contact,
       'programme': instance.programme,
       'hall': instance.hall,

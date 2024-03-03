@@ -49,7 +49,7 @@ class AuthController extends GetxController {
           return;
         }
         // update our shared preferences
-        await AppService.preferences.login();
+        await AppService.preferences.login().then((_) async => await Get.put(AppService()).init());
         await Get.offNamed(Routes.homeRoute);
         return;
       }

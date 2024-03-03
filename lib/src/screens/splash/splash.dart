@@ -26,7 +26,7 @@ class _SplashViewState extends State<SplashScreen> {
   goNext() async {
     AppService.preferences.isUserLoggedIn().then((value) async => {
           if (value)
-            {await Get.put(AppService()).init(), Get.offNamed(Routes.homeRoute)}
+            {await Get.put(AppService()).init().then((_) async => await Get.offNamed(Routes.homeRoute))}
           else
             {Get.offNamed(Routes.registerRoute)}
         });
