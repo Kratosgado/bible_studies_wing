@@ -17,7 +17,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
       .limit(1)
       .get();
   return Padding(
-    padding: const EdgeInsets.all(Spacing.s16),
+    padding: const EdgeInsets.symmetric(horizontal: Spacing.s16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -107,20 +107,23 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
                 ),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: ColorManager.faintWhite,
-                borderRadius: BorderRadius.circular(Spacing.s16),
-              ),
-              width: Get.width * 0.4 + Spacing.s16,
-              height: Get.height * 0.25,
-              child: Center(
-                child: ImageIcon(
-                  const AssetImage(
-                    IconAssets.megaphone,
+            InkResponse(
+              onTap: () => Get.toNamed(Routes.announcementRoute),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorManager.faintWhite,
+                  borderRadius: BorderRadius.circular(Spacing.s16),
+                ),
+                width: Get.width * 0.4 + Spacing.s16,
+                height: Get.height * 0.25,
+                child: Center(
+                  child: ImageIcon(
+                    const AssetImage(
+                      IconAssets.megaphone,
+                    ),
+                    color: ColorManager.deepBblue,
+                    size: Spacing.s100,
                   ),
-                  color: ColorManager.deepBblue,
-                  size: Spacing.s100,
                 ),
               ),
             ),

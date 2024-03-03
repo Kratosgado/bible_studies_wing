@@ -1,4 +1,6 @@
 import 'package:bible_studies_wing/src/screens/about_us/about.us.screen.dart';
+import 'package:bible_studies_wing/src/screens/announcement/add.announce.dart';
+import 'package:bible_studies_wing/src/screens/announcement/announcement.screen.dart';
 import 'package:bible_studies_wing/src/screens/auth/membership.form.screen.dart';
 import 'package:bible_studies_wing/src/screens/gallery/gallery.screen.dart';
 import 'package:bible_studies_wing/src/screens/home/home.screen.dart';
@@ -37,6 +39,10 @@ class Routes {
   // today's event
   static const String todaysEventRoute = '/todays-event';
   static const String addtodaysEventRoute = '/add-todays-event';
+
+  // announcement
+  static const String announcementRoute = "/announcemtent";
+  static const String addAnnouncementRoute = "/add-announcement";
 }
 
 List<GetPage> getRoutes() => [
@@ -61,6 +67,11 @@ List<GetPage> getRoutes() => [
       GetPage(name: Routes.lessonDetailRoute, page: () => LessonDetailScreen()),
 
       // today's event
-      GetPage(name: Routes.todaysEventRoute, page: () =>  const TodayEventScreen()),
+      GetPage(name: Routes.todaysEventRoute, page: () => const TodayEventScreen()),
       GetPage(name: Routes.addtodaysEventRoute, page: () => const AddEventScreen()),
+
+      // announcement
+      GetPage(name: Routes.announcementRoute, page: () => const AnnouncementScreen()),
+      GetPage(name: Routes.addAnnouncementRoute, page: () => const AddAnnouncementScreen()),
+
     ];

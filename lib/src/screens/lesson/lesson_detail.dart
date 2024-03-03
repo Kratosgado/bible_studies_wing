@@ -62,7 +62,7 @@ class LessonDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Date: ${lesson.date.toLocal().toString()}',
+                'Date: ${lesson.formatDate()}',
                 style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
               ),
             ],

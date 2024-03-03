@@ -46,13 +46,13 @@ ThemeData getApplicationTheme() {
       buttonTheme: ButtonThemeData(
         shape: const StadiumBorder(),
         disabledColor: Colors.grey,
-        buttonColor: Colors.blueAccent.shade400,
+        buttonColor: ColorManager.deepBblue,
       ),
 
       // elevated button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent.shade400,
+            backgroundColor: ColorManager.deepBblue,
             foregroundColor: Colors.white,
             shape: const StadiumBorder(),
             splashFactory: InkSparkle.splashFactory),

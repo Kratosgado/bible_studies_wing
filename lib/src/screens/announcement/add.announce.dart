@@ -9,29 +9,25 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'dart:io';
 
-class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({super.key});
+class AddAnnouncementScreen extends StatefulWidget {
+  const AddAnnouncementScreen({super.key});
 
   @override
   AddEventScreenState createState() => AddEventScreenState();
 }
 
-class AddEventScreenState extends State<AddEventScreen> {
+class AddEventScreenState extends State<AddAnnouncementScreen> {
   final QuillController _controller = QuillController.basic();
-  File? _image;
 
   @override
   Widget build(BuildContext context) {
     return CurvedScaffold(
-      title: 'Add Event',
-      child: Column(
-        children: [
-          ElevatedButton(
-            onPressed: getImage,
-            child: const Text('Select Image'),
-          ),
-          _image == null ? const Text('No image selected.') : Image.file(_image!),
-          Expanded(
+      title: 'Add Announcement',
+        floatingActionButton: FloatingActionButton(   
+          onPressed: uploadAnnouncement,
+          child: const Icon(Icons.upload),
+        ),
+      child: Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: QuillEditor.basic(
@@ -55,40 +51,12 @@ class AddEventScreenState extends State<AddEventScreen> {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: submit,
-            child: const Text('Submit'),
-          ),
-        ],
-      ),
     );
   }
 
-  Future getImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        debugPrint('No image selected.');
-      }
-    });
-  }
-
-  Future<String> uploadImage() async {
-    Reference ref =
-        FirebaseStorage.instance.ref().child('events/${DateTime.now().toIso8601String()}.jpg');
-    if (_image == null) return '';
-    await ref.putFile(_image!);
-    return await ref.getDownloadURL();
-  }
-
-  void submit() async {
-    String imageUrl = await uploadImage();
-    FirebaseFirestore.instance.collection('events').add({
+  void uploadAnnouncement() async {
+    FirebaseFirestore.instance.collection('announcement').add({
       'date': DateTime.now(),
-      'image': imageUrl,
       'body': _controller.document.toPlainText(),
     }).then((value) => Get.offNamed(Routes.todaysEventRoute));
   }
