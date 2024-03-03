@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,9 +24,12 @@ class _SplashViewState extends State<SplashScreen> {
   }
 
   goNext() async {
-    FirebaseAuth.instance.currentUser != null
-        ? Get.offNamed(Routes.homeRoute)
-        : Get.offNamed(Routes.registerRoute);
+    AppService.preferences.isUserLoggedIn().then((value) async => {
+          if (value)
+            {await Get.put(AppService()).init(), Get.offNamed(Routes.homeRoute)}
+          else
+            {Get.offNamed(Routes.registerRoute)}
+        });
   }
 
   @override

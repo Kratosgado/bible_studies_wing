@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -234,6 +235,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             .collection('members')
             .doc(widget.user.uid)
             .set(newMember.toJson())
+            .then((_) => AppService.preferences.login())
             .then((_) => Get.offNamed(Routes.memberProfileRoute, arguments: newMember));
       }
     }

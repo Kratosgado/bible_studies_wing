@@ -1,30 +1,38 @@
 import 'package:bible_studies_wing/src/data/models/member.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AppPreferences {
-  final SharedPreferences _preferences;
-  AppPreferences(this._preferences);
+  final GetStorage storage = GetStorage();
+  AppPreferences();
 
-  static Future<AppPreferences> get instance async => await getInstance();
-
-  static Future<AppPreferences> getInstance() async {
-    final preferences = await SharedPreferences.getInstance();
-    return AppPreferences(preferences);
-  }
-
-  bool isUserLoggedIn() {
-    return _preferences.getBool('isUserLoggedIn') ?? false;
+  Future<bool> isUserLoggedIn() async {
+    return storage.read('isUserLoggedIn') ?? false;
   }
 
   Future<void> setCurrentMember(Member member) async {
-    await _preferences.setString('currentMember', member.toJson().toString());
+    await storage.write('currentMember', member.toJson());
   }
 
-  Future<void> setUserLoggedIn(bool value) async {
-    await _preferences.setBool('isUserLoggedIn', value);
+  Member getCurrentMember() {
+    final member = storage.read('currentMember');
+    return Member.fromJson(member);
+  }
+
+  Future<void> login() async {
+    final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+
+    // Get member data from firestore
+    final getCurrentUser =
+        await FirebaseFirestore.instance.collection('members').doc(currentUserUid).get();
+    final member = Member.fromJson(getCurrentUser.data()!);
+    await setCurrentMember(member);
+
+    await storage.write('isUserLoggedIn', true);
   }
 
   Future<void> logout() async {
-    await _preferences.setBool('isUserLoggedIn', false);
+    await storage.write('isUserLoggedIn', false);
   }
 }

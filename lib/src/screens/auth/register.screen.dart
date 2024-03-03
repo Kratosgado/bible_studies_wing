@@ -1,16 +1,17 @@
+import 'package:bible_studies_wing/src/data/network/auth.controller.dart';
 import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
-
-import '../../functions.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(AuthController());
     // final appState = ref.read(applicationState.notifier);
     return CurvedScaffold(
       title: "Register a Member",
@@ -61,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
                     ],
                   ),
                   onPressed: () {
-                    signInWithGoogle();
+                    AuthController.to.signInWithGoogle();
                     // appState.signInWithGoogle(context);
                   },
                 ),

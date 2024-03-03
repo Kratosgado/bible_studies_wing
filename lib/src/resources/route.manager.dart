@@ -47,7 +47,7 @@ List<GetPage> getRoutes() => [
       // GetPage(name: Routes.settingsRoute, page: ()=> SettingsScreen(controller: controller))
 
       // home
-      GetPage(name: Routes.homeRoute, page: () => HomeScreen()),
+      GetPage(name: Routes.homeRoute, page: () => const HomeScreen()),
 
       GetPage(name: Routes.aboutUsRoute, page: () => const AboutUsScreen()),
       GetPage(name: Routes.livingStreamRoute, page: () => const LivingStreamScreen()),
@@ -61,6 +61,6 @@ List<GetPage> getRoutes() => [
       GetPage(name: Routes.lessonDetailRoute, page: () => LessonDetailScreen()),
 
       // today's event
-      GetPage(name: Routes.todaysEventRoute, page: () =>  TodayEventScreen()),
+      GetPage(name: Routes.todaysEventRoute, page: () =>  const TodayEventScreen()),
       GetPage(name: Routes.addtodaysEventRoute, page: () => const AddEventScreen()),
     ];
