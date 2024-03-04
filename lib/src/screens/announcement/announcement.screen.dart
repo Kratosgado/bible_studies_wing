@@ -20,20 +20,22 @@ class AnnouncementScreen extends StatelessWidget {
               child: const Icon(Icons.announcement),
             )
           : null,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('announcement').snapshots(),
+      child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        future: FirebaseFirestore.instance.collection('announcement').orderBy('date', descending: true).limit(1).get(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const CircularProgressIndicator();
+          if (!snapshot.hasData) return const Center(child:  CircularProgressIndicator());
           if (snapshot.data!.docs.isEmpty) {
             return Center(
                 child: Text('No announcement today.',
                     style: TextStyle(fontSize: 20, color: ColorManager.deepBblue)));
           }
-          var announcement = snapshot.data?.docs[0];
+          var announcement = snapshot.data?.docs[0].data();
           final doc = Document.fromJson(announcement?['body']);
           return Column(
             children: [
+              Text("Date: ${AppService.formatDate(DateTime.parse(announcement?['date']))}"),
               Expanded(
+                
                 child: QuillEditor.basic(
                   configurations: QuillEditorConfigurations(
                     controller: QuillController(

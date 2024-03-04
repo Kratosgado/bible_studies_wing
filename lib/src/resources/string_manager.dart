@@ -54,38 +54,3 @@ class AppStrings {
   static const String cacheError = "cache_error";
   static const String noInternetError = "no_internet_error";
 }
-
-class ServerStrings {
-  // Auth
-  static const String signup = '$BASEURL/auth/signup';
-  static const String login = '$BASEURL/auth/login';
-
-  // User
-  static const String getUsers = '$BASEURL/user/findall';
-  static const String getMe = '$BASEURL/user/me';
-  static const String getUser = '$BASEURL/user/find';
-  static const String updateUser = '$BASEURL/user/update';
-  static const String updateProfilePicture = '$BASEURL/user/updateProfilePic';
-  static const String getProfilePic = '$BASEURL/user/getProfilePic';
-  static const String deleteUser = '$BASEURL/user/delete';
-
-  // Chat
-  static const String findAllChats = 'findAllChats';
-  static const String returningChats = 'returningChats';
-
-  static const String findOneChat = 'findOneChat';
-  static const String returningChat = 'returningChat';
-
-  static const String createChat = 'createChat';
-  static const String chatCreated = 'chatCreated';
-
-  static const String deleteChat = 'deleteChat';
-  static const String chatDeleted = 'chatDeleted';
-
-  static const String newMessage = 'newMessage';
-  static const String messageDelivered = 'messageDelivered';
-
-  static const String sendMessage = 'sendMessage';
-
-  static const String deleteSocketMessage = 'deleteSocketMessage';
-}

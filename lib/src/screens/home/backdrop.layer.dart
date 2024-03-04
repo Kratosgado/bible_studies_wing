@@ -28,11 +28,6 @@ BackgroundImage backDropLayer() {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.local_post_office_sharp),
-          title: const Text('Register a Member'),
-          onTap: () => Get.toNamed(Routes.registerRoute),
-        ),
-        ListTile(
           leading: const Icon(Icons.picture_in_picture),
           title: const Text('Gallery'),
           onTap: () => Get.toNamed(Routes.galleryRoute),

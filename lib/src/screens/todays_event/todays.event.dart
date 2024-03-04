@@ -21,20 +21,21 @@ class TodayEventScreen extends StatelessWidget {
               child: const Icon(Icons.event),
             )
           : null,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('events').snapshots(),
+      child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        future: FirebaseFirestore.instance.collection('events').orderBy('date', descending: true).limit(1).get(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const CircularProgressIndicator();
+          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
           if (snapshot.data!.docs.isEmpty) {
             return Center(
                 child: Text('No events today.',
                     style: TextStyle(fontSize: 20, color: ColorManager.deepBblue)));
           }
-          var event = snapshot.data?.docs[0];
-          final doc = Document.fromJson(event?['body']);
+          var event = snapshot.data!.docs[0].data();
+          final doc = Document.fromJson(event['body']);
           return Column(
             children: [
-              CachedNetworkImage(imageUrl: event?['image']),
+              CachedNetworkImage(imageUrl: event['image']),
+               Text("Date: ${AppService.formatDate(DateTime.parse(event['date']))}"),
               Expanded(
                 child: QuillEditor.basic(
                   configurations: QuillEditorConfigurations(

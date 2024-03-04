@@ -9,6 +9,7 @@ import 'package:bible_studies_wing/src/screens/lesson/lesson_detail.dart';
 import 'package:bible_studies_wing/src/screens/living_stream/living_stream.dart';
 import 'package:bible_studies_wing/src/screens/my_people/member_profile.dart';
 import 'package:bible_studies_wing/src/screens/my_people/my_people.dart';
+import 'package:bible_studies_wing/src/screens/program_outline/add.outline.dart';
 import 'package:bible_studies_wing/src/screens/program_outline/program_outline.dart';
 import 'package:bible_studies_wing/src/screens/auth/register.screen.dart';
 import 'package:bible_studies_wing/src/screens/splash/splash.dart';
@@ -29,8 +30,11 @@ class Routes {
   static const String aboutUsRoute = '/about-us';
   static const String livingStreamRoute = '/living-stream';
   static const String myPeopleRoute = '/my-people';
-  static const String programOutlineRoute = '/program-outline';
   static const String galleryRoute = '/gallery';
+
+  // program outline
+  static const String programOutlineRoute = '/program-outline';
+  static const String addProgramOutlineRoute = '/add-program-outline';
 
   // lesson
   static const String lessonCreatorRoute = '/lesson-creator';
@@ -58,9 +62,12 @@ List<GetPage> getRoutes() => [
       GetPage(name: Routes.aboutUsRoute, page: () => const AboutUsScreen()),
       GetPage(name: Routes.livingStreamRoute, page: () => const LivingStreamScreen()),
       GetPage(name: Routes.myPeopleRoute, page: () => const MyPeopleScreen()),
-      GetPage(name: Routes.programOutlineRoute, page: () => const ProgramOutlineScreen()),
       GetPage(name: Routes.registerRoute, page: () => const RegisterScreen()),
       GetPage(name: Routes.galleryRoute, page: () => const GalleryScreen()),
+
+      // program outline
+      GetPage(name: Routes.programOutlineRoute, page: () => const ProgramOutlineScreen()),
+      GetPage(name: Routes.addProgramOutlineRoute, page: () => AddProgramOutlineScreen()),
 
       // lesson
       GetPage(name: Routes.lessonCreatorRoute, page: () => const LessonCreatorScreen()),
@@ -72,6 +79,5 @@ List<GetPage> getRoutes() => [
 
       // announcement
       GetPage(name: Routes.announcementRoute, page: () => const AnnouncementScreen()),
-      GetPage(name: Routes.addAnnouncementRoute, page: () => const AddAnnouncementScreen()),
-
+      GetPage(name: Routes.addAnnouncementRoute, page: () => AddAnnouncementScreen()),
     ];

@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -62,7 +63,7 @@ class LessonDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Date: ${lesson.formatDate()}',
+                'Date: ${AppService.formatDate(lesson.date)}',
                 style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
               ),
             ],

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -15,6 +16,7 @@ void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
     enableDrag: true,
     context: context,
     builder: (BuildContext context) {
+      lesson.getComments();
       return Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -41,7 +43,9 @@ void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(currentUserProfile),
+                  backgroundImage: CachedNetworkImageProvider(
+                    currentUserProfile,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -70,8 +74,6 @@ void showCommentSheet(BuildContext context, Lesson lesson, currentUserProfile) {
                     );
 
                     lesson.saveComment(newComment);
-                    // Add any logic to save the comment and close the bottom sheet here
-                    Navigator.pop(context); // Close the bottom sheet
                   },
                   icon: const Icon(Icons.send),
                 ),

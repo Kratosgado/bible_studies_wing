@@ -85,7 +85,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkResponse(
+            GestureDetector(
               onTap: () {
                 Get.toNamed(Routes.todaysEventRoute);
               },
@@ -107,7 +107,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
                 ),
               ),
             ),
-            InkResponse(
+            GestureDetector(
               onTap: () => Get.toNamed(Routes.announcementRoute),
               child: Container(
                 decoration: BoxDecoration(

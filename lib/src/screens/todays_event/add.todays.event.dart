@@ -30,7 +30,12 @@ class AddEventScreenState extends State<AddEventScreen> {
             onPressed: getImage,
             child: const Text('Select Image'),
           ),
-          _image == null ? const Text('No image selected.') : Image.file(_image!),
+          _image == null
+              ? Text(
+                  'No image selected.',
+                  style: TextStyle(color: ColorManager.deepBblue),
+                )
+              : Image.file(_image!),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -87,9 +92,9 @@ class AddEventScreenState extends State<AddEventScreen> {
   void submit() async {
     String imageUrl = await uploadImage();
     FirebaseFirestore.instance.collection('events').add({
-      'date': DateTime.now(),
+      'date': DateTime.now().toString(),
       'image': imageUrl,
-      'body': _controller.document.toPlainText(),
+      'body': _controller.document.toDelta().toJson(),
     }).then((value) => Get.offNamed(Routes.todaysEventRoute));
   }
 }

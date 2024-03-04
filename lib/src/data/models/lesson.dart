@@ -35,7 +35,7 @@ class Lesson {
   final String imageUrl;
   @JsonKey(fromJson: dateTimeFromTimestamp, toJson: dateTimeAsIs)
   final DateTime date;
-  final List<Comment> comments = [];
+  List<Comment> comments = [];
 
   Lesson({
     required this.id,
@@ -51,7 +51,7 @@ class Lesson {
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
   Map<String, dynamic> toJson() => _$LessonToJson(this);
 
-  Future<List<Comment>> getComments() async {
+  Future<void> getComments() async {
     try {
       final commentsSnapshot = await FirebaseFirestore.instance
           .collection('lessons')
@@ -60,11 +60,9 @@ class Lesson {
           .get();
 
       final comments = commentsSnapshot.docs.map((doc) => Comment.fromJson(doc.data())).toList();
-
-      return comments;
+      this.comments = comments;
     } catch (e) {
       debugPrint('Error getting comments: $e');
-      return [];
     }
   }
 
@@ -75,31 +73,11 @@ class Lesson {
           .doc(id)
           .collection('comments')
           .doc(comment.id) // Use the comment's id as the document id in the subcollection
-          .set(comment.toJson());
-      await getComments();
+          .set(comment.toJson())
+          .then((_) => comments.add(comment));
     } catch (e) {
       debugPrint('Error saving comment: $e');
     }
-  }
-
-  String formatDate() {
-    String month = switch (date.month) {
-      DateTime.january => "January",
-      DateTime.february => "February",
-      DateTime.march => "March",
-      DateTime.april => "April",
-      DateTime.may => "May",
-      DateTime.june => "June",
-      DateTime.july => "July",
-      DateTime.august => "August",
-      DateTime.september => "September",
-      DateTime.october => "October",
-      DateTime.november => "November",
-      DateTime.december => "December",
-      _ => "",
-    };
-
-    return "$month ${date.day}, ${date.year}";
   }
 }
 
