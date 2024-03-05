@@ -109,6 +109,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
       'date': DateTime.now().toString(),
       'image': imageUrl,
       'body': _controller.document.toDelta().toJson(),
-    }).then((value) => Get.offNamed(Routes.todaysEventRoute));
+    }).then((value) => Get.offNamed(Routes.lessonDetailRoute));
   }
 }

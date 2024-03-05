@@ -4,7 +4,7 @@ import 'package:bible_studies_wing/src/screens/announcement/announcement.screen.
 import 'package:bible_studies_wing/src/screens/auth/membership.form.screen.dart';
 import 'package:bible_studies_wing/src/screens/gallery/gallery.screen.dart';
 import 'package:bible_studies_wing/src/screens/home/home.screen.dart';
-import 'package:bible_studies_wing/src/screens/lesson/lesson_creator.dart';
+import 'package:bible_studies_wing/src/screens/lesson/add.lesson.dart';
 import 'package:bible_studies_wing/src/screens/lesson/lesson_detail.dart';
 import 'package:bible_studies_wing/src/screens/living_stream/living_stream.dart';
 import 'package:bible_studies_wing/src/screens/my_people/member_profile.dart';
@@ -70,7 +70,7 @@ List<GetPage> getRoutes() => [
       GetPage(name: Routes.addProgramOutlineRoute, page: () => AddProgramOutlineScreen()),
 
       // lesson
-      GetPage(name: Routes.lessonCreatorRoute, page: () => const LessonCreatorScreen()),
+      GetPage(name: Routes.lessonCreatorRoute, page: () => const AddLessonScreen()),
       GetPage(name: Routes.lessonDetailRoute, page: () => LessonDetailScreen()),
 
       // today's event

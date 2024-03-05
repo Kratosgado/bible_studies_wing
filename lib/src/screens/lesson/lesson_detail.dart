@@ -39,12 +39,6 @@ class LessonDetailScreen extends StatelessWidget {
                 'Subtopic: ${lesson.subtopic}',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Anchor Scripture: ${lesson.anchorScripture}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
               const SizedBox(height: 16),
               QuillEditor(
                 focusNode: FocusNode(),

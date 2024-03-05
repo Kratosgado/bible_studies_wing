@@ -64,6 +64,7 @@ ThemeData getApplicationTheme() {
             fontWeight: FontWeight.bold,
           ),
           bodyMedium: TextStyle(color: ColorManager.deepBblue)),
+          
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
         prefixIconColor: Colors.blue.shade100,
@@ -72,14 +73,20 @@ ThemeData getApplicationTheme() {
         contentPadding: const EdgeInsets.all(Spacing.s20),
         // hint style
         iconColor: Colors.blue.shade200,
+        labelStyle: TextStyle(
+          color: ColorManager.deepBblue,
+        ),
+        
 
         // enabled border
         enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(80),
-            borderSide: BorderSide(color: Colors.teal.shade300)),
+          borderRadius: BorderRadius.circular(80),
+          borderSide: BorderSide(color: ColorManager.deepBblue),
+          
+        ),
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(80),
-            borderSide: BorderSide(color: Colors.teal.shade300)),
+            borderSide: BorderSide(color: ColorManager.deepBblue)),
         // focused border
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blue.shade500, width: Spacing.s1_5),
