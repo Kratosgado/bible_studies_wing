@@ -12,6 +12,7 @@ ThemeData getApplicationTheme() {
         // onSecondary: Colors.grey.shade400,
         tertiary: Colors.amber,
       ),
+      textTheme: const TextTheme(),
       // ripple color
       splashColor: Colors.teal,
       listTileTheme: ListTileThemeData(
@@ -23,8 +24,6 @@ ThemeData getApplicationTheme() {
         // shape: const StadiumBorder(),
       ),
       scaffoldBackgroundColor: Colors.transparent,
-      // will be used incase of disabled button for example
-      // card view theme
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: ColorManager.deepBblue,
         splashColor: Colors.blueAccent.shade400,
@@ -59,6 +58,12 @@ ThemeData getApplicationTheme() {
       ),
       // input decoration theme (text form field)
 
+      primaryTextTheme: TextTheme(
+          bodyLarge: TextStyle(
+            color: ColorManager.deepBblue,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyMedium: TextStyle(color: ColorManager.deepBblue)),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
         prefixIconColor: Colors.blue.shade100,
@@ -67,9 +72,6 @@ ThemeData getApplicationTheme() {
         contentPadding: const EdgeInsets.all(Spacing.s20),
         // hint style
         iconColor: Colors.blue.shade200,
-
-        // label style
-        // error style
 
         // enabled border
         enabledBorder: OutlineInputBorder(

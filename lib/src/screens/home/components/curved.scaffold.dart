@@ -4,8 +4,13 @@ class CurvedScaffold extends StatelessWidget {
   final Widget child;
   final String title;
   final FloatingActionButton? floatingActionButton;
+  final Widget? bottomNavigationBar;
   const CurvedScaffold(
-      {super.key, required this.child, required this.title, this.floatingActionButton});
+      {super.key,
+      required this.child,
+      required this.title,
+      this.floatingActionButton,
+      this.bottomNavigationBar});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,8 @@ class CurvedScaffold extends StatelessWidget {
         child: child,
       ),
       floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
+      resizeToAvoidBottomInset: false,
     );
   }
 }

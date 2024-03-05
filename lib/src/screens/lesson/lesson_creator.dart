@@ -92,8 +92,7 @@ class LessonCreatorScreenState extends State<LessonCreatorScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: anchorScriptureController,
-                  decoration:
-                      const InputDecoration(labelText: 'Anchor Scripture'),
+                  decoration: const InputDecoration(labelText: 'Anchor Scripture'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the anchor scripture';
@@ -115,14 +114,13 @@ class LessonCreatorScreenState extends State<LessonCreatorScreen> {
                 const SizedBox(height: 16),
                 const Text('Body'),
                 QuillToolbar.simple(
-                  configurations: QuillSimpleToolbarConfigurations(
-                      controller: bodyController),
+                  configurations: QuillSimpleToolbarConfigurations(controller: bodyController),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 600,
                   child: QuillEditor.basic(
-                    configurations: QuillEditorConfigurations(
-                        controller: bodyController, readOnly: true),
+                    configurations:
+                        QuillEditorConfigurations(controller: bodyController, readOnly: true),
                   ),
                 ),
               ],
@@ -139,8 +137,7 @@ class LessonCreatorScreenState extends State<LessonCreatorScreen> {
   }
 
   Future<void> pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -167,17 +164,16 @@ class LessonCreatorScreenState extends State<LessonCreatorScreen> {
         topic: topicController.text,
         subtopic: subtopicController.text,
         anchorScripture: anchorScriptureController.text,
-        verses: versesController.text
-            .split(',')
-            .map((verse) => verse.trim())
-            .toList(),
+        verses: versesController.text.split(',').map((verse) => verse.trim()).toList(),
         body: bodyController.document.toDelta().toJson(),
         imageUrl: imageUrl!,
         date: DateTime(now.year, now.month, now.day),
       );
 
-
-      await firestore.collection('lessons').add(newLesson.toJson()).then((_) => Get.toNamed(Routes.lessonDetailRoute, arguments: newLesson));
+      await firestore
+          .collection('lessons')
+          .add(newLesson.toJson())
+          .then((_) => Get.toNamed(Routes.lessonDetailRoute, arguments: newLesson));
     }
   }
 }

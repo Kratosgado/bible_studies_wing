@@ -7,31 +7,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-
-class AddAnnouncementScreen extends StatelessWidget{
+class AddAnnouncementScreen extends StatelessWidget {
   final QuillController _controller = QuillController.basic();
 
   AddAnnouncementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CurvedScaffold(
-      title: 'Add Announcement',
-      floatingActionButton: FloatingActionButton(
-        onPressed: uploadAnnouncement,
-        child: const Icon(Icons.upload),
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
-            child: Expanded(
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: CurvedScaffold(
+        title: 'Add Announcement',
+        floatingActionButton: FloatingActionButton(
+          onPressed: uploadAnnouncement,
+          child: const Icon(Icons.save),
+        ),
+        bottomNavigationBar: QuillToolbar.simple(
+          configurations: QuillSimpleToolbarConfigurations(
+            controller: _controller,
+            multiRowsDisplay: true,
+          ),
+        ),
+        child: Column(
+          children: [
+            SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
                 child: QuillEditor.basic(
                   configurations: QuillEditorConfigurations(
                     controller: _controller,
-                    paintCursorAboveText: true,
                     autoFocus: true,
                     readOnly: false,
                     customStyles: DefaultStyles(
@@ -49,16 +53,16 @@ class AddAnnouncementScreen extends StatelessWidget{
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   void uploadAnnouncement() async {
-    FirebaseFirestore.instance.collection('announcement').add({
+    FirebaseFirestore.instance.collection('once').doc("announcement").set({
       'date': DateTime.now().toString(),
-      'body': _controller.document.toDelta().toJson,
-    }).then((value) => Get.offNamed(Routes.todaysEventRoute));
+      'body': _controller.document.toDelta().toJson(),
+    }).then((value) => Get.offNamed(Routes.announcementRoute));
   }
 }
