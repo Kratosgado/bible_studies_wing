@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 // import 'package:bible_studies_wing/src/functions.dart' show handleSignout;
 
 BackgroundImage backDropLayer() {
+  Get.put(AuthController());
   return BackgroundImage(
     child: ListView(
       children: [

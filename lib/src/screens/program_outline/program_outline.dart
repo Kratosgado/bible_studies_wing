@@ -15,7 +15,7 @@ class ProgramOutlineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: "Program Outline",
-      floatingActionButton: AppService.currentMember.executive
+      floatingActionButton: AppService.currentMember!.executive
           ? FloatingActionButton(
               onPressed: () => Get.offNamed(Routes.addProgramOutlineRoute),
               child: const Icon(Icons.add),

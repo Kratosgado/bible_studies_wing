@@ -15,7 +15,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
       .collection('lessons')
       .orderBy('date', descending: true)
       .limit(1)
-      .get();
+      .snapshots();
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: Spacing.s16),
     child: Column(
@@ -39,8 +39,8 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
           margin: const EdgeInsets.symmetric(vertical: Spacing.s16),
           width: Get.width,
           height: Get.height * 0.4,
-          child: FutureBuilder(
-              future: lastPostedLesson,
+          child: StreamBuilder(
+              stream: lastPostedLesson,
               builder: (_, snapShot) {
                 if (snapShot.connectionState == ConnectionState.waiting || !snapShot.hasData) {
                   // While waiting for data, show a loading indicator or some placeholder widget

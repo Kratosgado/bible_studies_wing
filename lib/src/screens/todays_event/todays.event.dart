@@ -16,7 +16,7 @@ class TodayEventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: "Today's Event",
-      floatingActionButton: AppService.currentMember.executive
+      floatingActionButton: AppService.currentMember!.executive
           ? FloatingActionButton(
               onPressed: () => Get.offNamed(Routes.addtodaysEventRoute),
               child: const Icon(Icons.event),

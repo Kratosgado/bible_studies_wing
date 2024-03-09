@@ -64,25 +64,23 @@ ThemeData getApplicationTheme() {
             fontWeight: FontWeight.bold,
           ),
           bodyMedium: TextStyle(color: ColorManager.deepBblue)),
-          
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
         prefixIconColor: Colors.blue.shade100,
         suffixIconColor: Colors.blue.shade100,
 
         contentPadding: const EdgeInsets.all(Spacing.s20),
+        
         // hint style
         iconColor: Colors.blue.shade200,
         labelStyle: TextStyle(
           color: ColorManager.deepBblue,
         ),
-        
 
         // enabled border
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(80),
           borderSide: BorderSide(color: ColorManager.deepBblue),
-          
         ),
         disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(80),

@@ -1,5 +1,8 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:bible_studies_wing/src/resources/values_manager.dart';
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,128 +69,144 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Member Registration Form')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _imageFile != null
-                    ? Image.file(
-                        _imageFile!,
-                        height: 200,
-                        width: 200,
-                      ) // Show the selected image if available
-                    : const SizedBox.shrink(),
-                ElevatedButton(
+    return CurvedScaffold(
+      title: "Member Registration Form",
+      child: Padding(
+        padding: const EdgeInsets.all(Spacing.s16),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              _imageFile != null
+                  ? Image.file(
+                      _imageFile!,
+                      height: 200,
+                      width: 200,
+                    ) // Show the selected image if available
+                  : const SizedBox.shrink(),
+              Center(
+                child: ElevatedButton(
                   onPressed: _pickImage, // Call the _pickImage method when the button is pressed
                   child: const Text('Select Image'),
                 ),
-                // Otherwise, hide the Image widget
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _birthdateController,
-                  readOnly: true,
-                  onTap: () {
-                    _selectDate(context);
-                  },
-                  decoration: const InputDecoration(labelText: 'Birthdate'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select a birthdate';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _contactController,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(labelText: 'Contact'),
-                  validator: (value) {
-                    // Add your contact validation logic here
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _programmeController,
-                  decoration: const InputDecoration(labelText: 'Programme'),
-                  validator: (value) {
-                    // Add your programme validation logic here
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _hallController,
-                  decoration: const InputDecoration(labelText: 'Hall/Hostel'),
-                  validator: (value) {
-                    // Add your hall validation logic here
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _isExecutive,
-                      onChanged: (value) {
-                        setState(() {
-                          _isExecutive = value ?? false;
-                          if (!_isExecutive) {
-                            _verifierController.clear();
-                          }
-                        });
-                      },
-                    ),
-                    const Text('Executive'),
-                  ],
-                ),
-                if (_isExecutive)
-                  TextFormField(
-                    controller: _verifierController,
-                    decoration: const InputDecoration(labelText: 'Verifier Code'),
-                    validator: (value) {
-                      // Add your verifier code validation logic here
-                      if (value != '1234') {
-                        executiveStatus = false;
-                        return 'Incorrect code';
-                      }
-                      executiveStatus = true;
-                      return null; // Validation passes, return null.
+              ),
+              // Otherwise, hide the Image widget
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Name'),
+                style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _birthdateController,
+                readOnly: true,
+                style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                onTap: () {
+                  _selectDate(context);
+                },
+                decoration: const InputDecoration(labelText: 'Birthdate'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please select a birthdate';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _contactController,
+                keyboardType: TextInputType.phone,
+                style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                decoration: const InputDecoration(labelText: 'Contact'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'required';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _programmeController,
+                style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                decoration: const InputDecoration(labelText: 'Programme'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'required';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _hallController,
+                style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                decoration: const InputDecoration(labelText: 'Hall/Hostel'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'required';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Checkbox(
+                    value: _isExecutive,
+                    checkColor: Colors.white,
+                    activeColor: Colors.blue,
+                    fillColor: MaterialStateColor.resolveWith((states) => ColorManager.deepBblue),
+                    overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                    onChanged: (value) {
+                      setState(() {
+                        _isExecutive = value ?? false;
+                        if (!_isExecutive) {
+                          _verifierController.clear();
+                        }
+                      });
                     },
                   ),
+                  Text(
+                    'Executive',
+                    style: TextStyle(color: ColorManager.deepBblue),
+                  ),
+                ],
+              ),
+              if (_isExecutive)
+                TextFormField(
+                  controller: _verifierController,
+                  style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                  decoration: const InputDecoration(labelText: 'Verifier Code'),
+                  validator: (value) {
+                    // Add your verifier code validation logic here
+                    if (int.parse(value!) != AppService.passcode) {
+                      executiveStatus = false;
+                      return 'Incorrect code';
+                    }
+                    executiveStatus = true;
+                    return null; // Validation passes, return null.
+                  },
+                ),
 
-                const SizedBox(height: 16),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // Save the form data to Firestore
-                        _saveFormData();
-                      }
-                    },
-                    child: const Text('Submit'),
-                  ),
+              const SizedBox(height: 16),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Save the form data to Firestore
+                    _saveFormData();
+                  },
+                  child: const Text('Submit'),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -236,7 +255,11 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             .doc(widget.user.uid)
             .set(newMember.toJson())
             .then((_) => AppService.preferences.login())
-            .then((_) => Get.offNamed(Routes.memberProfileRoute, arguments: newMember));
+            .then((_) async => await Get.put(AppService()).init())
+            .then((_) => Get.offNamed(Routes.homeRoute));
+      } else {
+        Get.snackbar("Registration Error", "Add a profile picture to continue",
+            snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
       }
     }
   }

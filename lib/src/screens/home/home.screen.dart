@@ -7,7 +7,6 @@ import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -15,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentMember = AppService.currentMember;
+    final currentMember = AppService.currentMember!;
     return BackdropScaffold(
       appBar: BackdropAppBar(
         toolbarHeight: Spacing.s90,

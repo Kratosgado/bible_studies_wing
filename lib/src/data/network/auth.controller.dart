@@ -17,6 +17,7 @@ class AuthController extends GetxController {
     await auth.signOut();
     await googleSignIn.signOut();
     await AppService.preferences.logout();
+    AppService.currentMember = null;
     // await googleSignIn.disconnect();
     await Get.offNamed(Routes.registerRoute);
   }

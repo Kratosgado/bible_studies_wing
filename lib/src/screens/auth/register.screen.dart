@@ -24,6 +24,11 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              // add icon
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage(ImageAssets.bslogo),
+              ),
               const Text(
                 "BIBLE STUDY WING",
                 style: TextStyle(

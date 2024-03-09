@@ -10,7 +10,7 @@ import '../../../data/models/lesson.dart';
 
 void showCommentSheet(BuildContext context, Lesson lesson) {
   final commentController = TextEditingController();
-  final currentMember = AppService.currentMember;
+  final currentMember = AppService.currentMember!;
 
   Future<void> deleteComment(String id) async {
     debugPrint("Deleting comment");
@@ -84,7 +84,7 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
                           ),
                           title: Text(comment.username),
                           subtitle: Text(comment.comment),
-                          trailing: AppService.currentMember.id == currentMember.id
+                          trailing: AppService.currentMember!.id == comment.userId
                               ? IconButton(
                                   icon: const Icon(
                                     Icons.delete,

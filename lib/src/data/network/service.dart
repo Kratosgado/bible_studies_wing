@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 
 class AppService extends GetxService {
   static final AppPreferences preferences = AppPreferences();
-  static late final Member currentMember;
+  static Member? currentMember;
   Future<void> init() async {
     debugPrint("AppService init");
     currentMember = preferences.getCurrentMember();
     super.onInit();
   }
 
-    static String formatDate(DateTime date) {
+  static String formatDate(DateTime date) {
     String month = switch (date.month) {
       DateTime.january => "January",
       DateTime.february => "February",
@@ -31,4 +31,6 @@ class AppService extends GetxService {
 
     return "$month ${date.day}, ${date.year}";
   }
+
+  static int passcode = 1234;
 }
