@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
@@ -26,7 +27,11 @@ class _SplashViewState extends State<SplashScreen> {
   goNext() async {
     AppService.preferences.isUserLoggedIn().then((value) async => {
           if (value)
-            {await Get.put(AppService()).init().then((_) async => await Get.offNamed(Routes.homeRoute))}
+            {
+              await Get.put(AppService())
+                  .init()
+                  .then((_) async => await Get.offNamed(Routes.homeRoute))
+            }
           else
             {Get.offNamed(Routes.registerRoute)}
         });
@@ -35,6 +40,9 @@ class _SplashViewState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    });
     startDelay();
   }
 

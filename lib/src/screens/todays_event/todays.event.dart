@@ -22,7 +22,7 @@ class TodayEventScreen extends StatelessWidget {
               child: const Icon(Icons.event),
             )
           : null,
-      child:FutureBuilder(
+      child: FutureBuilder(
         future: FirebaseFirestore.instance.collection('once').doc("event").get(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
@@ -49,8 +49,16 @@ class TodayEventScreen extends StatelessWidget {
                   thickness: 1,
                   color: ColorManager.deepBblue,
                 ),
-                CachedNetworkImage(imageUrl: event['image']),
-
+                CachedNetworkImage(
+                  imageUrl: event['image'],
+                  progressIndicatorBuilder: (context, _, downloadProgress) {
+                    return Center(
+                      child: CircularProgressIndicator(value: downloadProgress.progress),
+                    );
+                  },
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                ),
                 Expanded(
                   child: QuillEditor.basic(
                     configurations: QuillEditorConfigurations(

@@ -34,14 +34,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
         bottomNavigationBar: QuillToolbar.simple(
           configurations: QuillSimpleToolbarConfigurations(
             controller: _controller,
-            multiRowsDisplay: true,
+            multiRowsDisplay: false,
           ),
         ),
-        child: Column(
+        child: ListView(
           children: [
-            ElevatedButton(
-              onPressed: getImage,
-              child: const Text('Select Image'),
+            Center(
+              child: ElevatedButton(
+                onPressed: getImage,
+                child: const Text('Select Image'),
+              ),
             ),
             _image == null
                 ? Text(
@@ -56,7 +58,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       fit: BoxFit.fill,
                     ),
                   ),
-            SingleChildScrollView(
+            Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
                 child: QuillEditor.basic(
@@ -109,6 +111,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
       'date': DateTime.now().toString(),
       'image': imageUrl,
       'body': _controller.document.toDelta().toJson(),
-    }).then((value) => Get.offNamed(Routes.lessonDetailRoute));
+    }).then((value) => Get.offNamed(Routes.todaysEventRoute));
   }
 }

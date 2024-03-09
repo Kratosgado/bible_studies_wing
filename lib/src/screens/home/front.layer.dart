@@ -54,8 +54,14 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
                   );
                 }
                 // Data has been successfully fetched
-                final lesson = Lesson.fromJson(snapShot.data!.docs[0].data());
-                return lessonCard(context, lesson, currentUserPhotoUrl);
+                try {
+                  final lesson = Lesson.fromJson(snapShot.data!.docs[0].data());
+                  return lessonCard(context, lesson);
+                } catch (e) {
+                  return const Center(
+                    child: Text('Error fetching data'),
+                  );
+                }
               }),
         ),
         const SizedBox(

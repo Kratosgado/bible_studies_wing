@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../../data/models/lesson.dart';
 
-Widget lessonCard(BuildContext context, Lesson lesson, String currentUserProfile) {
+Widget lessonCard(BuildContext context, Lesson lesson) {
   return SizedBox(
     height: 300,
     width: 350,
@@ -39,7 +39,7 @@ Widget lessonCard(BuildContext context, Lesson lesson, String currentUserProfile
             Row(
               children: [
                 IconButton(
-                  onPressed: () => showCommentSheet(context, lesson, currentUserProfile),
+                  onPressed: () => showCommentSheet(context, lesson),
                   icon: const Icon(Icons.message_rounded),
                   iconSize: 35,
                 ),

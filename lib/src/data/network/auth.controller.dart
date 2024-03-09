@@ -1,4 +1,5 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,6 +56,13 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       Text(e.toString());
+      Get.snackbar(
+        "Error Signing In",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: ColorManager.deepBblue,
+        colorText: Colors.white,
+      );
       debugPrint(e.toString());
     }
   }

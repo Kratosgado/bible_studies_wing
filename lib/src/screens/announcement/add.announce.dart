@@ -25,7 +25,7 @@ class AddAnnouncementScreen extends StatelessWidget {
         bottomNavigationBar: QuillToolbar.simple(
           configurations: QuillSimpleToolbarConfigurations(
             controller: _controller,
-            multiRowsDisplay: true,
+            multiRowsDisplay: false,
           ),
         ),
         child: Column(

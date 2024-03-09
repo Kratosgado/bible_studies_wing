@@ -22,7 +22,6 @@ class AppPreferences {
 
   Future<void> login() async {
     final currentUserUid = FirebaseAuth.instance.currentUser!.uid;
-
     // Get member data from firestore
     final getCurrentUser =
         await FirebaseFirestore.instance.collection('members').doc(currentUserUid).get();

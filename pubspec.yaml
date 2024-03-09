@@ -12,7 +12,6 @@ environment:
 dependencies:
   cached_network_image:
   json_annotation: ^4.8.1
-  shared_preferences: ^2.0.8
   expandable: ^5.0.1
   # firebase_auth: ^4.7.0
   # firebase_core: ^2.15.0

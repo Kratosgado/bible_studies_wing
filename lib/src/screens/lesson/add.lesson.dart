@@ -40,7 +40,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         bottomNavigationBar: QuillToolbar.simple(
           configurations: QuillSimpleToolbarConfigurations(
             controller: _controller,
-            multiRowsDisplay: true,
+            multiRowsDisplay: false,
           ),
         ),
         child: ListView(
@@ -151,6 +151,6 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     FirebaseFirestore.instance
         .collection('lessons')
         .add(newLesson.toJson())
-        .then((value) => Get.offNamed(Routes.lessonDetailRoute));
+        .then((value) => Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson));
   }
 }
