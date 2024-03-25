@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "93150933206",
+    "project_id": "biblestudywing-32f3b",
+    "storage_bucket": "biblestudywing-32f3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93150933206:android:9a4c766d0eb76b7450d977",
+        "android_client_info": {
+          "package_name": "com.biblestudieswing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93150933206-f4lkscst9586cdh9c1d6shb34e6i2rd7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.biblestudieswing",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQEJ4BNqiZX_rvUvmx-x3jtf-V-3F29sg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93150933206-5chpp3g7n6qf6gdt2u58820b2ln486ij.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bibleStudiesWing"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93150933206:android:3af626be6359e6b350d977",
+        "android_client_info": {
+          "package_name": "com.example.bible_studies_wing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93150933206-apu7giufv1tt2bdettbn9s3c66mk78di.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bible_studies_wing",
+            "certificate_hash": "9e0b9fd6b74a291122e7f4b113e3cfdf3f1cc894"
+          }
+        },
+        {
+          "client_id": "93150933206-ttevi41d3vpr8e2u0e2rdlkfp9p8uck7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bible_studies_wing",
+            "certificate_hash": "091b1da6a29fbadd08960fbd33b5e4d1fbe857b2"
+          }
+        },
+        {
+          "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQEJ4BNqiZX_rvUvmx-x3jtf-V-3F29sg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93150933206-5chpp3g7n6qf6gdt2u58820b2ln486ij.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bibleStudiesWing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
