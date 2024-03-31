@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
+// import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:cached_network_image/cached_network_image.dart';
 
 class GalleryScreen extends StatelessWidget {
@@ -82,9 +82,10 @@ class ImageScreen extends StatelessWidget {
         onPressed: () async {
           var ref = FirebaseStorage.instance.refFromURL(url);
           var bytes = await ref.getData();
-          var dir = await path_provider.getExternalStorageDirectory();
-          debugPrint('dir: $dir');
-          File file = File('${dir!.path}/${ref.name}.jpg');
+          // var dir = await path_provider.getExternalStorageDirectory();
+          var downloadDir = Directory("/storage/emulated/0/Download");
+          // debugPrint('dir: $dir');
+          File file = File('${downloadDir.path}/${ref.name}.jpg');
           await file.writeAsBytes(bytes!);
           Get.snackbar('Download', 'Image downloaded');
         },

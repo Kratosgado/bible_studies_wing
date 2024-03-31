@@ -90,24 +90,22 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 return null;
               },
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
-                child: QuillEditor.basic(
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
-                    autoFocus: true,
-                    readOnly: false,
-                    customStyles: DefaultStyles(
-                      paragraph: DefaultTextBlockStyle(
-                        TextStyle(
-                          color: ColorManager.deepBblue,
-                          fontSize: 18,
-                        ),
-                        const VerticalSpacing(1.0, 1),
-                        const VerticalSpacing(1.0, 1),
-                        const BoxDecoration(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: _controller,
+                  autoFocus: true,
+                  readOnly: false,
+                  customStyles: DefaultStyles(
+                    paragraph: DefaultTextBlockStyle(
+                      TextStyle(
+                        color: ColorManager.deepBblue,
+                        fontSize: 18,
                       ),
+                      const VerticalSpacing(1.0, 1),
+                      const VerticalSpacing(1.0, 1),
+                      const BoxDecoration(),
                     ),
                   ),
                 ),

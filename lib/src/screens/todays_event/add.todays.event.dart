@@ -46,9 +46,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
               ),
             ),
             _image == null
-                ? Text(
-                    'No image selected.',
-                    style: TextStyle(color: ColorManager.deepBblue),
+                ? Center(
+                    child: Text(
+                      'No image selected.',
+                      style: TextStyle(color: ColorManager.deepBblue),
+                    ),
                   )
                 : SizedBox(
                     height: 200,
@@ -58,24 +60,22 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       fit: BoxFit.fill,
                     ),
                   ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
-                child: QuillEditor.basic(
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
-                    autoFocus: true,
-                    readOnly: false,
-                    customStyles: DefaultStyles(
-                      paragraph: DefaultTextBlockStyle(
-                        TextStyle(
-                          color: ColorManager.deepBblue,
-                          fontSize: 18,
-                        ),
-                        const VerticalSpacing(1.0, 1),
-                        const VerticalSpacing(1.0, 1),
-                        const BoxDecoration(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: _controller,
+                  autoFocus: true,
+                  readOnly: false,
+                  customStyles: DefaultStyles(
+                    paragraph: DefaultTextBlockStyle(
+                      TextStyle(
+                        color: ColorManager.deepBblue,
+                        fontSize: 18,
                       ),
+                      const VerticalSpacing(1.0, 1),
+                      const VerticalSpacing(1.0, 1),
+                      const BoxDecoration(),
                     ),
                   ),
                 ),

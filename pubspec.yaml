@@ -39,7 +39,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_quill: ^9.3.1
   google_sign_in: ^6.1.4
-  image_picker: ^1.0.1
+  image_picker: ^1.0.7
   intl: ^0.18.1
   # share_plus: ^7.0.2
   uuid: ^4.3.3
