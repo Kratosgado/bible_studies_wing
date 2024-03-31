@@ -33,34 +33,34 @@ class TodayEventScreen extends StatelessWidget {
           }
           var event = snapshot.data!.data()!;
           final doc = Document.fromJson(event['body']);
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
-            child: Column(
-              children: [
-                Text(
-                  "Date: ${AppService.formatDate(
-                    DateTime.parse(
-                      event['date'],
-                    ),
-                  )}",
-                  style: Theme.of(context).primaryTextTheme.bodyLarge,
-                ),
-                Divider(
-                  thickness: 1,
-                  color: ColorManager.deepBblue,
-                ),
-                CachedNetworkImage(
-                  imageUrl: event['image'],
-                  progressIndicatorBuilder: (context, _, downloadProgress) {
-                    return Center(
-                      child: CircularProgressIndicator(value: downloadProgress.progress),
-                    );
-                  },
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
-                ),
-                Expanded(
-                  child: QuillEditor.basic(
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
+              child: Column(
+                children: [
+                  Text(
+                    "Date: ${AppService.formatDate(
+                      DateTime.parse(
+                        event['date'],
+                      ),
+                    )}",
+                    style: Theme.of(context).primaryTextTheme.bodyLarge,
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: ColorManager.deepBblue,
+                  ),
+                  CachedNetworkImage(
+                    imageUrl: event['image'],
+                    progressIndicatorBuilder: (context, _, downloadProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(value: downloadProgress.progress),
+                      );
+                    },
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
+                  QuillEditor.basic(
                     configurations: QuillEditorConfigurations(
                       controller: QuillController(
                         document: doc,
@@ -80,8 +80,8 @@ class TodayEventScreen extends StatelessWidget {
                       readOnly: true,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

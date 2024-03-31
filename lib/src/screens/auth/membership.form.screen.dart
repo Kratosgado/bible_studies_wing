@@ -91,7 +91,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 ),
               ),
               // Otherwise, hide the Image widget
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.s16),
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Name'),
@@ -103,7 +103,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.s16),
               TextFormField(
                 controller: _birthdateController,
                 readOnly: true,
@@ -119,7 +119,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.s16),
               TextFormField(
                 controller: _contactController,
                 keyboardType: TextInputType.phone,
@@ -132,7 +132,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.s16),
               TextFormField(
                 controller: _programmeController,
                 style: Theme.of(context).primaryTextTheme.bodyMedium!,
@@ -196,7 +196,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   },
                 ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.s16),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
