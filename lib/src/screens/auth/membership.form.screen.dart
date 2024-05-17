@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
@@ -165,8 +165,8 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                       value: _isExecutive,
                       checkColor: Colors.white,
                       activeColor: Colors.blue,
-                      fillColor: MaterialStateColor.resolveWith((states) => ColorManager.deepBblue),
-                      overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                      fillColor: WidgetStateColor.resolveWith((states) => ColorManager.deepBblue),
+                      overlayColor: WidgetStateColor.resolveWith((states) => Colors.white),
                       onChanged: (value) {
                         setState(() {
                           _isExecutive = value ?? false;
@@ -226,7 +226,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
 
     if (pickedDate != null && pickedDate != DateTime.now()) {
       setState(() {
-        _birthdateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+        _birthdateController.text = pickedDate.toLocal().toString().substring(0, 10);
       });
     }
   }

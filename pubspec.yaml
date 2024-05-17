@@ -37,10 +37,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
-  flutter_quill: ^9.3.1
+  flutter_quill: ^9.2.3
   google_sign_in: ^6.1.4
   image_picker: ^1.0.7
-  intl: ^0.18.1
+  # intl: ^0.19.0
   # share_plus: ^7.0.2
   uuid: ^4.3.3
   get: ^4.6.6
@@ -52,6 +52,12 @@ dependencies:
   firebase_core: ^2.25.3
   path_provider:
   permission_handler: ^11.3.0
+
+dependency_overrides:
+  flutter_colorpicker:
+    git:
+      url: https://github.com/mchome/flutter_colorpicker
+      ref: master  # or 786d04363f587b818ce585d25b9c2bb62de95aba
 
 dev_dependencies:
   flutter_test:

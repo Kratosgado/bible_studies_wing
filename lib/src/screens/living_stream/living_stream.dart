@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';

@@ -6,7 +6,7 @@ ThemeData getApplicationTheme() {
   return ThemeData(
       disabledColor: Colors.grey.shade400,
       colorScheme: ColorScheme.dark(
-        background: Colors.transparent,
+        surface: Colors.transparent,
         primary: ColorManager.mediumBlue,
         secondary: ColorManager.secondaryColor,
         // onSecondary: Colors.grey.shade400,
