@@ -23,10 +23,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -66,4 +63,16 @@ class DefaultFirebaseOptions {
     projectId: 'biblestudywing-32f3b',
     storageBucket: 'biblestudywing-32f3b.appspot.com',
   );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCMaN7KB8dRCg8Pczy7iK4jFIsR2d7JvcM',
+    appId: '1:93150933206:ios:87112107c8ce366a50d977',
+    messagingSenderId: '93150933206',
+    projectId: 'biblestudywing-32f3b',
+    storageBucket: 'biblestudywing-32f3b.appspot.com',
+    androidClientId: '93150933206-0lin8ti09tvaf457kmt5urj5reegh4u9.apps.googleusercontent.com',
+    iosClientId: '93150933206-5chpp3g7n6qf6gdt2u58820b2ln486ij.apps.googleusercontent.com',
+    iosBundleId: 'com.example.bibleStudiesWing',
+  );
+
 }
