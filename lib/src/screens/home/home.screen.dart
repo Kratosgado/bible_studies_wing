@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {},
-            child: Text('The Word', style: Theme.of(context).textTheme.titleLarge),
+            child: Text('The Word our light our sword', style: Theme.of(context).textTheme.titleLarge),
           )
         ],
       ),

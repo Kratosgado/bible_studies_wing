@@ -50,6 +50,7 @@ class AnnouncementScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: QuillEditor.basic(
+                    
                     configurations: QuillEditorConfigurations(
                       controller: QuillController(
                         document: doc,

@@ -94,6 +94,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 ),
                 // Otherwise, hide the Image widget
                 const SizedBox(height: Spacing.s16),
+              
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(labelText: 'Name'),

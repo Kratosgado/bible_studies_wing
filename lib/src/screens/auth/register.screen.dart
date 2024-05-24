@@ -60,6 +60,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 20),
+                    
                       Text(
                         "Sign in with Google",
                         style: Theme.of(context).textTheme.titleMedium,
