@@ -5,6 +5,7 @@ import 'values_manager.dart';
 ThemeData getApplicationTheme() {
   return ThemeData(
       disabledColor: Colors.grey.shade400,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
       colorScheme: ColorScheme.dark(
         surface: Colors.transparent,
         primary: ColorManager.mediumBlue,
@@ -12,7 +13,7 @@ ThemeData getApplicationTheme() {
         // onSecondary: Colors.grey.shade400,
         tertiary: Colors.amber,
       ),
-      textTheme: const TextTheme(),
+
       // ripple color
       splashColor: Colors.teal,
       listTileTheme: ListTileThemeData(
@@ -57,7 +58,6 @@ ThemeData getApplicationTheme() {
             splashFactory: InkSparkle.splashFactory),
       ),
       // input decoration theme (text form field)
-
       primaryTextTheme: TextTheme(
           bodyLarge: TextStyle(
             color: ColorManager.deepBblue,
@@ -68,27 +68,33 @@ ThemeData getApplicationTheme() {
         isDense: true,
         prefixIconColor: Colors.blue.shade100,
         suffixIconColor: Colors.blue.shade100,
-
+        fillColor: ColorManager.faintWhite,
+        filled: true,
         contentPadding: const EdgeInsets.all(Spacing.s20),
-        
+        floatingLabelAlignment: FloatingLabelAlignment.center,
+        floatingLabelStyle: const TextStyle(
+          color: ColorManager.bgColor,
+          fontSize: Spacing.s20,
+        ),
+
         // hint style
         iconColor: Colors.blue.shade200,
         labelStyle: TextStyle(
           color: ColorManager.deepBblue,
+          fontSize: Spacing.s16,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
         ),
 
-        // enabled border
-        enabledBorder: OutlineInputBorder(
+        disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(80),
           borderSide: BorderSide(color: ColorManager.deepBblue),
         ),
-        disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(80),
-            borderSide: BorderSide(color: ColorManager.deepBblue)),
-        // focused border
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue.shade500, width: Spacing.s1_5),
-            borderRadius: const BorderRadius.all(Radius.circular(Spacing.s8))),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
 
         // error border
         errorBorder: OutlineInputBorder(
@@ -97,9 +103,5 @@ ThemeData getApplicationTheme() {
             Radius.circular(Spacing.s8),
           ),
         ),
-        // focused error border
-        focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blueAccent.shade400, width: Spacing.s1_5),
-            borderRadius: const BorderRadius.all(Radius.circular(Spacing.s8))),
       ));
 }

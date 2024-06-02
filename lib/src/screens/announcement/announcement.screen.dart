@@ -15,7 +15,7 @@ class AnnouncementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: "Announcement",
-      floatingActionButton: AppService.currentMember!.executive
+      floatingActionButton: AppService.currentMember!.executivePosition != null
           ? FloatingActionButton(
               onPressed: () => Get.offNamed(Routes.addAnnouncementRoute),
               child: const Icon(Icons.announcement),

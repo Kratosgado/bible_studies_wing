@@ -96,7 +96,7 @@ class MemberProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    member.executive ? 'Yes' : 'No',
+                    member.executivePosition ?? "Not Executive" ,
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

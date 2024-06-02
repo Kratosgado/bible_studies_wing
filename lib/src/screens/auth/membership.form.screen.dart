@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-// import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
@@ -33,6 +33,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
   final _programmeController = TextEditingController();
   final _hallController = TextEditingController();
   final _verifierController = TextEditingController();
+  final _executivePosition = TextEditingController();
   bool executiveStatus = false;
 
   bool _isExecutive = false;
@@ -94,7 +95,6 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 ),
                 // Otherwise, hide the Image widget
                 const SizedBox(height: Spacing.s16),
-              
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(labelText: 'Name'),
@@ -166,8 +166,8 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                       value: _isExecutive,
                       checkColor: Colors.white,
                       activeColor: Colors.blue,
-                      fillColor: WidgetStateColor.resolveWith((states) => ColorManager.deepBblue),
-                      overlayColor: WidgetStateColor.resolveWith((states) => Colors.white),
+                      fillColor: MaterialStateColor.resolveWith((states) => ColorManager.deepBblue),
+                      overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
                       onChanged: (value) {
                         setState(() {
                           _isExecutive = value ?? false;
@@ -187,6 +187,12 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   TextFormField(
                     controller: _verifierController,
                     style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                    onChanged: (value) => {
+                      setState(() {
+                        executiveStatus =
+                            (int.tryParse(value) != AppService.passcode) ? false : true;
+                      })
+                    },
                     decoration: const InputDecoration(labelText: 'Verifier Code'),
                     validator: (value) {
                       // Add your verifier code validation logic here
@@ -198,7 +204,14 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                       return null; // Validation passes, return null.
                     },
                   ),
-      
+                const SizedBox(height: Spacing.s16),
+
+                if (executiveStatus)
+                  TextFormField(
+                    controller: _executivePosition,
+                    style: Theme.of(context).primaryTextTheme.bodyLarge!,
+                    decoration: const InputDecoration(labelText: 'Executive Position'),
+                  ),
                 const SizedBox(height: Spacing.s16),
                 Center(
                   child: ElevatedButton(
@@ -223,11 +236,22 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: ColorManager.deepBblue,
+              onPrimary: Colors.white,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null && pickedDate != DateTime.now()) {
       setState(() {
-        _birthdateController.text = pickedDate.toLocal().toString().substring(0, 10);
+        _birthdateController.text = DateFormat('MM-dd').format(pickedDate);
       });
     }
   }
@@ -251,7 +275,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
           contact: _contactController.text,
           programme: _programmeController.text,
           hall: _hallController.text,
-          executive: executiveStatus,
+          executivePosition: _executivePosition.text,
         );
         // Convert Member object to a Map and save it to Firestore
         await firestore

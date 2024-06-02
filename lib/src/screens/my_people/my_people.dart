@@ -32,8 +32,8 @@ class MyPeopleScreen extends StatelessWidget {
           final data = snapshot.data!;
           final members = data.docs.map((doc) => Member.fromJson(doc.data())).toList();
 
-          final executives = members.where((member) => member.executive).toList();
-          final nonExecutives = members.where((member) => !member.executive).toList();
+          final executives = members.where((member) => member.executivePosition != null).toList();
+          final nonExecutives = members.where((member) => member.executivePosition == null).toList();
 
           return ListView(children: [
             _buildExpandableListTile(
@@ -83,7 +83,7 @@ class MyPeopleScreen extends StatelessWidget {
       ),
       title: Text(member.name),
       subtitle: Text(member.programme),
-      trailing: member.executive
+      trailing: member.executivePosition != null
           ? const Icon(
               Icons.star,
               color: Colors.blueAccent,

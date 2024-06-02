@@ -13,7 +13,7 @@ class Member {
   final String contact;
   final String programme;
   final String hall;
-  final bool executive;
+  final String? executivePosition;
 
   Member({
     required this.id,
@@ -23,12 +23,13 @@ class Member {
     required this.contact,
     required this.programme,
     required this.hall,
-    required this.executive,
+    this.executivePosition,
   });
 
   // Method to convert Member object to a Map (for Firestore)
-  Map<String, dynamic> toJson( {bool convert= true}) => _$MemberToJson(this, convert);
-  factory Member.fromJson(Map<String, dynamic> json, {converted = false}) => _$MemberFromJson(json, converted);
+  Map<String, dynamic> toJson({bool convert = true}) => _$MemberToJson(this, convert);
+  factory Member.fromJson(Map<String, dynamic> json, {converted = false}) =>
+      _$MemberFromJson(json, converted);
 }
 
 class TimestampConverter implements JsonConverter<DateTime, Timestamp> {

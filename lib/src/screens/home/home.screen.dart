@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
       backLayer: backDropLayer(),
       frontLayer: frontLayer(context, currentMember.photoUrl),
       // bottomNavigationBar: BottomNavigationBar(),
-      floatingActionButton: currentMember.executive
+      floatingActionButton: currentMember.executivePosition != null
           ? FloatingActionButton(
               tooltip: 'Create a lesson',
               onPressed: () => Get.toNamed(Routes.lessonCreatorRoute),
