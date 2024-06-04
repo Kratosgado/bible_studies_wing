@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
@@ -142,6 +143,10 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     String imageUrl = await uploadImage();
     final DateTime now = DateTime.now();
 
+    if (mounted) {
+      AppService.showLoadingPopup(context, "Saving Lesson");
+    }
+
     Lesson newLesson = Lesson(
         id: const Uuid().v4(),
         topic: topicController.text.trim(),
@@ -153,5 +158,9 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         .collection('lessons')
         .add(newLesson.toJson())
         .then((value) => Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson));
+
+    if (mounted) {
+      AppService.dismissPopup(context);
+    }
   }
 }

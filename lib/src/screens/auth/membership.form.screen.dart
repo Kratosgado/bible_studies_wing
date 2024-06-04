@@ -1,5 +1,4 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
-import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
@@ -266,21 +265,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
         final UploadTask uploadTask = storageRef.putFile(_imageFile!);
 
         // Display loading dialog
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return const Dialog(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircularProgressIndicator(),
-                  Text("Submitting information"),
-                ],
-              ),
-            );
-          },
-        );
+        AppService.showLoadingPopup(context, "Submitting information");
 
         final TaskSnapshot storageSnapshot = await uploadTask;
         final String photoUrl = await storageSnapshot.ref.getDownloadURL();
@@ -304,7 +289,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             .then((_) => Get.offNamed(Routes.homeRoute));
         // Dismiss the loading dialog
         if (mounted) {
-          Navigator.of(context, rootNavigator: true).pop();
+          AppService.dismissPopup(context);
         }
       } else {
         Get.snackbar("Registration Error", "Add a profile picture to continue",

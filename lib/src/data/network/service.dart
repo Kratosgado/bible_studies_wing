@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/app/app.refs.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppService extends GetxService {
@@ -30,6 +31,29 @@ class AppService extends GetxService {
     };
 
     return "$month ${date.day}, ${date.year}";
+  }
+
+  // function to show loading popup
+  static dynamic showLoadingPopup(BuildContext ctx, String message) {
+    return showDialog(
+      context: ctx,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              Text(message),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  static void dismissPopup(BuildContext ctx) {
+    Navigator.of(ctx, rootNavigator: true).pop();
   }
 
   static int passcode = 1234;
