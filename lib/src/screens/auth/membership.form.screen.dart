@@ -1,4 +1,5 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
@@ -81,10 +82,9 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             child: ListView(
               children: [
                 _imageFile != null
-                    ? Image.file(
-                        _imageFile!,
-                        height: 200,
-                        width: 200,
+                    ? CircleAvatar(
+                        radius: Spacing.s100,
+                        backgroundImage: FileImage(_imageFile!),
                       ) // Show the selected image if available
                     : const SizedBox.shrink(),
                 Center(
@@ -98,7 +98,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(labelText: 'Name'),
-                  style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a name';
@@ -110,7 +110,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 TextFormField(
                   controller: _birthdateController,
                   readOnly: true,
-                  style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
                   onTap: () {
                     _selectDate(context);
                   },
@@ -126,7 +126,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 TextFormField(
                   controller: _contactController,
                   keyboardType: TextInputType.phone,
-                  style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
                   decoration: const InputDecoration(labelText: 'Contact'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -138,7 +138,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 const SizedBox(height: Spacing.s16),
                 TextFormField(
                   controller: _programmeController,
-                  style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
                   decoration: const InputDecoration(labelText: 'Programme'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -150,7 +150,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 const SizedBox(height: 16),
                 TextFormField(
                   controller: _hallController,
-                  style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
                   decoration: const InputDecoration(labelText: 'Hall/Hostel'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -166,8 +166,8 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                       value: _isExecutive,
                       checkColor: Colors.white,
                       activeColor: Colors.blue,
-                      fillColor: MaterialStateColor.resolveWith((states) => ColorManager.deepBblue),
-                      overlayColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                      fillColor: WidgetStateColor.resolveWith((states) => ColorManager.deepBblue),
+                      overlayColor: WidgetStateColor.resolveWith((states) => Colors.white),
                       onChanged: (value) {
                         setState(() {
                           _isExecutive = value ?? false;
@@ -186,7 +186,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 if (_isExecutive)
                   TextFormField(
                     controller: _verifierController,
-                    style: Theme.of(context).primaryTextTheme.bodyMedium!,
+                    style: Theme.of(context).primaryTextTheme.bodyLarge!,
                     onChanged: (value) => {
                       setState(() {
                         executiveStatus =
@@ -251,7 +251,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
 
     if (pickedDate != null && pickedDate != DateTime.now()) {
       setState(() {
-        _birthdateController.text = DateFormat('MM-dd').format(pickedDate);
+        _birthdateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
       });
     }
   }
@@ -264,6 +264,23 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             FirebaseStorage.instance.ref().child('profile_images').child('${widget.user.uid}.jpg');
 
         final UploadTask uploadTask = storageRef.putFile(_imageFile!);
+
+        // Display loading dialog
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const Dialog(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  Text("Submitting information"),
+                ],
+              ),
+            );
+          },
+        );
 
         final TaskSnapshot storageSnapshot = await uploadTask;
         final String photoUrl = await storageSnapshot.ref.getDownloadURL();
@@ -285,6 +302,10 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             .then((_) => AppService.preferences.login())
             .then((_) async => await Get.put(AppService()).init())
             .then((_) => Get.offNamed(Routes.homeRoute));
+        // Dismiss the loading dialog
+        if (mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+        }
       } else {
         Get.snackbar("Registration Error", "Add a profile picture to continue",
             snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);

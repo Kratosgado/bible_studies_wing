@@ -43,75 +43,78 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
             multiRowsDisplay: false,
           ),
         ),
-        child: ListView(
-          children: [
-            Center(
-              child: ElevatedButton(
-                onPressed: getImage,
-                child: const Text('Select Image'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
+          child: ListView(
+            children: [
+              Center(
+                child: ElevatedButton(
+                  onPressed: getImage,
+                  child: const Text('Select Image'),
+                ),
               ),
-            ),
-            Center(
-              child: _image == null
-                  ? Text(
-                      'No image selected.',
-                      style: TextStyle(color: ColorManager.deepBblue),
-                    )
-                  : SizedBox(
-                      height: 200,
-                      width: context.width,
-                      child: Image.file(
-                        _image!,
-                        fit: BoxFit.fill,
+              Center(
+                child: _image == null
+                    ? Text(
+                        'No image selected.',
+                        style: TextStyle(color: ColorManager.deepBblue),
+                      )
+                    : SizedBox(
+                        height: 200,
+                        width: context.width,
+                        child: Image.file(
+                          _image!,
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: topicController,
-              decoration: const InputDecoration(labelText: 'Topic'),
-              style: TextStyle(color: ColorManager.deepBblue),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a topic';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: subtopicController,
-              decoration: const InputDecoration(labelText: 'Subtopic'),
-              style: TextStyle(color: ColorManager.deepBblue),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a subtopic';
-                }
-                return null;
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
-              child: QuillEditor.basic(
-                configurations: QuillEditorConfigurations(
-                  controller: _controller,
-                  autoFocus: true,
-                  // readOnly: false,
-                  customStyles: DefaultStyles(
-                    paragraph: DefaultTextBlockStyle(
-                      TextStyle(
-                        color: ColorManager.deepBblue,
-                        fontSize: 18,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: topicController,
+                decoration: const InputDecoration(labelText: 'Topic'),
+                style: TextStyle(color: ColorManager.deepBblue),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a topic';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: subtopicController,
+                decoration: const InputDecoration(labelText: 'Subtopic'),
+                style: TextStyle(color: ColorManager.deepBblue),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a subtopic';
+                  }
+                  return null;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
+                child: QuillEditor.basic(
+                  configurations: QuillEditorConfigurations(
+                    controller: _controller,
+                    autoFocus: true,
+                    // readOnly: false,
+                    customStyles: DefaultStyles(
+                      paragraph: DefaultTextBlockStyle(
+                        TextStyle(
+                          color: ColorManager.deepBblue,
+                          fontSize: 18,
+                        ),
+                        const VerticalSpacing(1.0, 1),
+                        const VerticalSpacing(1.0, 1),
+                        const BoxDecoration(),
                       ),
-                      const VerticalSpacing(1.0, 1),
-                      const VerticalSpacing(1.0, 1),
-                      const BoxDecoration(),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
