@@ -55,20 +55,21 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 ),
               ),
               Center(
-                child: _image == null
-                    ? Text(
-                        'No image selected.',
-                        style: TextStyle(color: ColorManager.deepBblue),
-                      )
-                    : SizedBox(
-                        height: 200,
-                        width: context.width,
-                        child: Image.file(
-                          _image!,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-              ),
+                  child: _image == null
+                      ? Text(
+                          'No image selected.',
+                          style: TextStyle(color: ColorManager.deepBblue),
+                        )
+                      : GestureDetector(
+                          onTap: () => viewPicture(_image!),
+                          child: Hero(
+                            tag: "lessonImage",
+                            child: CircleAvatar(
+                              radius: Spacing.s100,
+                              backgroundImage: FileImage(_image!),
+                            ),
+                          ),
+                        )),
               const SizedBox(height: 16),
               TextFormField(
                 controller: topicController,
@@ -119,6 +120,21 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         ),
       ),
     );
+  }
+
+  void viewPicture(File image) {
+    Get.to(() => Hero(
+        tag: "lessonImage",
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            title: const Text("Lesson Image"),
+          ),
+          body: Center(
+            child: Image.file(image),
+          ),
+        )));
   }
 
   Future getImage() async {

@@ -1,15 +1,18 @@
 import 'package:bible_studies_wing/src/app/app.refs.dart';
+import 'package:bible_studies_wing/src/app/notifications.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppService extends GetxService {
   static final AppPreferences preferences = AppPreferences();
+  static final _notificationService = PushNotificationService();
+
   static Member? currentMember;
   Future<void> init() async {
     debugPrint("AppService init");
     currentMember = preferences.getCurrentMember();
+    _notificationService.initialize();
     super.onInit();
   }
 
