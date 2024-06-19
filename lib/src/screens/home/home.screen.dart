@@ -20,9 +20,19 @@ class HomeScreen extends StatelessWidget {
         toolbarHeight: Spacing.s90,
         backgroundColor: Colors.transparent,
         actions: [
+          IconButton(
+              onPressed: () => Get.toNamed(Routes.todaysEventRoute), icon: const Icon(Icons.event)),
+          Badge(
+            // offset: const Offset(4, 3),
+            alignment: Alignment.center,
+            child: IconButton(
+                onPressed: () => Get.toNamed(Routes.announcementRoute),
+                icon: const Icon(Icons.notification_add)),
+          ),
           TextButton(
             onPressed: () {},
-            child: Text('The Word our light our sword', style: Theme.of(context).textTheme.titleLarge),
+            child: Text('The Word our light our sword',
+                style: Theme.of(context).textTheme.titleMedium),
           )
         ],
       ),

@@ -42,7 +42,7 @@ class MyPeopleScreen extends StatelessWidget {
                   executives.map((executive) => _buildMemberTile(context, executive)).toList(),
             ),
             _buildExpandableListTile(
-              title: 'Non-Executives',
+              title: 'Members',
               children: nonExecutives
                   .map((nonExecutives) => _buildMemberTile(context, nonExecutives))
                   .toList(),
@@ -91,13 +91,6 @@ class MyPeopleScreen extends StatelessWidget {
           : null,
       onTap: () {
         Get.toNamed(Routes.memberProfileRoute, arguments: member);
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => MemberProfileScreen(
-        //       member: member,
-        //     ),
-        //   ),
-        // );
       },
     );
   }
