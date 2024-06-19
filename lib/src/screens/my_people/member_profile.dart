@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:get/get.dart';
 
+import '../../resources/styles_manager.dart';
+import '../../resources/values_manager.dart';
+
 class MemberProfileScreen extends StatelessWidget {
   final Member member = Get.arguments;
 
@@ -22,9 +25,31 @@ class MemberProfileScreen extends StatelessWidget {
       child: ListView(
         children: [
           const SizedBox(height: 20),
-          CircleAvatar(
-            radius: 100,
-            backgroundImage: CachedNetworkImageProvider(member.photoUrl),
+          GestureDetector(
+            onTap: () => AppService.viewPicture(CachedNetworkImage(imageUrl: member.photoUrl), "Display Picture"),
+            child: Container(
+              height: Spacing.s190,
+              // padding: const EdgeInsets.all(Spacing.s5),
+              margin: const EdgeInsets.all(3),
+              alignment: Alignment.center,
+              decoration: StyleManager.boxDecoration.copyWith(
+                shape: BoxShape.circle,
+                borderRadius: null,
+                boxShadow: [
+                  const BoxShadow(
+                    color: Colors.black,
+                    blurRadius: Spacing.s4,
+                    offset: Offset(2, 2),
+                  )
+                ],
+              ),
+              child: Hero(
+                tag: 'profile_pic${member.id}',
+                child: CircleAvatar(
+                    radius: Spacing.s90,
+                    backgroundImage: CachedNetworkImageProvider(member.photoUrl)),
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           Text(
@@ -96,7 +121,7 @@ class MemberProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    member.executivePosition ?? "Not Executive" ,
+                    member.executivePosition ?? "Not Executive",
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],
@@ -108,3 +133,8 @@ class MemberProfileScreen extends StatelessWidget {
     );
   }
 }
+
+// CircleAvatar(
+//             radius: 100,
+//             backgroundImage: CachedNetworkImageProvider(member.photoUrl),
+//           ),

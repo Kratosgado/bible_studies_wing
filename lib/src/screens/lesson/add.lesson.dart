@@ -61,7 +61,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                           style: TextStyle(color: ColorManager.deepBblue),
                         )
                       : GestureDetector(
-                          onTap: () => viewPicture(_image!),
+                          onTap: () => AppService.viewPicture(Image.file(_image!), "Lesson Image"),
                           child: Hero(
                             tag: "lessonImage",
                             child: CircleAvatar(
@@ -120,21 +120,6 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         ),
       ),
     );
-  }
-
-  void viewPicture(File image) {
-    Get.to(() => Hero(
-        tag: "lessonImage",
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: const Text("Lesson Image"),
-          ),
-          body: Center(
-            child: Image.file(image),
-          ),
-        )));
   }
 
   Future getImage() async {

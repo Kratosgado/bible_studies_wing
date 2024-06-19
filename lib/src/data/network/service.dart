@@ -55,6 +55,23 @@ class AppService extends GetxService {
     );
   }
 
+  // function to view image
+   static void viewPicture(Widget child, String title) {
+    Get.to(() => Hero(
+        tag: "lessonImage",
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            title: Text(title),
+          ),
+          body: Center(
+            child: child,
+          ),
+        )));
+  }
+
+
   static void dismissPopup(BuildContext ctx) {
     Navigator.of(ctx, rootNavigator: true).pop();
   }

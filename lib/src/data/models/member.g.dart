@@ -16,7 +16,7 @@ Member _$MemberFromJson(Map<String, dynamic> json, bool converted) => Member(
       contact: json['contact'] as String,
       programme: json['programme'] as String,
       hall: json['hall'] as String,
-      executivePosition: json['executivePosition'] as String,
+      executivePosition: json['executivePosition'] != null ? json['executivePosition'] as String : null,
     );
 
 Map<String, dynamic> _$MemberToJson(Member instance, bool convert) => <String, dynamic>{
