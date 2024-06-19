@@ -11,7 +11,6 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
-
 import '../../data/models/member.dart';
 
 class MemberRegistrationForm extends StatefulWidget {
