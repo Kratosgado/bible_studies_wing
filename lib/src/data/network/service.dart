@@ -56,9 +56,9 @@ class AppService extends GetxService {
   }
 
   // function to view image
-   static void viewPicture(Widget child, String title) {
+  static void viewPicture(Widget child, String title, String imageUrl) {
     Get.to(() => Hero(
-        tag: "lessonImage",
+        tag: imageUrl,
         child: Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(
@@ -70,7 +70,6 @@ class AppService extends GetxService {
           ),
         )));
   }
-
 
   static void dismissPopup(BuildContext ctx) {
     Navigator.of(ctx, rootNavigator: true).pop();

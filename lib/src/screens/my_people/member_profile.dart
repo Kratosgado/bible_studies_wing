@@ -26,7 +26,8 @@ class MemberProfileScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           GestureDetector(
-            onTap: () => AppService.viewPicture(CachedNetworkImage(imageUrl: member.photoUrl), "Display Picture"),
+            onTap: () => AppService.viewPicture(
+                CachedNetworkImage(imageUrl: member.photoUrl), "Display Picture", member.photoUrl),
             child: Container(
               height: Spacing.s190,
               // padding: const EdgeInsets.all(Spacing.s5),
@@ -44,7 +45,7 @@ class MemberProfileScreen extends StatelessWidget {
                 ],
               ),
               child: Hero(
-                tag: 'profile_pic${member.id}',
+                tag: member.photoUrl,
                 child: CircleAvatar(
                     radius: Spacing.s90,
                     backgroundImage: CachedNetworkImageProvider(member.photoUrl)),
