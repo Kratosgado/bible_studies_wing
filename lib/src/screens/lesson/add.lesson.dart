@@ -61,9 +61,9 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                           style: TextStyle(color: ColorManager.deepBblue),
                         )
                       : GestureDetector(
-                          onTap: () => AppService.viewPicture(Image.file(_image!), "Lesson Image"),
+                          onTap: () => AppService.viewPicture(Image.file(_image!), "Lesson Image", "lesson_image"),
                           child: Hero(
-                            tag: "lessonImage",
+                            tag: "lesson_image",
                             child: CircleAvatar(
                               radius: Spacing.s100,
                               backgroundImage: FileImage(_image!),
