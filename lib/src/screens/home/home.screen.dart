@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
           TextButton(
             onPressed: () {},
             child: Text('The Word our light our sword',
-                style: Theme.of(context).textTheme.titleMedium),
+                style: context.textTheme.displaySmall?.copyWith(fontSize: Spacing.s20)),
           )
         ],
       ),

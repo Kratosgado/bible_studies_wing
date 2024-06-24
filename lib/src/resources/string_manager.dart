@@ -17,5 +17,5 @@ class AboutUs {
       responseValue = "Our Light, Our Sword\n",
       bibleRef = "Bible References: ",
       bibleRefValue = "Psalm 119:105, Hebrews 4:12\n",
-      godBless = "God Bless You";
+      godBless = "God Bless You!!!";
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 class CurvedScaffold extends StatelessWidget {
   final Widget child;
@@ -21,7 +22,7 @@ class CurvedScaffold extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {},
-            child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+            child: Text(title, style: context.textTheme.displaySmall),
           )
         ],
       ),

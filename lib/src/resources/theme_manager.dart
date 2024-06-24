@@ -6,6 +6,13 @@ ThemeData getApplicationTheme() {
   return ThemeData(
       disabledColor: Colors.grey.shade400,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      textTheme: const TextTheme(
+        bodyMedium: TextStyle(fontSize: Spacing.s20, color: Colors.black),
+        titleLarge:
+            TextStyle(fontWeight: FontWeight.bold, fontSize: Spacing.s28, color: Colors.black),
+        titleMedium:
+            TextStyle(fontWeight: FontWeight.bold, fontSize: Spacing.s20, color: Colors.black),
+      ),
       colorScheme: ColorScheme.dark(
         surface: Colors.transparent,
         primary: ColorManager.mediumBlue,

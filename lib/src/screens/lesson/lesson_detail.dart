@@ -1,4 +1,6 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:bible_studies_wing/src/resources/values_manager.dart';
+import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -12,13 +14,11 @@ class LessonDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(lesson.topic),
-      ),
-      body: SingleChildScrollView(
+    return CurvedScaffold(
+      title: lesson.topic,
+      child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(Spacing.s16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,9 +37,9 @@ class LessonDetailScreen extends StatelessWidget {
               ),
               Text(
                 'Subtopic: ${lesson.subtopic}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: context.textTheme.titleLarge,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: Spacing.s16),
               QuillEditor(
                 focusNode: FocusNode(),
                 scrollController: ScrollController(),
@@ -58,7 +58,7 @@ class LessonDetailScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 'Date: ${AppService.formatDate(lesson.date)}',
-                style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                style: context.textTheme.titleMedium,
               ),
             ],
           ),
