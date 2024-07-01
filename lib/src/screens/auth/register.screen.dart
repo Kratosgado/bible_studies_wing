@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/data/network/auth.controller.dart';
 import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
+import 'package:bible_studies_wing/src/resources/styles_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
@@ -24,23 +25,33 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // add icon
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage(ImageAssets.bslogo),
-              ),
-              const Text(
-                "BIBLE STUDY WING",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: ColorManager.bgColor,
-                  fontWeight: FontWeight.bold,
+              Container(
+                height: Spacing.s190,
+                // padding: const EdgeInsets.all(Spacing.s5),
+                margin: const EdgeInsets.all(3),
+                alignment: Alignment.center,
+                decoration: StyleManager.boxDecoration.copyWith(
+                  shape: BoxShape.circle,
+                  borderRadius: null,
+                  boxShadow: [
+                    const BoxShadow(
+                      color: Colors.black,
+                      blurRadius: Spacing.s4,
+                      offset: Offset(2, 2),
+                    )
+                  ],
                 ),
+                child: const CircleAvatar(
+                    radius: Spacing.s90, backgroundImage: AssetImage(ImageAssets.bslogo)),
+              ),
+              Text(
+                "BIBLE STUDY WING",
+                style: context.textTheme.titleLarge,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: MaterialButton(
-                  color: ColorManager.bgColor,
+                  color: ColorManager.faintWhite,
                   elevation: Spacing.s10,
                   splashColor: Colors.teal,
                   hoverElevation: Spacing.s20,
@@ -60,10 +71,9 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 20),
-                    
                       Text(
                         "Sign in with Google",
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: context.textTheme.titleMedium?.copyWith(color: Colors.white),
                       ),
                     ],
                   ),

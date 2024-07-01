@@ -75,5 +75,7 @@ class AppService extends GetxService {
     Navigator.of(ctx, rootNavigator: true).pop();
   }
 
+  
+
   static int passcode = 1234;
 }
