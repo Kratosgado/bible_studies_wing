@@ -1,4 +1,6 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/comment.sheet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +10,16 @@ import '../../../data/models/lesson.dart';
 
 Widget lessonCard(BuildContext context, Lesson lesson) {
   return SizedBox(
-    height: 300,
+    height: 350,
     width: 350,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GestureDetector(
-          onTap: () => Get.toNamed(Routes.lessonDetailRoute, arguments: lesson),
-          child: SizedBox(
-            height: 220,
-            width: 350,
+        SizedBox(
+          width: 50,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(Spacing.s10),
             child: CachedNetworkImage(
               imageUrl: lesson.imageUrl,
               progressIndicatorBuilder: (context, _, downloadProgress) {
@@ -25,26 +27,65 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
                   child: CircularProgressIndicator(value: downloadProgress.progress),
                 );
               },
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(lesson.topic,
-                style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              lesson.topic,
+              style:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            Text(
+              AppService.formatDate(lesson.date),
+              style: context.textTheme.titleSmall?.copyWith(color: Colors.blueGrey),
+            ),
+            const SizedBox(
+              height: Spacing.s5,
+            ),
+            GestureDetector(
+              onTap: () => Get.toNamed(Routes.lessonDetailRoute, arguments: lesson),
+              child: SizedBox(
+                height: 200,
+                width: 300,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(Spacing.s10),
+                  child: CachedNetworkImage(
+                    imageUrl: lesson.imageUrl,
+                    progressIndicatorBuilder: (context, _, downloadProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(value: downloadProgress.progress),
+                      );
+                    },
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: Spacing.s5,
+            ),
             Row(
-              children: [
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  lesson.subtopic,
+                  style: context.textTheme.titleSmall?.copyWith(color: Colors.blueGrey),
+                ),
                 IconButton(
                   onPressed: () => showCommentSheet(context, lesson),
-                  icon: const Icon(Icons.message_rounded),
+                  icon: const Icon(
+                    Icons.message_rounded,
+                    color: Colors.blueAccent,
+                  ),
                   iconSize: 35,
-                ),
+                )
               ],
-            )
+            ),
           ],
         ),
       ],

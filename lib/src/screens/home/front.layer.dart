@@ -34,7 +34,6 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
             return ListView.separated(
               separatorBuilder: (_, __) => Divider(
                 color: ColorManager.faintWhite,
-                thickness: 5.0,
               ),
               itemCount: lessonsDocs.length,
               itemBuilder: (ctx, index) {
