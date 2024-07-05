@@ -18,10 +18,12 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
       children: [
         SizedBox(
           width: 50,
+          height: 50,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(Spacing.s10),
             child: CachedNetworkImage(
               imageUrl: lesson.imageUrl,
+              fit: BoxFit.cover,
               progressIndicatorBuilder: (context, _, downloadProgress) {
                 return Center(
                   child: CircularProgressIndicator(value: downloadProgress.progress),
@@ -41,7 +43,8 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
             ),
             Text(
               AppService.formatDate(lesson.date),
-              style: context.textTheme.titleSmall?.copyWith(color: Colors.blueGrey),
+              style: context.textTheme.titleMedium
+                  ?.copyWith(color: Colors.blueGrey, fontWeight: FontWeight.normal),
             ),
             const SizedBox(
               height: Spacing.s5,
@@ -74,7 +77,8 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
               children: <Widget>[
                 Text(
                   lesson.subtopic,
-                  style: context.textTheme.titleSmall?.copyWith(color: Colors.blueGrey),
+                  style: context.textTheme.titleMedium
+                      ?.copyWith(color: Colors.blueGrey, fontWeight: FontWeight.normal),
                 ),
                 IconButton(
                   onPressed: () => showCommentSheet(context, lesson),

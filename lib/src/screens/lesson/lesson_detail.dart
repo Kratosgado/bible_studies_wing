@@ -1,4 +1,5 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,6 +17,10 @@ class LessonDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: lesson.topic,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(Routes.lessonCreatorRoute, arguments: lesson),
+        child: const Icon(Icons.edit),
+      ),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(Spacing.s16),
@@ -24,15 +29,18 @@ class LessonDetailScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                child: CachedNetworkImage(
-                  imageUrl: lesson.imageUrl,
-                  progressIndicatorBuilder: (context, _, downloadProgress) {
-                    return Center(
-                      child: CircularProgressIndicator(value: downloadProgress.progress),
-                    );
-                  },
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(Spacing.s28),
+                  child: CachedNetworkImage(
+                    imageUrl: lesson.imageUrl,
+                    progressIndicatorBuilder: (context, _, downloadProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(value: downloadProgress.progress),
+                      );
+                    },
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Text(

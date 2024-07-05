@@ -11,6 +11,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
   final retrieveLessons = FirebaseFirestore.instance
       .collection('lessons')
       .orderBy('date', descending: true)
+      .limit(10)
       .snapshots();
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: Spacing.s16),

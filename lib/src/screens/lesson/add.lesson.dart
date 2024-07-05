@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,7 +16,8 @@ import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 
 class AddLessonScreen extends StatefulWidget {
-  const AddLessonScreen({super.key});
+  AddLessonScreen({super.key});
+  final Lesson? lesson = Get.arguments;
 
   @override
   State<AddLessonScreen> createState() => _AddLessonScreenState();
@@ -27,6 +29,16 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
   final topicController = TextEditingController();
   final subtopicController = TextEditingController();
   File? _image;
+
+  @override
+  void initState() {
+    if (widget.lesson != null) {
+      topicController.text = widget.lesson!.topic;
+      subtopicController.text = widget.lesson!.subtopic;
+      _controller.document = Document.fromJson(widget.lesson!.body);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,21 +67,37 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 ),
               ),
               Center(
-                  child: _image == null
-                      ? Text(
-                          'No image selected.',
-                          style: TextStyle(color: ColorManager.deepBblue),
-                        )
-                      : GestureDetector(
-                          onTap: () => AppService.viewPicture(Image.file(_image!), "Lesson Image", "lesson_image"),
-                          child: Hero(
-                            tag: "lesson_image",
-                            child: CircleAvatar(
-                              radius: Spacing.s100,
-                              backgroundImage: FileImage(_image!),
+                child: widget.lesson != null
+                    ? GestureDetector(
+                        onTap: () => AppService.viewPicture(
+                            CachedNetworkImage(imageUrl: widget.lesson!.imageUrl),
+                            "Lesson Image",
+                            "lesson_image"),
+                        child: Hero(
+                          tag: "lesson_image",
+                          child: CircleAvatar(
+                            radius: Spacing.s100,
+                            backgroundImage: CachedNetworkImageProvider(widget.lesson!.imageUrl),
+                          ),
+                        ),
+                      )
+                    : _image == null
+                        ? Text(
+                            'No image selected.',
+                            style: TextStyle(color: ColorManager.deepBblue),
+                          )
+                        : GestureDetector(
+                            onTap: () => AppService.viewPicture(
+                                Image.file(_image!), "Lesson Image", "lesson_image"),
+                            child: Hero(
+                              tag: "lesson_image",
+                              child: CircleAvatar(
+                                radius: Spacing.s100,
+                                backgroundImage: FileImage(_image!),
+                              ),
                             ),
                           ),
-                        )),
+              ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: topicController,
@@ -144,21 +172,29 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     if (mounted) {
       AppService.showLoadingPopup(context, "Saving Lesson");
     }
-    String imageUrl = await uploadImage();
+
+    String? imageUrl;
+    if (_image != null) {
+      imageUrl = await uploadImage();
+    }
     final DateTime now = DateTime.now();
 
     Lesson newLesson = Lesson(
-        id: const Uuid().v4(),
-        topic: topicController.text.trim(),
-        subtopic: subtopicController.text.trim(),
-        body: _controller.document.toDelta().toJson(),
-        imageUrl: imageUrl,
-        date: DateTime(now.year, now.month, now.day));
-    FirebaseFirestore.instance.collection('lessons').add(newLesson.toJson()).then((value) async => {
-          await AppService.notificationService.sendMessageToTopic(
-              message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson"),
-          Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson)
-        });
+      id: widget.lesson?.id ?? const Uuid().v4(),
+      topic: topicController.text.trim(),
+      subtopic: subtopicController.text.trim(),
+      body: _controller.document.toDelta().toJson(),
+      imageUrl: imageUrl ?? widget.lesson!.imageUrl,
+      date: DateTime(now.year, now.month, now.day),
+    );
+
+    FirebaseFirestore.instance.collection('lessons').doc(newLesson.id).set(newLesson.toJson()).then(
+          (_) async => {
+            await AppService.notificationService.sendMessageToTopic(
+                message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson"),
+            Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson)
+          },
+        );
 
     if (mounted) {
       AppService.dismissPopup(context);

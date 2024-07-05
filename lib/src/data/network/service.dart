@@ -50,12 +50,14 @@ class AppService extends GetxService {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              Text(message),
-            ],
+          child: Card(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(),
+                Text(message),
+              ],
+            ),
           ),
         );
       },

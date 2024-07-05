@@ -70,7 +70,7 @@ List<GetPage> getRoutes() => [
       GetPage(name: Routes.addProgramOutlineRoute, page: () => AddProgramOutlineScreen()),
 
       // lesson
-      GetPage(name: Routes.lessonCreatorRoute, page: () => const AddLessonScreen()),
+      GetPage(name: Routes.lessonCreatorRoute, page: () => AddLessonScreen()),
       GetPage(name: Routes.lessonDetailRoute, page: () => LessonDetailScreen()),
 
       // today's event
