@@ -1,16 +1,16 @@
+import 'dart:convert';
+
+import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 import "package:rxdart/rxdart.dart";
-// import 'package:flutter/material.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   final _messageStreamController = BehaviorSubject<RemoteMessage>();
-
-  static const String lessonTopic = "lesson";
-  static const String eventTopic = "event";
-  static const String announcementTopic = "announcement";
 
   Future initialize() async {
     final settings = await _fcm.requestPermission(
@@ -43,16 +43,49 @@ class PushNotificationService {
     // get the token
     await getToken();
     // subscribe to topic
-    await _fcm.subscribeToTopic(lessonTopic);
-    await _fcm.subscribeToTopic(eventTopic);
-    await _fcm.subscribeToTopic(announcementTopic);
-    await _fcm.getInitialMessage();
+    await _fcm.subscribeToTopic(AppService.announcementTopic);
+    await _fcm.subscribeToTopic(AppService.eventTopic);
+    await _fcm.subscribeToTopic(AppService.lessonTopic);
   }
 
   Future<String?> getToken() async {
     String? token = await _fcm.getToken();
     debugPrint("Token :: :: $token");
     return token;
+  }
+
+  Future<void> sendMessageToTopic(
+      {required String message, required String topic, required String title}) async {
+    var url =
+        Uri.parse("https://fcm.googleapis.com/v1/projects/${AppService.projectId}/messages:send");
+
+    OAuthProvider oAuthProvider = OAuthProvider("");
+    
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${AppService.firebaseToken}',
+    };
+    var body = jsonEncode({
+      'message': {
+        'topic': topic,
+        'notification': {
+          'body': message,
+          'title': title,
+        }
+      }
+    });
+
+    try {
+      var response = await post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        debugPrint("Message sent successfullly to topic: $topic");
+      } else {
+        debugPrint("Failed to send message. Status code: ${response.statusCode}");
+        debugPrint("Response body: ${response.body}");
+      }
+    } catch (e) {
+      debugPrint("Error sending message: $e");
+    }
   }
 }
 
