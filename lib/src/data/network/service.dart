@@ -1,18 +1,25 @@
 import 'package:bible_studies_wing/src/app/app.refs.dart';
 import 'package:bible_studies_wing/src/app/notifications.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppService extends GetxService {
   static final AppPreferences preferences = AppPreferences();
-  static final _notificationService = PushNotificationService();
+  static final notificationService = PushNotificationService();
+
+  static const String lessonTopic = "lesson";
+  static const String eventTopic = "event";
+  static const String announcementTopic = "announcement";
+  static const projectId = "biblestudywing-32f3b";
+  static const firebaseToken = "bEhCWyKiJAQRjRJrgIHzVrWFR_CVfxTCGfhFcuzjlGs";
 
   static Member? currentMember;
   Future<void> init() async {
     debugPrint("AppService init");
     currentMember = preferences.getCurrentMember();
-    _notificationService.initialize();
+    notificationService.initialize();
     super.onInit();
   }
 

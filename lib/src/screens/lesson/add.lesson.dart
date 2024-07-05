@@ -141,12 +141,11 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
   }
 
   void submit() async {
-    String imageUrl = await uploadImage();
-    final DateTime now = DateTime.now();
-
     if (mounted) {
       AppService.showLoadingPopup(context, "Saving Lesson");
     }
+    String imageUrl = await uploadImage();
+    final DateTime now = DateTime.now();
 
     Lesson newLesson = Lesson(
         id: const Uuid().v4(),
@@ -155,10 +154,11 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         body: _controller.document.toDelta().toJson(),
         imageUrl: imageUrl,
         date: DateTime(now.year, now.month, now.day));
-    FirebaseFirestore.instance
-        .collection('lessons')
-        .add(newLesson.toJson())
-        .then((value) => Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson));
+    FirebaseFirestore.instance.collection('lessons').add(newLesson.toJson()).then((value) async => {
+          await AppService.notificationService.sendMessageToTopic(
+              message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson"),
+          Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson)
+        });
 
     if (mounted) {
       AppService.dismissPopup(context);
