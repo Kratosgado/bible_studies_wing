@@ -255,45 +255,51 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
   }
 
   Future<void> _saveFormData() async {
-    if (_formKey.currentState!.validate()) {
-      final firestore = FirebaseFirestore.instance;
-      if (_imageFile != null) {
-        final Reference storageRef =
-            FirebaseStorage.instance.ref().child('profile_images').child('${widget.user.uid}.jpg');
+    await AppService.showLoadingPopup(
+        asyncFunction: () async {
+          if (_formKey.currentState!.validate()) {
+            final firestore = FirebaseFirestore.instance;
+            if (_imageFile != null) {
+              final Reference storageRef = FirebaseStorage.instance
+                  .ref()
+                  .child('profile_images')
+                  .child('${widget.user.uid}.jpg');
 
-        final UploadTask uploadTask = storageRef.putFile(_imageFile!);
+              final UploadTask uploadTask = storageRef.putFile(_imageFile!);
 
-        // Display loading dialog
-        AppService.showLoadingPopup(context, "Submitting information");
-
-        final TaskSnapshot storageSnapshot = await uploadTask;
-        final String photoUrl = await storageSnapshot.ref.getDownloadURL();
-        Member newMember = Member(
-          id: widget.user.uid,
-          name: _nameController.text,
-          photoUrl: photoUrl, // will be back
-          birthdate: DateTime.parse(_birthdateController.text),
-          contact: _contactController.text,
-          programme: _programmeController.text,
-          hall: _hallController.text,
-          executivePosition: _executivePosition.text,
-        );
-        // Convert Member object to a Map and save it to Firestore
-        await firestore
-            .collection('members')
-            .doc(widget.user.uid)
-            .set(newMember.toJson())
-            .then((_) => AppService.preferences.login())
-            .then((_) async => await Get.put(AppService()).init())
-            .then((_) => Get.offNamed(Routes.homeRoute));
-        // Dismiss the loading dialog
-        if (mounted) {
-          AppService.dismissPopup(context);
-        }
-      } else {
-        Get.snackbar("Registration Error", "Add a profile picture to continue",
-            snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
-      }
-    }
+              final TaskSnapshot storageSnapshot = await uploadTask;
+              final String photoUrl = await storageSnapshot.ref.getDownloadURL();
+              Member newMember = Member(
+                id: widget.user.uid,
+                name: _nameController.text,
+                photoUrl: photoUrl, // will be back
+                birthdate: DateTime.parse(_birthdateController.text),
+                contact: _contactController.text,
+                programme: _programmeController.text,
+                hall: _hallController.text,
+                executivePosition: _executivePosition.text,
+              );
+              // Convert Member object to a Map and save it to Firestore
+              await firestore
+                  .collection('members')
+                  .doc(widget.user.uid)
+                  .set(newMember.toJson())
+                  .then((_) => AppService.preferences.login())
+                  .then((_) async => await Get.put(AppService()).init())
+                  .then((_) => Get.offNamed(Routes.homeRoute));
+              // Dismiss the loading dialog
+              if (mounted) {
+                AppService.dismissPopup(context);
+              }
+            } else {
+              Get.snackbar("Registration Error", "Add a profile picture to continue",
+                  snackPosition: SnackPosition.TOP,
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white);
+            }
+          }
+        },
+        message: "Submitting information",
+        errorMessage: "Error submitting information");
   }
 }

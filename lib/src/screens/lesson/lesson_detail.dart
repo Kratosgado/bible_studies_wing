@@ -18,7 +18,7 @@ class LessonDetailScreen extends StatelessWidget {
     return CurvedScaffold(
       title: lesson.topic,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.lessonCreatorRoute, arguments: lesson),
+        onPressed: () => Get.offNamed(Routes.lessonCreatorRoute),
         child: const Icon(Icons.edit),
       ),
       child: SingleChildScrollView(

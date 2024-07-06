@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../resources/color_manager.dart';
+
 class AppService extends GetxService {
   static final AppPreferences preferences = AppPreferences();
   static final notificationService = PushNotificationService();
@@ -44,24 +46,33 @@ class AppService extends GetxService {
   }
 
   // function to show loading popup
-  static dynamic showLoadingPopup(BuildContext ctx, String message) {
-    return showDialog(
-      context: ctx,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Card(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const CircularProgressIndicator(),
-                Text(message),
-              ],
-            ),
+  static dynamic showLoadingPopup(
+      {required Future<dynamic> Function() asyncFunction,
+      required String message,
+      required errorMessage}) async {
+    try {
+      await Get.showOverlay(
+        asyncFunction: asyncFunction,
+        loadingWidget: Card(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              Text(message),
+            ],
           ),
-        );
-      },
-    );
+        ),
+      );
+    } catch (e) {
+      Get.snackbar(
+        errorMessage,
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: ColorManager.deepBblue,
+        colorText: Colors.white,
+      );
+      debugPrint(e.toString());
+    }
   }
 
   // function to view image

@@ -25,8 +25,10 @@ class CustomListTile extends StatelessWidget {
       height: context.height * 0.1,
       width: context.height * 0.8,
       padding: const EdgeInsets.all(Spacing.s10),
-      decoration:
-          StyleManager.boxDecoration.copyWith(borderRadius: BorderRadius.circular(Spacing.s28)),
+      decoration: StyleManager.boxDecoration.copyWith(
+        borderRadius: BorderRadius.circular(Spacing.s28),
+        boxShadow: null,
+      ),
       child: Row(
         children: [
           Container(

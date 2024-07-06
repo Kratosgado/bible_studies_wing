@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
@@ -106,11 +107,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
   }
 
   void submit() async {
+
     String imageUrl = await uploadImage();
     FirebaseFirestore.instance.collection('once').doc("event").set({
       'date': DateTime.now().toString(),
       'image': imageUrl,
       'body': _controller.document.toDelta().toJson(),
     }).then((value) => Get.offNamed(Routes.todaysEventRoute));
+    if (mounted) {
+      AppService.dismissPopup(context);
+    }
   }
 }
