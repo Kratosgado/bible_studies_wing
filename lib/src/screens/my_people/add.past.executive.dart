@@ -5,43 +5,33 @@ import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
+import 'package:uuid/uuid.dart';
+import 'package:uuid/v4.dart';
 import '../../data/models/member.dart';
 
-class MemberRegistrationForm extends StatefulWidget {
-  final User user = Get.arguments; // Receive user data as an argument
-
-  MemberRegistrationForm({super.key});
+class AddPastExecutiveScreen extends StatefulWidget {
+  const AddPastExecutiveScreen({super.key});
 
   @override
   MemberRegistrationFormState createState() => MemberRegistrationFormState();
 }
 
-class MemberRegistrationFormState extends State<MemberRegistrationForm> {
-  // final auth = FirebaseAuth.instance.currentUser;
+class MemberRegistrationFormState extends State<AddPastExecutiveScreen> {
+  final currentUser = AppService.currentMember;
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _birthdateController = TextEditingController();
   final _contactController = TextEditingController();
   final _programmeController = TextEditingController();
-  final _hallController = TextEditingController();
-  final _verifierController = TextEditingController();
+  final _yearController = TextEditingController();
   final _executivePosition = TextEditingController();
   bool executiveStatus = false;
-
-  bool _isExecutive = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.text = widget.user.displayName!;
-    // Initialize other form fields with user data if available
-  }
 
   @override
   void dispose() {
@@ -49,7 +39,6 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     _birthdateController.dispose();
     _contactController.dispose();
     _programmeController.dispose();
-    _hallController.dispose();
     super.dispose();
   }
 
@@ -110,7 +99,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   style: Theme.of(context).primaryTextTheme.bodyLarge!,
                   onTap: () async {
                     _birthdateController.text =
-                        await AppService.selectDate(context) ?? "Select Date";
+                        await AppService.selectDate(context) ?? "Select date";
                   },
                   decoration: const InputDecoration(labelText: 'Birthdate'),
                   validator: (value) {
@@ -145,71 +134,27 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: Spacing.s16),
                 TextFormField(
-                  controller: _hallController,
+                  controller: _yearController,
                   style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                  decoration: const InputDecoration(labelText: 'Hall/Hostel'),
+                  decoration: const InputDecoration(labelText: 'Year'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'required';
+                    } else if (int.parse(value).isLowerThan(2000)) {
+                      return "Expecing a number greater than 2000";
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _isExecutive,
-                      checkColor: Colors.white,
-                      activeColor: Colors.blue,
-                      fillColor: WidgetStateColor.resolveWith((states) => ColorManager.deepBblue),
-                      overlayColor: WidgetStateColor.resolveWith((states) => Colors.white),
-                      onChanged: (value) {
-                        setState(() {
-                          _isExecutive = value ?? false;
-                          if (!_isExecutive) {
-                            _verifierController.clear();
-                          }
-                        });
-                      },
-                    ),
-                    Text(
-                      'Executive',
-                      style: TextStyle(color: ColorManager.deepBblue),
-                    ),
-                  ],
-                ),
-                if (_isExecutive)
-                  TextFormField(
-                    controller: _verifierController,
-                    style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                    onChanged: (value) => {
-                      setState(() {
-                        executiveStatus =
-                            (int.tryParse(value) != AppService.passcode) ? false : true;
-                      })
-                    },
-                    decoration: const InputDecoration(labelText: 'Verifier Code'),
-                    validator: (value) {
-                      // Add your verifier code validation logic here
-                      if (int.parse(value!) != AppService.passcode) {
-                        executiveStatus = false;
-                        return 'Incorrect code';
-                      }
-                      executiveStatus = true;
-                      return null; // Validation passes, return null.
-                    },
-                  ),
                 const SizedBox(height: Spacing.s16),
 
-                if (executiveStatus)
-                  TextFormField(
-                    controller: _executivePosition,
-                    style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                    decoration: const InputDecoration(labelText: 'Executive Position'),
-                  ),
+                TextFormField(
+                  controller: _executivePosition,
+                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
+                  decoration: const InputDecoration(labelText: 'Executive Position'),
+                ),
                 const SizedBox(height: Spacing.s16),
                 Center(
                   child: ElevatedButton(
@@ -229,6 +174,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
   }
 
   Future<void> _saveFormData() async {
+    final id = const Uuid().v4();
     await AppService.showLoadingPopup(
         asyncFunction: () async {
           if (_formKey.currentState!.validate()) {
@@ -237,34 +183,27 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
               final Reference storageRef = FirebaseStorage.instance
                   .ref()
                   .child('profile_images')
-                  .child('${widget.user.uid}.jpg');
+                  .child('${id.toString()}.jpg');
 
               final UploadTask uploadTask = storageRef.putFile(_imageFile!);
 
               final TaskSnapshot storageSnapshot = await uploadTask;
               final String photoUrl = await storageSnapshot.ref.getDownloadURL();
               Member newMember = Member(
-                id: widget.user.uid,
+                id: id.toString(),
                 name: _nameController.text,
                 photoUrl: photoUrl, // will be back
                 birthdate: _birthdateController.text,
                 contact: _contactController.text,
                 programme: _programmeController.text,
-                hall: _hallController.text,
+                year: int.parse(_yearController.text),
                 executivePosition: _executivePosition.text,
               );
               // Convert Member object to a Map and save it to Firestore
               await firestore
-                  .collection('members')
-                  .doc(widget.user.uid)
-                  .set(newMember.toJson())
-                  .then((_) => AppService.preferences.login())
-                  .then((_) async => await Get.put(AppService()).init())
-                  .then((_) => Get.offNamed(Routes.homeRoute));
-              // Dismiss the loading dialog
-              if (mounted) {
-                AppService.dismissPopup(context);
-              }
+                  .collection('past_executives')
+                  .doc(id.toString())
+                  .set(newMember.toJson());
             } else {
               Get.snackbar("Registration Error", "Add a profile picture to continue",
                   snackPosition: SnackPosition.TOP,

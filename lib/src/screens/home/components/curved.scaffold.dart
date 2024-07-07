@@ -22,7 +22,7 @@ class CurvedScaffold extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {},
-            child: Text(title, style: context.textTheme.displaySmall),
+            child: Text(title, style: context.textTheme.titleLarge?.copyWith(color: Colors.white)),
           )
         ],
       ),

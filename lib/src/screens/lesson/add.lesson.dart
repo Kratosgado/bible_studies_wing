@@ -172,35 +172,36 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
   void submit() async {
     // AppService.showLoadingPopup(context, "Saving Lesson");
     await AppService.showLoadingPopup(
-        asyncFunction: () async {
-          String? imageUrl;
-          if (_image != null) {
-            imageUrl = await uploadImage();
-          }
-          final DateTime now = DateTime.now();
+      asyncFunction: () async {
+        String? imageUrl;
+        if (_image != null) {
+          imageUrl = await uploadImage();
+        }
+        final DateTime now = DateTime.now();
 
-          Lesson newLesson = Lesson(
-            id: widget.lesson?.id ?? const Uuid().v4(),
-            topic: topicController.text.trim(),
-            subtopic: subtopicController.text.trim(),
-            body: _controller.document.toDelta().toJson(),
-            imageUrl: imageUrl ?? widget.lesson!.imageUrl,
-            date: DateTime(now.year, now.month, now.day),
-          );
+        Lesson newLesson = Lesson(
+          id: widget.lesson?.id ?? const Uuid().v4(),
+          topic: topicController.text.trim(),
+          subtopic: subtopicController.text.trim(),
+          body: _controller.document.toDelta().toJson(),
+          imageUrl: imageUrl ?? widget.lesson!.imageUrl,
+          date: DateTime(now.year, now.month, now.day),
+        );
 
-          FirebaseFirestore.instance
-              .collection('lessons')
-              .doc(newLesson.id)
-              .set(newLesson.toJson())
-              .then(
-                (_) async => {
-                  await AppService.notificationService.sendMessageToTopic(
-                      message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson"),
-                  Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson)
-                },
-              );
-        },
-        message: "Saving Lesson",
-        errorMessage: "Error saving lesson");
+        FirebaseFirestore.instance
+            .collection('lessons')
+            .doc(newLesson.id)
+            .set(newLesson.toJson())
+            .then(
+              (_) async => {
+                await AppService.notificationService.sendMessageToTopic(
+                    message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson"),
+                Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson)
+              },
+            );
+      },
+      message: "Saving Lesson",
+      errorMessage: "Error saving lesson",
+    );
   }
 }

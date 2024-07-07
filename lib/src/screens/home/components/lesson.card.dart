@@ -74,6 +74,7 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
                   lesson.subtopic,

@@ -8,21 +8,21 @@ import 'package:get/get.dart';
 import '../../data/models/member.dart';
 import '../../resources/values_manager.dart';
 
-class MyPeopleScreen extends StatelessWidget {
-
-  const MyPeopleScreen({super.key});
+class PastExecutivesScreen extends StatelessWidget {
+  const PastExecutivesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CurvedScaffold(
-      title: "My People",
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => Get.toNamed(Routes.pastExecutivesRoute),
-          label: const Text("Past Executives")),
+      title: "Past Executives",
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.toNamed(Routes.addPastExecutivesRoute),
+        child: const Icon(Icons.add),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.s20, horizontal: Spacing.s10),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseFirestore.instance.collection('members').snapshots(),
+          stream: FirebaseFirestore.instance.collection('past_executives').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
