@@ -195,8 +195,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
             .then(
               (_) async => {
                 await AppService.notificationService.sendMessageToTopic(
-                    message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson"),
-                Get.offNamed(Routes.lessonDetailRoute, arguments: newLesson)
+                    message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson")
               },
             );
       },

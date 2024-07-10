@@ -52,10 +52,13 @@ class AppService extends GetxService {
   static dynamic showLoadingPopup(
       {required Future<dynamic> Function() asyncFunction,
       required String message,
-      required errorMessage}) async {
+      required errorMessage,
+      VoidCallback? callback}) async {
     try {
       await Get.showOverlay(
-        asyncFunction: asyncFunction,
+        asyncFunction: () async {
+          return await asyncFunction();
+        },
         loadingWidget: Center(
           child: SizedBox(
             height: Get.height * 0.1,
@@ -73,6 +76,12 @@ class AppService extends GetxService {
           ),
         ),
       );
+      if (Get.isOverlaysOpen) {
+        Get.back();
+      }
+      if (callback != null) {
+        callback();
+      }
     } catch (e) {
       Get.snackbar(
         errorMessage,
@@ -82,8 +91,6 @@ class AppService extends GetxService {
         colorText: Colors.white,
       );
       debugPrint(e.toString());
-    } finally {
-      Get.back();
     }
   }
 

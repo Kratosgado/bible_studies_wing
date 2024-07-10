@@ -78,18 +78,19 @@ ThemeData getApplicationTheme() {
         fillColor: ColorManager.faintWhite,
         filled: true,
         contentPadding: const EdgeInsets.all(Spacing.s20),
-        floatingLabelAlignment: FloatingLabelAlignment.center,
-        floatingLabelStyle: const TextStyle(
-          color: ColorManager.bgColor,
-          fontSize: Spacing.s20,
-        ),
+        // floatingLabelAlignment: FloatingLabelAlignment.center,
+        // floatingLabelStyle: const TextStyle(
+        //   color: ColorManager.bgColor,
+        //   fontSize: Spacing.s20,
+        // ),
+        alignLabelWithHint: true,
 
         // hint style
         iconColor: Colors.blue.shade200,
-        labelStyle: TextStyle(
-          color: ColorManager.deepBblue,
-          fontSize: Spacing.s16,
-        ),
+        // labelStyle: TextStyle(
+        //   color: ColorManager.deepBblue,
+        //   fontSize: Spacing.s16,
+        // ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,
