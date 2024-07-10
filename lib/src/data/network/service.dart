@@ -82,12 +82,19 @@ class AppService extends GetxService {
       if (callback != null) {
         callback();
       }
+      Get.snackbar(
+        "Task Successful",
+        "Done $message",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: ColorManager.faintWhite,
+        colorText: ColorManager.deepBblue,
+      );
     } catch (e) {
       Get.snackbar(
         errorMessage,
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: ColorManager.deepBblue,
+        backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
       debugPrint(e.toString());

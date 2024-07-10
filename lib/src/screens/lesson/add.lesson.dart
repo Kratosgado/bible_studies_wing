@@ -191,7 +191,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         FirebaseFirestore.instance
             .collection('lessons')
             .doc(newLesson.id)
-            .set(newLesson.toJson())
+            .set(newLesson.toJson(), SetOptions(merge: true))
             .then(
               (_) async => {
                 await AppService.notificationService.sendMessageToTopic(

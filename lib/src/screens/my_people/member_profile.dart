@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
   final _hallController = TextEditingController();
   final _yearController = TextEditingController();
   final _executivePosition = TextEditingController();
+
+  bool changed = false;
 
   @override
   void initState() {
@@ -69,14 +72,13 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                 alignment: Alignment.center,
                 decoration: StyleManager.boxDecoration.copyWith(
                   shape: BoxShape.circle,
-                  borderRadius: null,
-                  boxShadow: [
-                    const BoxShadow(
-                      color: Colors.black,
-                      blurRadius: Spacing.s4,
-                      offset: Offset(2, 2),
-                    )
-                  ],
+                  // boxShadow: [
+                  //   const BoxShadow(
+                  //     color: Colors.black,
+                  //     blurRadius: Spacing.s4,
+                  //     offset: Offset(2, 2),
+                  //   )
+                  // ],
                 ),
                 child: Hero(
                   tag: member.photoUrl,
@@ -164,6 +166,49 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> updateData() async {
+    await AppService.showLoadingPopup(
+      asyncFunction: () async {
+        if (_formKey.currentState!.validate()) {
+          final firestore = FirebaseFirestore.instance;
+          // if (_imageFile != null) {
+          //   final Reference storageRef = FirebaseStorage.instance
+          //       .ref()
+          //       .child('profile_images')
+          //       .child('${id.toString()}.jpg');
+
+          //   final UploadTask uploadTask = storageRef.putFile(_imageFile!);
+
+          // final TaskSnapshot storageSnapshot = await uploadTask;
+          // final String photoUrl = await storageSnapshot.ref.getDownloadURL();
+          Member newMember = Member(
+            id: member.id,
+            name: _nameController.text,
+            photoUrl: member.photoUrl, // will be back
+            birthdate: _birthdateController.text,
+            contact: _contactController.text,
+            programme: _programmeController.text,
+            year: int.parse(_yearController.text),
+            executivePosition: _executivePosition.text,
+          );
+          // Convert Member object to a Map and save it to Firestore
+          await firestore
+              .collection('past_executives')
+              .doc(member.id)
+              .set(newMember.toJson(), SetOptions(merge: true));
+        } else {
+          Get.snackbar("Registration Error", "Add a profile picture to continue",
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white);
+        }
+      },
+      message: "Submitting information",
+      errorMessage: "Error submitting information",
+      callback: () {},
     );
   }
 }
