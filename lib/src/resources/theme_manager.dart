@@ -1,8 +1,9 @@
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'values_manager.dart';
 
-ThemeData getApplicationTheme() {
+ThemeData getApplicationTheme(BuildContext context) {
   return ThemeData(
       disabledColor: Colors.grey.shade400,
       visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -73,8 +74,9 @@ ThemeData getApplicationTheme() {
           bodyMedium: TextStyle(color: ColorManager.deepBblue)),
       inputDecorationTheme: InputDecorationTheme(
         isDense: true,
-        prefixIconColor: Colors.blue.shade100,
+        prefixIconColor: ColorManager.deepBblue,
         suffixIconColor: Colors.blue.shade100,
+        suffixStyle: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         fillColor: ColorManager.faintWhite,
         filled: true,
         contentPadding: const EdgeInsets.all(Spacing.s20),
@@ -83,14 +85,12 @@ ThemeData getApplicationTheme() {
         //   color: ColorManager.bgColor,
         //   fontSize: Spacing.s20,
         // ),
-        alignLabelWithHint: true,
-
         // hint style
         iconColor: Colors.blue.shade200,
-        // labelStyle: TextStyle(
-        //   color: ColorManager.deepBblue,
-        //   fontSize: Spacing.s16,
-        // ),
+        labelStyle: TextStyle(
+          color: ColorManager.deepBblue,
+          fontSize: Spacing.s16,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,

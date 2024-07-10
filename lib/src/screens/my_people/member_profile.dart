@@ -36,7 +36,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
     _hallController.text = member.hall ?? "";
     _nameController.text = member.name;
     _birthdateController.text = member.birthdate;
-    _executivePosition.text = member.executivePosition ?? "";
+    _executivePosition.text = member.executivePosition ?? "Not Executive";
     _yearController.text = member.year.toString();
 
     super.initState();
@@ -44,13 +44,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = context.textTheme.titleMedium;
     final valueStyle = context.textTheme.bodyMedium;
     return CurvedScaffold(
       title: member.name,
       floatingActionButton: (AppService.currentMember!.id == member.id ||
               AppService.currentMember!.executivePosition != null)
-          ? FloatingActionButton.extended(onPressed: () {}, label: const Text("Save Changes"))
+          ? FloatingActionButton.extended(onPressed: updateData, label: const Text("Save Changes"))
           : null,
       // appBar: AppBar(
       //   title: const Text('Member Profile'),
@@ -72,13 +71,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                 alignment: Alignment.center,
                 decoration: StyleManager.boxDecoration.copyWith(
                   shape: BoxShape.circle,
-                  // boxShadow: [
-                  //   const BoxShadow(
-                  //     color: Colors.black,
-                  //     blurRadius: Spacing.s4,
-                  //     offset: Offset(2, 2),
-                  //   )
-                  // ],
                 ),
                 child: Hero(
                   tag: member.photoUrl,
@@ -91,7 +83,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             const SizedBox(height: Spacing.s16),
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(suffixText: "Name", suffixStyle: titleStyle),
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.person_outline,
+                    size: Spacing.s28,
+                  ),
+                  suffixText: "Name"),
               style: valueStyle,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -108,7 +105,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
               onTap: () async {
                 _birthdateController.text = await AppService.selectDate(context) ?? "Select Date";
               },
-              decoration: InputDecoration(suffixText: "Birthday", suffixStyle: titleStyle),
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.date_range_rounded,
+                    size: Spacing.s28,
+                  ),
+                  suffixText: "Birthday"),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please select a birthdate';
@@ -121,7 +123,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
               controller: _contactController,
               keyboardType: TextInputType.phone,
               style: valueStyle,
-              decoration: InputDecoration(suffixText: "Contact", suffixStyle: titleStyle),
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.contact_phone_outlined,
+                    size: Spacing.s28,
+                  ),
+                  suffixText: "Contact"),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'required';
@@ -133,7 +140,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: _programmeController,
               style: valueStyle,
-              decoration: InputDecoration(suffixText: "Programme", suffixStyle: titleStyle),
+              decoration: const InputDecoration(
+                  suffixText: "Programme",
+                  prefixIcon: Icon(
+                    Icons.menu_book_outlined,
+                    size: Spacing.s28,
+                  )),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'required';
@@ -146,7 +158,11 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
               controller: member.hall != null ? _hallController : _yearController,
               style: valueStyle,
               decoration: InputDecoration(
-                  suffixText: member.hall != null ? "Hall" : "Year", suffixStyle: titleStyle),
+                  suffixText: member.hall != null ? "Hall" : "Year",
+                  prefixIcon: Icon(
+                    member.hall != null ? Icons.home_outlined : Icons.numbers_outlined,
+                    size: Spacing.s28,
+                  )),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'required';
@@ -160,8 +176,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: _executivePosition,
               style: valueStyle,
-              decoration:
-                  InputDecoration(suffixText: "Executive Position", suffixStyle: titleStyle),
+              decoration: const InputDecoration(
+                  suffixText: "Executive Position",
+                  prefixIcon: Icon(
+                    Icons.work_outline,
+                    size: Spacing.s28,
+                  )),
             ),
           ],
         ),
@@ -206,8 +226,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
               colorText: Colors.white);
         }
       },
-      message: "Submitting information",
-      errorMessage: "Error submitting information",
+      message: "Updating information",
+      errorMessage: "Error updating information",
       callback: () {},
     );
   }

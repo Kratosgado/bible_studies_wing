@@ -15,6 +15,8 @@ import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 
+import '../../resources/styles_manager.dart';
+
 class AddLessonScreen extends StatefulWidget {
   AddLessonScreen({super.key});
   final Lesson? lesson = Get.arguments;
@@ -73,11 +75,20 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                             CachedNetworkImage(imageUrl: widget.lesson!.imageUrl),
                             "Lesson Image",
                             "lesson_image"),
-                        child: Hero(
-                          tag: "lesson_image",
-                          child: CircleAvatar(
-                            radius: Spacing.s100,
-                            backgroundImage: CachedNetworkImageProvider(widget.lesson!.imageUrl),
+                        child: Container(
+                          height: Spacing.s190,
+                          // padding: const EdgeInsets.all(Spacing.s5),
+                          margin: const EdgeInsets.all(3),
+                          alignment: Alignment.center,
+                          decoration: StyleManager.boxDecoration.copyWith(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Hero(
+                            tag: "lesson_image",
+                            child: CircleAvatar(
+                              radius: Spacing.s90,
+                              backgroundImage: CachedNetworkImageProvider(widget.lesson!.imageUrl),
+                            ),
                           ),
                         ),
                       )
@@ -101,7 +112,13 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: topicController,
-                decoration: const InputDecoration(labelText: 'Topic'),
+                decoration: const InputDecoration(
+                  suffixText: 'Topic',
+                  prefixIcon: Icon(
+                    Icons.topic,
+                    size: Spacing.s28,
+                  ),
+                ),
                 style: TextStyle(color: ColorManager.deepBblue),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -113,7 +130,12 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: subtopicController,
-                decoration: const InputDecoration(labelText: 'Subtopic'),
+                decoration: const InputDecoration(
+                    suffixText: 'Subtopic',
+                    prefixIcon: Icon(
+                      Icons.topic_outlined,
+                      size: Spacing.s28,
+                    )),
                 style: TextStyle(color: ColorManager.deepBblue),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -171,6 +193,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
 
   void submit() async {
     // AppService.showLoadingPopup(context, "Saving Lesson");
+    Lesson? lesson;
     await AppService.showLoadingPopup(
       asyncFunction: () async {
         String? imageUrl;
@@ -187,7 +210,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
           imageUrl: imageUrl ?? widget.lesson!.imageUrl,
           date: DateTime(now.year, now.month, now.day),
         );
-
+        lesson = newLesson;
         FirebaseFirestore.instance
             .collection('lessons')
             .doc(newLesson.id)
@@ -201,6 +224,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
       },
       message: "Saving Lesson",
       errorMessage: "Error saving lesson",
+      callback: () => Get.offNamed(Routes.lessonDetailRoute, arguments: lesson),
     );
   }
 }

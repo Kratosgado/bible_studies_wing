@@ -3,6 +3,7 @@ import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,26 @@ class LessonDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: lesson.topic,
+      action: IconButton(
+        icon: const Icon(
+          Icons.delete,
+          color: Colors.redAccent,
+        ),
+        onPressed: () async => {
+          await AppService.showLoadingPopup(
+            asyncFunction: () async {
+              try {
+                await FirebaseFirestore.instance.collection("lessons").doc(lesson.id).delete();
+              } catch (e) {
+                rethrow;
+              }
+            },
+            message: "Deleting Lesson",
+            errorMessage: "Error Deleting message",
+            callback: () => Get.back(),
+          )
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.offNamed(Routes.lessonCreatorRoute, arguments: lesson),
         child: const Icon(Icons.edit),

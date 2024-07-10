@@ -23,48 +23,55 @@ class AuthController extends GetxController {
   }
 
   void signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      final UserCredential userCredential = await auth.signInWithCredential(credential);
-      final User? user = userCredential.user;
+    AppService.showLoadingPopup(
+      asyncFunction: () async {
+        try {
+          final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+          final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+          final AuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          final UserCredential userCredential = await auth.signInWithCredential(credential);
+          final User? user = userCredential.user;
 
-      debugPrint("checking credentials");
-      if (user != null) {
-        // Check if user data already exists in Firestore
-        final QuerySnapshot result = await FirebaseFirestore.instance
-            .collection("members")
-            .where('id', isEqualTo: user.uid)
-            .get();
-        final List<DocumentSnapshot> documents = result.docs;
-        debugPrint("checking documents");
-        if (documents.isEmpty) {
-          // User data doesn't exist, save it to Firestore
-          // await saveFormData(user);
-          // Navigate to the MemberRegistrationForm and pass user data as arguments
-          Get.offNamed(Routes.membershipFormRoute, arguments: user);
-          debugPrint("saved form data");
-          return;
+          debugPrint("checking credentials");
+          if (user != null) {
+            // Check if user data already exists in Firestore
+            final QuerySnapshot result = await FirebaseFirestore.instance
+                .collection("members")
+                .where('id', isEqualTo: user.uid)
+                .get();
+            final List<DocumentSnapshot> documents = result.docs;
+            debugPrint("checking documents");
+            if (documents.isEmpty) {
+              // User data doesn't exist, save it to Firestore
+              // await saveFormData(user);
+              // Navigate to the MemberRegistrationForm and pass user data as arguments
+              Get.offNamed(Routes.membershipFormRoute, arguments: user);
+              debugPrint("saved form data");
+              return;
+            }
+            // update our shared preferences
+            await AppService.preferences
+                .login()
+                .then((_) async => await Get.put(AppService()).init());
+          }
+        } catch (e) {
+          Text(e.toString());
+          Get.snackbar(
+            "Error Signing In",
+            e.toString(),
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: ColorManager.deepBblue,
+            colorText: Colors.white,
+          );
+          debugPrint(e.toString());
         }
-        // update our shared preferences
-        await AppService.preferences.login().then((_) async => await Get.put(AppService()).init());
-        await Get.offNamed(Routes.homeRoute);
-        return;
-      }
-    } catch (e) {
-      Text(e.toString());
-      Get.snackbar(
-        "Error Signing In",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: ColorManager.deepBblue,
-        colorText: Colors.white,
-      );
-      debugPrint(e.toString());
-    }
+      },
+      message: "Signing in with Google",
+      errorMessage: "Failed to Sign in",
+      callback: () async => await Get.offNamed(Routes.homeRoute),
+    );
   }
 }

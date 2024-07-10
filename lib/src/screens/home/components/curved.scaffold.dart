@@ -6,11 +6,13 @@ class CurvedScaffold extends StatelessWidget {
   final String title;
   final FloatingActionButton? floatingActionButton;
   final Widget? bottomNavigationBar;
+  final Widget? action;
   const CurvedScaffold(
       {super.key,
       required this.child,
       required this.title,
       this.floatingActionButton,
+      this.action,
       this.bottomNavigationBar});
 
   @override
@@ -20,6 +22,7 @@ class CurvedScaffold extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
+          action ?? const SizedBox.shrink(),
           TextButton(
             onPressed: () {},
             child: Text(title, style: context.textTheme.titleLarge?.copyWith(color: Colors.white)),

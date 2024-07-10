@@ -67,6 +67,7 @@ class AppService extends GetxService {
               elevation: Spacing.s20,
               shape: const StadiumBorder(),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircularProgressIndicator(),
                   Text(message),

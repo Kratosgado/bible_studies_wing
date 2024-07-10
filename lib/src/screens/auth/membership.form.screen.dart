@@ -3,6 +3,7 @@ import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
+import 'package:bible_studies_wing/src/screens/home/components/input.field.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,7 @@ import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
 import '../../data/models/member.dart';
+import '../../resources/styles_manager.dart';
 
 class MemberRegistrationForm extends StatefulWidget {
   final User user = Get.arguments; // Receive user data as an argument
@@ -79,9 +81,21 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             child: ListView(
               children: [
                 _imageFile != null
-                    ? CircleAvatar(
-                        radius: Spacing.s100,
-                        backgroundImage: FileImage(_imageFile!),
+                    ? Container(
+                        height: Spacing.s190,
+                        // padding: const EdgeInsets.all(Spacing.s5),
+                        margin: const EdgeInsets.all(3),
+                        alignment: Alignment.center,
+                        decoration: StyleManager.boxDecoration.copyWith(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Hero(
+                          tag: "registrationProfile",
+                          child: CircleAvatar(
+                            radius: Spacing.s90,
+                            backgroundImage: FileImage(_imageFile!),
+                          ),
+                        ),
                       ) // Show the selected image if available
                     : const SizedBox.shrink(),
                 Center(
@@ -104,6 +118,12 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   },
                 ),
                 const SizedBox(height: Spacing.s16),
+                InputField(
+                  label: "test",
+                  controller: _programmeController,
+                ),
+                const SizedBox(height: Spacing.s16),
+
                 TextFormField(
                   controller: _birthdateController,
                   readOnly: true,
@@ -230,50 +250,51 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
 
   Future<void> _saveFormData() async {
     await AppService.showLoadingPopup(
-        asyncFunction: () async {
-          if (_formKey.currentState!.validate()) {
-            final firestore = FirebaseFirestore.instance;
-            if (_imageFile != null) {
-              final Reference storageRef = FirebaseStorage.instance
-                  .ref()
-                  .child('profile_images')
-                  .child('${widget.user.uid}.jpg');
+      asyncFunction: () async {
+        if (_formKey.currentState!.validate()) {
+          final firestore = FirebaseFirestore.instance;
+          if (_imageFile != null) {
+            final Reference storageRef = FirebaseStorage.instance
+                .ref()
+                .child('profile_images')
+                .child('${widget.user.uid}.jpg');
 
-              final UploadTask uploadTask = storageRef.putFile(_imageFile!);
+            final UploadTask uploadTask = storageRef.putFile(_imageFile!);
 
-              final TaskSnapshot storageSnapshot = await uploadTask;
-              final String photoUrl = await storageSnapshot.ref.getDownloadURL();
-              Member newMember = Member(
-                id: widget.user.uid,
-                name: _nameController.text,
-                photoUrl: photoUrl, // will be back
-                birthdate: _birthdateController.text,
-                contact: _contactController.text,
-                programme: _programmeController.text,
-                hall: _hallController.text,
-                executivePosition: _executivePosition.text,
-              );
-              // Convert Member object to a Map and save it to Firestore
-              await firestore
-                  .collection('members')
-                  .doc(widget.user.uid)
-                  .set(newMember.toJson())
-                  .then((_) => AppService.preferences.login())
-                  .then((_) async => await Get.put(AppService()).init())
-                  .then((_) => Get.offNamed(Routes.homeRoute));
-              // Dismiss the loading dialog
-              if (mounted) {
-                AppService.dismissPopup(context);
-              }
-            } else {
-              Get.snackbar("Registration Error", "Add a profile picture to continue",
-                  snackPosition: SnackPosition.TOP,
-                  backgroundColor: Colors.red,
-                  colorText: Colors.white);
+            final TaskSnapshot storageSnapshot = await uploadTask;
+            final String photoUrl = await storageSnapshot.ref.getDownloadURL();
+            Member newMember = Member(
+              id: widget.user.uid,
+              name: _nameController.text,
+              photoUrl: photoUrl, // will be back
+              birthdate: _birthdateController.text,
+              contact: _contactController.text,
+              programme: _programmeController.text,
+              hall: _hallController.text,
+              executivePosition: _executivePosition.text,
+            );
+            // Convert Member object to a Map and save it to Firestore
+            await firestore
+                .collection('members')
+                .doc(widget.user.uid)
+                .set(newMember.toJson())
+                .then((_) => AppService.preferences.login())
+                .then((_) async => await Get.put(AppService()).init());
+            // Dismiss the loading dialog
+            if (mounted) {
+              AppService.dismissPopup(context);
             }
+          } else {
+            Get.snackbar("Registration Error", "Add a profile picture to continue",
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: Colors.red,
+                colorText: Colors.white);
           }
-        },
-        message: "Submitting information",
-        errorMessage: "Error submitting information");
+        }
+      },
+      message: "Submitting information",
+      errorMessage: "Error submitting information",
+      callback: () => Get.offNamed(Routes.homeRoute),
+    );
   }
 }

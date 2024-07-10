@@ -39,9 +39,9 @@ class CustomListTile extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () =>
-                  AppService.viewPicture(CachedNetworkImage(imageUrl: imageUrl), title, imageUrl),
+                  AppService.viewPicture(CachedNetworkImage(imageUrl: imageUrl), title, imageUrl+title),
               child: Hero(
-                tag: imageUrl,
+                tag: imageUrl+title,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: CachedNetworkImage(
