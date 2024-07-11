@@ -1,5 +1,7 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
+import 'package:bible_studies_wing/src/resources/styles_manager.dart';
+import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +50,13 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
     builder: (context) {
       return Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-        child: SizedBox(
+        child: Container(
           height: MediaQuery.of(context).size.height * 0.5,
+          decoration: BoxDecoration(
+            color: ColorManager.deepBblue,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(Spacing.s28), topRight: Radius.circular(Spacing.s28)),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,20 +81,41 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
                     }
                     final comments =
                         snapshot.data!.docs.map((doc) => Comment.fromJson(doc.data())).toList();
-                    return ListView.builder(
+                    return ListView.separated(
                       itemCount: comments.length,
+                      separatorBuilder: (context, index) => Divider(
+                        color: ColorManager.faintWhite,
+                        indent: 50,
+                        endIndent: 50,
+                      ),
                       itemBuilder: (context, index) {
                         final comment = comments[index];
                         return ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity.compact,
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(comment.photoUrl),
+                            backgroundImage: CachedNetworkImageProvider(comment.photoUrl),
                           ),
-                          title: Text(comment.username),
-                          subtitle: Text(comment.comment),
+                          title: Text(
+                            comment.username,
+                            style: const TextStyle(
+                              fontSize: Spacing.s15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            comment.comment,
+                            style: TextStyle(
+                              fontSize: Spacing.s15,
+                              color: ColorManager.faintWhite,
+                            ),
+                          ),
                           trailing: AppService.currentMember!.id == comment.userId
                               ? IconButton(
                                   icon: const Icon(
                                     Icons.delete,
+                                    color: Colors.red,
                                   ),
                                   onPressed: () async => deleteComment(comment.id),
                                 )
@@ -99,28 +127,18 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  CircleAvatar(
+              TextFormField(
+                controller: commentController,
+                style: context.textTheme.bodyMedium?.copyWith(color: Colors.black),
+                // give a rounded input decoration
+                decoration: InputDecoration(
+                  icon: CircleAvatar(
                     backgroundImage: CachedNetworkImageProvider(
                       currentMember.photoUrl,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextFormField(
-                      controller: commentController,
-                      // give a rounded input decoration
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                        ),
-                        hintText: 'Add a question/comment',
-                      ),
-                      // Add any logic to save the user's input here
-                    ),
-                  ),
-                  IconButton(
+                  hintText: 'Add a question/comment',
+                  suffixIcon: IconButton(
                     onPressed: () {
                       // lesson.saveComment();
 
@@ -135,9 +153,14 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
                       lesson.saveComment(newComment);
                       commentController.clear();
                     },
-                    icon: const Icon(Icons.send),
+                    icon: Icon(
+                      Icons.send,
+                      color: ColorManager.deepBblue,
+                      size: Spacing.s28,
+                    ),
                   ),
-                ],
+                ),
+                // Add any logic to save the user's input here
               ),
             ],
           ),

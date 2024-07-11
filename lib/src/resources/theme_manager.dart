@@ -81,6 +81,7 @@ ThemeData getApplicationTheme(BuildContext context) {
         filled: true,
         contentPadding: const EdgeInsets.all(Spacing.s20),
         iconColor: Colors.blue.shade200,
+        hintStyle: context.textTheme.titleLarge,
         labelStyle: TextStyle(
           color: ColorManager.deepBblue,
           fontSize: Spacing.s16,

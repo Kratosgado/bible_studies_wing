@@ -22,7 +22,10 @@ class MyPeopleScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.s20, horizontal: Spacing.s10),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseFirestore.instance.collection('members').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('members')
+              .orderBy("executivePosition", descending: true)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -45,7 +48,21 @@ class MyPeopleScreen extends StatelessWidget {
                     callback: () => Get.toNamed(Routes.memberProfileRoute, arguments: member),
                   );
                 },
-                separatorBuilder: (context, index) => const Divider(),
+                separatorBuilder: (context, index) {
+                  final current = members[index].executivePosition;
+                  final previous = index != 0 ? members[index - 1].executivePosition : "";
+                  if (current == null && previous != null) {
+                    return Padding(
+                      padding: const EdgeInsets.all(Spacing.s8),
+                      child: Center(
+                          child: Text(
+                        "Members",
+                        style: context.textTheme.bodyMedium,
+                      )),
+                    );
+                  }
+                  return const Divider();
+                },
                 itemCount: members.length);
           },
         ),
