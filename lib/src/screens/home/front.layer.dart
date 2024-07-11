@@ -10,6 +10,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
   // Get lesson from firestore
   final retrieveLessons = FirebaseFirestore.instance
       .collection('lessons')
+      .limit(10)
       .orderBy('date', descending: true)
       .snapshots();
   return Padding(
@@ -34,7 +35,6 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
             return ListView.separated(
               separatorBuilder: (_, __) => Divider(
                 color: ColorManager.faintWhite,
-                thickness: 5.0,
               ),
               itemCount: lessonsDocs.length,
               itemBuilder: (ctx, index) {

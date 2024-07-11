@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 part 'member.g.dart';
 
@@ -8,12 +7,12 @@ class Member {
   final String id;
   final String photoUrl;
   final String name;
-  @TimestampConverter()
-  final DateTime birthdate;
+  final String birthdate;
   final String contact;
   final String programme;
-  final String hall;
+  final String? hall;
   final String? executivePosition;
+  final int? year;
 
   Member({
     required this.id,
@@ -22,26 +21,13 @@ class Member {
     required this.birthdate,
     required this.contact,
     required this.programme,
-    required this.hall,
+    this.hall,
     this.executivePosition,
+    this.year,
   });
 
   // Method to convert Member object to a Map (for Firestore)
   Map<String, dynamic> toJson({bool convert = true}) => _$MemberToJson(this, convert);
   factory Member.fromJson(Map<String, dynamic> json, {converted = false}) =>
       _$MemberFromJson(json, converted);
-}
-
-class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
-  const TimestampConverter();
-
-  @override
-  DateTime fromJson(Timestamp timestamp) {
-    return DateTime.parse(timestamp.toDate().toString());
-  }
-
-  @override
-  Timestamp toJson(DateTime date) {
-    return Timestamp.fromDate(date);
-  }
 }

@@ -45,12 +45,10 @@ class AnnouncementScreen extends StatelessWidget {
                   style: Theme.of(context).primaryTextTheme.bodyLarge,
                 ),
                 Divider(
-                  thickness: 1,
-                  color: ColorManager.deepBblue,
+                  color: ColorManager.faintWhite,
                 ),
                 Expanded(
                   child: QuillEditor.basic(
-                    
                     configurations: QuillEditorConfigurations(
                       controller: QuillController(
                         document: doc,

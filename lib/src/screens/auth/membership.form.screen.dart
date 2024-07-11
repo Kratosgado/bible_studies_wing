@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
 import '../../data/models/member.dart';
+import '../../resources/styles_manager.dart';
 
 class MemberRegistrationForm extends StatefulWidget {
   final User user = Get.arguments; // Receive user data as an argument
@@ -69,6 +69,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
+    final valueStyle = context.textTheme.bodyMedium;
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: CurvedScaffold(
@@ -80,9 +81,21 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
             child: ListView(
               children: [
                 _imageFile != null
-                    ? CircleAvatar(
-                        radius: Spacing.s100,
-                        backgroundImage: FileImage(_imageFile!),
+                    ? Container(
+                        height: Spacing.s190,
+                        // padding: const EdgeInsets.all(Spacing.s5),
+                        margin: const EdgeInsets.all(3),
+                        alignment: Alignment.center,
+                        decoration: StyleManager.boxDecoration.copyWith(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Hero(
+                          tag: "registrationProfile",
+                          child: CircleAvatar(
+                            radius: Spacing.s90,
+                            backgroundImage: FileImage(_imageFile!),
+                          ),
+                        ),
                       ) // Show the selected image if available
                     : const SizedBox.shrink(),
                 Center(
@@ -95,8 +108,13 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 const SizedBox(height: Spacing.s16),
                 TextFormField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.person_outline,
+                        size: Spacing.s28,
+                      ),
+                      suffixText: "Name"),
+                  style: valueStyle,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a name';
@@ -108,11 +126,17 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 TextFormField(
                   controller: _birthdateController,
                   readOnly: true,
-                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                  onTap: () {
-                    _selectDate(context);
+                  style: valueStyle,
+                  onTap: () async {
+                    _birthdateController.text =
+                        await AppService.selectDate(context) ?? "Select Date";
                   },
-                  decoration: const InputDecoration(labelText: 'Birthdate'),
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.date_range_rounded,
+                        size: Spacing.s28,
+                      ),
+                      suffixText: "Birthday"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please select a birthdate';
@@ -124,8 +148,13 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 TextFormField(
                   controller: _contactController,
                   keyboardType: TextInputType.phone,
-                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                  decoration: const InputDecoration(labelText: 'Contact'),
+                  style: valueStyle,
+                  decoration: const InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.contact_phone_outlined,
+                        size: Spacing.s28,
+                      ),
+                      suffixText: "Contact"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'required';
@@ -136,8 +165,13 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 const SizedBox(height: Spacing.s16),
                 TextFormField(
                   controller: _programmeController,
-                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                  decoration: const InputDecoration(labelText: 'Programme'),
+                  style: valueStyle,
+                  decoration: const InputDecoration(
+                      suffixText: "Programme",
+                      prefixIcon: Icon(
+                        Icons.menu_book_outlined,
+                        size: Spacing.s28,
+                      )),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'required';
@@ -145,11 +179,16 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: Spacing.s16),
                 TextFormField(
                   controller: _hallController,
-                  style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                  decoration: const InputDecoration(labelText: 'Hall/Hostel'),
+                  style: valueStyle,
+                  decoration: const InputDecoration(
+                      suffixText: "Hall",
+                      prefixIcon: Icon(
+                        Icons.home_outlined,
+                        size: Spacing.s28,
+                      )),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'required';
@@ -157,7 +196,8 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: Spacing.s16),
+
                 Row(
                   children: [
                     Checkbox(
@@ -184,31 +224,33 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                 if (_isExecutive)
                   TextFormField(
                     controller: _verifierController,
-                    style: Theme.of(context).primaryTextTheme.bodyLarge!,
+                    style: valueStyle,
+                    decoration: const InputDecoration(
+                        suffixText: "Verify Code",
+                        prefixIcon: Icon(
+                          Icons.verified,
+                          size: Spacing.s28,
+                        )),
                     onChanged: (value) => {
                       setState(() {
                         executiveStatus =
                             (int.tryParse(value) != AppService.passcode) ? false : true;
                       })
                     },
-                    decoration: const InputDecoration(labelText: 'Verifier Code'),
-                    validator: (value) {
-                      // Add your verifier code validation logic here
-                      if (int.parse(value!) != AppService.passcode) {
-                        executiveStatus = false;
-                        return 'Incorrect code';
-                      }
-                      executiveStatus = true;
-                      return null; // Validation passes, return null.
-                    },
                   ),
+
                 const SizedBox(height: Spacing.s16),
 
                 if (executiveStatus)
                   TextFormField(
                     controller: _executivePosition,
-                    style: Theme.of(context).primaryTextTheme.bodyLarge!,
-                    decoration: const InputDecoration(labelText: 'Executive Position'),
+                    style: valueStyle,
+                    decoration: const InputDecoration(
+                        suffixText: "Executive Position",
+                        prefixIcon: Icon(
+                          Icons.work_outline,
+                          size: Spacing.s28,
+                        )),
                   ),
                 const SizedBox(height: Spacing.s16),
                 Center(
@@ -228,72 +270,50 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
     );
   }
 
-  void _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
-              primary: ColorManager.deepBblue,
-              onPrimary: Colors.white,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
-    if (pickedDate != null && pickedDate != DateTime.now()) {
-      setState(() {
-        _birthdateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-      });
-    }
-  }
-
   Future<void> _saveFormData() async {
-    if (_formKey.currentState!.validate()) {
-      final firestore = FirebaseFirestore.instance;
-      if (_imageFile != null) {
-        final Reference storageRef =
-            FirebaseStorage.instance.ref().child('profile_images').child('${widget.user.uid}.jpg');
+    await AppService.showLoadingPopup(
+      asyncFunction: () async {
+        try {
+          if (_formKey.currentState!.validate()) {
+            final firestore = FirebaseFirestore.instance;
+            if (_imageFile != null) {
+              final Reference storageRef = FirebaseStorage.instance
+                  .ref()
+                  .child('profile_images')
+                  .child('${widget.user.uid}.jpg');
 
-        final UploadTask uploadTask = storageRef.putFile(_imageFile!);
+              final UploadTask uploadTask = storageRef.putFile(_imageFile!);
 
-        // Display loading dialog
-        AppService.showLoadingPopup(context, "Submitting information");
-
-        final TaskSnapshot storageSnapshot = await uploadTask;
-        final String photoUrl = await storageSnapshot.ref.getDownloadURL();
-        Member newMember = Member(
-          id: widget.user.uid,
-          name: _nameController.text,
-          photoUrl: photoUrl, // will be back
-          birthdate: DateTime.parse(_birthdateController.text),
-          contact: _contactController.text,
-          programme: _programmeController.text,
-          hall: _hallController.text,
-          executivePosition: _executivePosition.text,
-        );
-        // Convert Member object to a Map and save it to Firestore
-        await firestore
-            .collection('members')
-            .doc(widget.user.uid)
-            .set(newMember.toJson())
-            .then((_) => AppService.preferences.login())
-            .then((_) async => await Get.put(AppService()).init())
-            .then((_) => Get.offNamed(Routes.homeRoute));
-        // Dismiss the loading dialog
-        if (mounted) {
-          AppService.dismissPopup(context);
+              final TaskSnapshot storageSnapshot = await uploadTask;
+              final String photoUrl = await storageSnapshot.ref.getDownloadURL();
+              Member newMember = Member(
+                id: widget.user.uid,
+                name: _nameController.text,
+                photoUrl: photoUrl, // will be back
+                birthdate: _birthdateController.text,
+                contact: _contactController.text,
+                programme: _programmeController.text,
+                hall: _hallController.text,
+                executivePosition: _executivePosition.text.isEmpty ? null : _executivePosition.text,
+              );
+              // Convert Member object to a Map and save it to Firestore
+              await firestore
+                  .collection('members')
+                  .doc(widget.user.uid)
+                  .set(newMember.toJson())
+                  .then((_) => AppService.preferences.login())
+                  .then((_) async => await Get.put(AppService()).init());
+              return null;
+            }
+            return Error.safeToString("Add Profile picture to continue");
+          }
+        } catch (e) {
+          return e;
         }
-      } else {
-        Get.snackbar("Registration Error", "Add a profile picture to continue",
-            snackPosition: SnackPosition.TOP, backgroundColor: Colors.red, colorText: Colors.white);
-      }
-    }
+      },
+      message: "Submitting information",
+      errorMessage: "Error submitting information",
+      callback: () async => await Get.offNamed(Routes.homeRoute),
+    );
   }
 }

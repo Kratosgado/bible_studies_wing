@@ -60,7 +60,7 @@ class PushNotificationService {
         Uri.parse("https://fcm.googleapis.com/v1/projects/${AppService.projectId}/messages:send");
 
     OAuthProvider oAuthProvider = OAuthProvider("");
-    
+
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${AppService.firebaseToken}',

@@ -9,23 +9,24 @@ import 'package:get/get.dart';
 import '../../data/models/member.dart';
 import '../../resources/values_manager.dart';
 
-class MyPeopleScreen extends StatelessWidget {
-  const MyPeopleScreen({super.key});
+class PastExecutivesScreen extends StatelessWidget {
+  const PastExecutivesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CurvedScaffold(
-      title: "My People",
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => Get.toNamed(Routes.pastExecutivesRoute),
-          label: const Text("Past Executives")),
+      title: "Past Executives",
+      floatingActionButton: AppService.currentMember!.executivePosition != null
+          ? FloatingActionButton(
+              onPressed: () => Get.toNamed(Routes.addPastExecutivesRoute),
+              child: const Icon(Icons.add),
+            )
+          : null,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.s20, horizontal: Spacing.s10),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: FirebaseFirestore.instance
-              .collection('members')
-              .orderBy("executivePosition", descending: true)
-              .snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection('past_executives').orderBy("year").snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -43,20 +44,20 @@ class MyPeopleScreen extends StatelessWidget {
                   final member = members[index];
                   return CustomListTile(
                     imageUrl: member.photoUrl,
-                    title: member.id == AppService.currentMember!.id ? "Me" : member.name,
+                    title: member.name,
                     subTitle: member.executivePosition ?? member.programme,
                     callback: () => Get.toNamed(Routes.memberProfileRoute, arguments: member),
                   );
                 },
                 separatorBuilder: (context, index) {
-                  final current = members[index].executivePosition;
-                  final previous = index != 0 ? members[index - 1].executivePosition : "";
-                  if (current == null && previous != null) {
+                  final current = members[index].year;
+                  final previous = index != 0 ? members[index - 1].year : 0;
+                  if (current != previous) {
                     return Padding(
                       padding: const EdgeInsets.all(Spacing.s8),
                       child: Center(
                           child: Text(
-                        "Members",
+                        current.toString(),
                         style: context.textTheme.bodyMedium,
                       )),
                     );

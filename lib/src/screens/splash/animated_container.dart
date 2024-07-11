@@ -1,5 +1,3 @@
-
-
 import 'package:bible_studies_wing/src/resources/assets.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -51,22 +49,20 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>
                 BoxShadow(
                   color: Colors.pink,
                   offset: Offset(-2, 0),
-                  blurRadius: 20,
+                  blurRadius: 5,
                 ),
                 BoxShadow(
                   color: Colors.blue,
                   offset: Offset(2, 0),
-                  blurRadius: 20,
+                  blurRadius: 5,
                 ),
               ],
             ),
             child: Container(
-              
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 image: const DecorationImage(
                   image: AssetImage(ImageAssets.bslogo),
-                  
                   fit: BoxFit.cover,
                 ),
                 color: Colors.black,

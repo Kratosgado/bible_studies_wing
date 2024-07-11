@@ -47,18 +47,23 @@ class TodayEventScreen extends StatelessWidget {
                     style: Theme.of(context).primaryTextTheme.bodyLarge,
                   ),
                   Divider(
-                    thickness: 1,
-                    color: ColorManager.deepBblue,
+                    color: ColorManager.faintWhite,
                   ),
-                  CachedNetworkImage(
-                    imageUrl: event['image'],
-                    progressIndicatorBuilder: (context, _, downloadProgress) {
-                      return Center(
-                        child: CircularProgressIndicator(value: downloadProgress.progress),
-                      );
-                    },
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                    fit: BoxFit.cover,
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(Spacing.s28),
+                      child: CachedNetworkImage(
+                        imageUrl: event["image"],
+                        progressIndicatorBuilder: (context, _, downloadProgress) {
+                          return Center(
+                            child: CircularProgressIndicator(value: downloadProgress.progress),
+                          );
+                        },
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   QuillEditor.basic(
                     configurations: QuillEditorConfigurations(

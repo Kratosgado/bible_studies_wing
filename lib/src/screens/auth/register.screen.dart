@@ -32,14 +32,14 @@ class RegisterScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: StyleManager.boxDecoration.copyWith(
                   shape: BoxShape.circle,
-                  borderRadius: null,
-                  boxShadow: [
-                    const BoxShadow(
-                      color: Colors.black,
-                      blurRadius: Spacing.s4,
-                      offset: Offset(2, 2),
-                    )
-                  ],
+                  // borderRadius: null,
+                  // boxShadow: [
+                  //   const BoxShadow(
+                  //     color: Colors.black,
+                  //     blurRadius: Spacing.s4,
+                  //     offset: Offset(2, 2),
+                  //   )
+                  // ],
                 ),
                 child: const CircleAvatar(
                     radius: Spacing.s90, backgroundImage: AssetImage(ImageAssets.bslogo)),

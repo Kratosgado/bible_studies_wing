@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     // Whenever the user updates their settings, the MaterialApp is rebuilt.
     return GetMaterialApp(
       title: "Bible Studies Wing",
-      theme: getApplicationTheme(),
+      theme: getApplicationTheme(context),
       // darkTheme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.splashRoute,

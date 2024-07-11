@@ -34,6 +34,9 @@ dependencies:
   firebase_messaging: ^14.9.4
   flutter_local_notifications: ^17.2.1
 
+  http: any
+  rxdart: any
+  intl: any
 dependency_overrides:
   flutter_colorpicker:
     git:
