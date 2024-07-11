@@ -4,6 +4,7 @@ import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
@@ -28,6 +29,7 @@ class LessonDetailScreen extends StatelessWidget {
             asyncFunction: () async {
               try {
                 await FirebaseFirestore.instance.collection("lessons").doc(lesson.id).delete();
+                await FirebaseStorage.instance.refFromURL(lesson.imageUrl).delete();
               } catch (e) {
                 rethrow;
               }

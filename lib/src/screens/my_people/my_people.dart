@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:bible_studies_wing/src/screens/home/components/list.tile.dart';
@@ -9,7 +10,6 @@ import '../../data/models/member.dart';
 import '../../resources/values_manager.dart';
 
 class MyPeopleScreen extends StatelessWidget {
-
   const MyPeopleScreen({super.key});
 
   @override
@@ -40,7 +40,7 @@ class MyPeopleScreen extends StatelessWidget {
                   final member = members[index];
                   return CustomListTile(
                     imageUrl: member.photoUrl,
-                    title: member.name,
+                    title: member.id == AppService.currentMember!.id ? "Me" : member.name,
                     subTitle: member.executivePosition ?? member.programme,
                     callback: () => Get.toNamed(Routes.memberProfileRoute, arguments: member),
                   );

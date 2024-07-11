@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:bible_studies_wing/src/screens/home/components/list.tile.dart';
@@ -15,10 +16,12 @@ class PastExecutivesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: "Past Executives",
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.addPastExecutivesRoute),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: AppService.currentMember!.executivePosition != null
+          ? FloatingActionButton(
+              onPressed: () => Get.toNamed(Routes.addPastExecutivesRoute),
+              child: const Icon(Icons.add),
+            )
+          : null,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.s20, horizontal: Spacing.s10),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(

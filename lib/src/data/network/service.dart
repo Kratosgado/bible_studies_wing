@@ -1,9 +1,7 @@
 import 'package:bible_studies_wing/src/app/app.refs.dart';
 import 'package:bible_studies_wing/src/app/notifications.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
-import 'package:bible_studies_wing/src/resources/styles_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,9 +53,11 @@ class AppService extends GetxService {
       required errorMessage,
       VoidCallback? callback}) async {
     try {
+      Object? err;
+
       await Get.showOverlay(
         asyncFunction: () async {
-          return await asyncFunction();
+          err = await asyncFunction();
         },
         loadingWidget: Center(
           child: SizedBox(
@@ -67,7 +67,7 @@ class AppService extends GetxService {
               elevation: Spacing.s20,
               shape: const StadiumBorder(),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   const CircularProgressIndicator(),
                   Text(message),
@@ -79,6 +79,9 @@ class AppService extends GetxService {
       );
       if (Get.isOverlaysOpen) {
         Get.back();
+      }
+      if (err != null) {
+        throw err!;
       }
       if (callback != null) {
         callback();

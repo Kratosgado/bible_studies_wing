@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/auth.controller.dart';
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -5,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bible_studies_wing/src/data/models/member.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
@@ -28,6 +30,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
   final _executivePosition = TextEditingController();
 
   bool changed = false;
+  bool canChange = false;
 
   @override
   void initState() {
@@ -39,6 +42,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
     _executivePosition.text = member.executivePosition ?? "Not Executive";
     _yearController.text = member.year.toString();
 
+    canChange = AppService.currentMember!.id == member.id ||
+        AppService.currentMember!.executivePosition != null;
     super.initState();
   }
 
@@ -47,14 +52,32 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
     final valueStyle = context.textTheme.bodyMedium;
     return CurvedScaffold(
       title: member.name,
-      floatingActionButton: (AppService.currentMember!.id == member.id ||
-              AppService.currentMember!.executivePosition != null)
+      floatingActionButton: canChange
           ? FloatingActionButton.extended(onPressed: updateData, label: const Text("Save Changes"))
           : null,
-      // appBar: AppBar(
-      //   title: const Text('Member Profile'),
-      //   actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.edit))],
-      // ),
+      action: IconButton(
+        icon: const Icon(Icons.delete, color: Colors.red),
+        onPressed: () async => {
+          await AppService.showLoadingPopup(
+            asyncFunction: () async {
+              try {
+                await FirebaseFirestore.instance.collection("members").doc(member.id).delete();
+                if (member.id == AppService.currentMember!.id) {
+                  AuthController.to.handleSignout();
+                  return;
+                }
+                final googleSignIn = GoogleSignIn(clientId: member.id);
+                await googleSignIn.disconnect();
+              } catch (e) {
+                rethrow;
+              }
+            },
+            message: "Deleting member",
+            errorMessage: "Error deleting member",
+            callback: () => Get.back(),
+          ),
+        },
+      ),
       child: Form(
         key: _formKey,
         child: ListView(
@@ -83,6 +106,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             const SizedBox(height: Spacing.s16),
             TextFormField(
               controller: _nameController,
+              enabled: canChange,
               decoration: const InputDecoration(
                   prefixIcon: Icon(
                     Icons.person_outline,
@@ -101,6 +125,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: _birthdateController,
               readOnly: true,
+              enabled: canChange,
               style: valueStyle,
               onTap: () async {
                 _birthdateController.text = await AppService.selectDate(context) ?? "Select Date";
@@ -122,6 +147,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: _contactController,
               keyboardType: TextInputType.phone,
+              enabled: canChange,
               style: valueStyle,
               decoration: const InputDecoration(
                   prefixIcon: Icon(
@@ -140,6 +166,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: _programmeController,
               style: valueStyle,
+              enabled: canChange,
               decoration: const InputDecoration(
                   suffixText: "Programme",
                   prefixIcon: Icon(
@@ -157,6 +184,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: member.hall != null ? _hallController : _yearController,
               style: valueStyle,
+              enabled: canChange,
               decoration: InputDecoration(
                   suffixText: member.hall != null ? "Hall" : "Year",
                   prefixIcon: Icon(
@@ -176,6 +204,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
             TextFormField(
               controller: _executivePosition,
               style: valueStyle,
+              enabled: canChange,
               decoration: const InputDecoration(
                   suffixText: "Executive Position",
                   prefixIcon: Icon(

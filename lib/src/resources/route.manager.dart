@@ -57,7 +57,7 @@ List<GetPage> getRoutes() => [
       // auth
       GetPage(name: Routes.splashRoute, page: () => const SplashScreen()),
       GetPage(name: Routes.membershipFormRoute, page: () => MemberRegistrationForm()),
-      GetPage(name: Routes.memberProfileRoute, page: () => MemberProfileScreen()),
+      GetPage(name: Routes.memberProfileRoute, page: () => const MemberProfileScreen()),
       // GetPage(name: Routes.settingsRoute, page: ()=> SettingsScreen(controller: controller))
 
       // home

@@ -18,11 +18,11 @@ class AuthController extends GetxController {
     await googleSignIn.signOut();
     await AppService.preferences.logout();
     AppService.currentMember = null;
-    // await googleSignIn.disconnect();
     await Get.offNamed(Routes.registerRoute);
   }
 
   void signInWithGoogle() async {
+    User? newUser;
     AppService.showLoadingPopup(
       asyncFunction: () async {
         try {
@@ -48,7 +48,7 @@ class AuthController extends GetxController {
               // User data doesn't exist, save it to Firestore
               // await saveFormData(user);
               // Navigate to the MemberRegistrationForm and pass user data as arguments
-              Get.offNamed(Routes.membershipFormRoute, arguments: user);
+              newUser = user;
               debugPrint("saved form data");
               return;
             }
@@ -71,7 +71,8 @@ class AuthController extends GetxController {
       },
       message: "Signing in with Google",
       errorMessage: "Failed to Sign in",
-      callback: () async => await Get.offNamed(Routes.homeRoute),
+      callback: () async => await (newUser != null  ? Get.offNamed(Routes.membershipFormRoute, arguments: newUser) :
+ Get.offNamed(Routes.homeRoute)),
     );
   }
 }

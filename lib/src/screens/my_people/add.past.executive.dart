@@ -1,17 +1,14 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
-import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart'; // Add this line
 import 'dart:io'; // Add this line
 import 'package:firebase_storage/firebase_storage.dart'; // Add this line
 import 'package:uuid/uuid.dart';
-import 'package:uuid/v4.dart';
 import '../../data/models/member.dart';
 
 class AddPastExecutiveScreen extends StatefulWidget {

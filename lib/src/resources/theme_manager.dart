@@ -80,24 +80,18 @@ ThemeData getApplicationTheme(BuildContext context) {
         fillColor: ColorManager.faintWhite,
         filled: true,
         contentPadding: const EdgeInsets.all(Spacing.s20),
-        // floatingLabelAlignment: FloatingLabelAlignment.center,
-        // floatingLabelStyle: const TextStyle(
-        //   color: ColorManager.bgColor,
-        //   fontSize: Spacing.s20,
-        // ),
-        // hint style
         iconColor: Colors.blue.shade200,
         labelStyle: TextStyle(
           color: ColorManager.deepBblue,
           fontSize: Spacing.s16,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Spacing.s15),
           borderSide: BorderSide.none,
         ),
 
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(80),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(Spacing.s15),
           borderSide: BorderSide(color: ColorManager.deepBblue),
         ),
         focusedBorder: const OutlineInputBorder(

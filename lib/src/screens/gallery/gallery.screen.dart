@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -46,12 +47,18 @@ class GalleryScreen extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
               itemCount: snapshot.data?.docs.length,
               itemBuilder: (context, index) {
-                final imageUrl = snapshot.data?.docs[index]['url'] as String;
+                final data = snapshot.data?.docs[index];
+                final imageUrl = data?["url"];
                 return Hero(
                   tag: imageUrl,
                   child: GestureDetector(
                     onTap: () => Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => ImageScreen(imageUrl))),
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ImageScreen(
+                                  imageUrl,
+                                  id: data!.id,
+                                ))),
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
                       filterQuality: FilterQuality.medium,
@@ -70,21 +77,36 @@ class GalleryScreen extends StatelessWidget {
 
 class ImageScreen extends StatelessWidget {
   final String url;
+  final String id;
 
-  const ImageScreen(this.url, {super.key});
+  const ImageScreen(this.url, {super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
     return CurvedScaffold(
       title: 'Image',
+      action: IconButton(
+        icon: const Icon(
+          Icons.delete,
+          color: Colors.redAccent,
+        ),
+        onPressed: () async {
+          await AppService.showLoadingPopup(
+              asyncFunction: () async {
+                await FirebaseFirestore.instance.collection("gallery").doc(id).delete();
+                await FirebaseStorage.instance.refFromURL(url).delete();
+              },
+              message: "deleting picture",
+              errorMessage: "Failed to delete picture",
+              callback: () => Get.back());
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.download),
         onPressed: () async {
           var ref = FirebaseStorage.instance.refFromURL(url);
           var bytes = await ref.getData();
-          // var dir = await path_provider.getExternalStorageDirectory();
           var downloadDir = Directory("/storage/emulated/0/Download");
-          // debugPrint('dir: $dir');
           File file = File('${downloadDir.path}/${ref.name}.jpg');
           await file.writeAsBytes(bytes!);
           Get.snackbar('Download', 'Image downloaded');
