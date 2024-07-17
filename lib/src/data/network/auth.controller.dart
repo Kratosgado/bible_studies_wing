@@ -28,10 +28,12 @@ class AuthController extends GetxController {
         try {
           final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
           final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+
           final AuthCredential credential = GoogleAuthProvider.credential(
             accessToken: googleAuth.accessToken,
             idToken: googleAuth.idToken,
           );
+
           final UserCredential userCredential = await auth.signInWithCredential(credential);
           final User? user = userCredential.user;
 

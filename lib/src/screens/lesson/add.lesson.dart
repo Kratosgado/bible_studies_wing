@@ -217,8 +217,12 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
             .set(newLesson.toJson(), SetOptions(merge: true))
             .then(
               (_) async => {
-                await AppService.notificationService.sendMessageToTopic(
-                    message: newLesson.topic, topic: AppService.lessonTopic, title: "New Lesson")
+                await AppService.notificationService
+                    .sendMessageToTopic(
+                        message: newLesson.topic,
+                        topic: AppService.lessonTopic,
+                        title: "New Lesson")
+                    .catchError((err) => err)
               },
             );
       },

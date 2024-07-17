@@ -37,6 +37,8 @@ dependencies:
   http: any
   rxdart: any
   intl: any
+  googleapis_auth: ^1.6.0
+  extension_google_sign_in_as_googleapis_auth: ^2.0.12
 dependency_overrides:
   flutter_colorpicker:
     git:
@@ -72,3 +74,6 @@ flutter:
     # icons
     - assets/icons/megaphone.png
     - assets/icons/meeting.png
+
+    # config
+    - assets/config/

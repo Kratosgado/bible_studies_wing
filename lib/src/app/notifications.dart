@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
+import 'package:flutter/services.dart';
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:http/http.dart' as http;
 import "package:rxdart/rxdart.dart";
 
 class PushNotificationService {
@@ -56,33 +58,40 @@ class PushNotificationService {
 
   Future<void> sendMessageToTopic(
       {required String message, required String topic, required String title}) async {
-    var url =
-        Uri.parse("https://fcm.googleapis.com/v1/projects/${AppService.projectId}/messages:send");
-
-    OAuthProvider oAuthProvider = OAuthProvider("");
-
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${AppService.firebaseToken}',
-    };
-    var body = jsonEncode({
-      'message': {
-        'topic': topic,
-        'notification': {
-          'body': message,
-          'title': title,
-        }
-      }
-    });
+    final client = http.Client();
 
     try {
-      var response = await post(url, headers: headers, body: body);
+      var url =
+          Uri.parse("https://fcm.googleapis.com/v1/projects/${AppService.projectId}/messages:send");
+
+      final serviceAccountKey = await rootBundle.loadString("assets/config/serviceAccountKey.json");
+
+      // implement oauth authentication for messaging
+
+      final credentials = ServiceAccountCredentials.fromJson(jsonDecode(serviceAccountKey));
+      final scopes = ["https://www.googleapis.com/auth/firebase.messaging"];
+      final accessCredentials =
+          await obtainAccessCredentialsViaServiceAccount(credentials, scopes, client);
+      final authClient =
+          authenticatedClient(client, accessCredentials, closeUnderlyingClient: true);
+
+      var body = jsonEncode({
+        'message': {
+          'topic': topic,
+          'notification': {
+            'body': message,
+            'title': title,
+          }
+        }
+      });
+      var response = await authClient.post(url, body: body);
       if (response.statusCode == 200) {
         debugPrint("Message sent successfullly to topic: $topic");
       } else {
         debugPrint("Failed to send message. Status code: ${response.statusCode}");
         debugPrint("Response body: ${response.body}");
       }
+      
     } catch (e) {
       debugPrint("Error sending message: $e");
     }

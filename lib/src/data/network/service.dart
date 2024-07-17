@@ -16,7 +16,7 @@ class AppService extends GetxService {
   static const String eventTopic = "event";
   static const String announcementTopic = "announcement";
   static const projectId = "biblestudywing-32f3b";
-  static const firebaseToken = "bEhCWyKiJAQRjRJrgIHzVrWFR_CVfxTCGfhFcuzjlGs";
+  static const serverKey = "bEhCWyKiJAQRjRJrgIHzVrWFR_CVfxTCGfhFcuzjlGs";
 
   static Member? currentMember;
   Future<void> init() async {
