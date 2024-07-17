@@ -18,6 +18,23 @@ class PushNotificationService {
       FlutterLocalNotificationsPlugin();
 
   Future initialize() async {
+    const androidInitSettings = AndroidInitializationSettings("@mipmap/launcher_icon");
+    const iosInitSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+    const initSettings = InitializationSettings(
+      android: androidInitSettings,
+      iOS: iosInitSettings,
+    );
+    await flutterLocalNotificationsPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (details) {
+        debugPrint("local:: :: ${details.id}");
+      },
+      onDidReceiveBackgroundNotificationResponse: backgroundNotificationHandler,
+    );
     final settings = await _fcm.requestPermission(
       alert: true,
       announcement: true,
@@ -32,13 +49,18 @@ class PushNotificationService {
     if (kDebugMode) {
       print("Permission granted: ${settings.authorizationStatus}");
     }
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       debugPrint("Got a message whilst in the foreground");
-      debugPrint("Message data: ${message.data}");
+      debugPrint("Message data:: :: ${message.data}");
 
       if (message.notification != null) {
         debugPrint("Message also contained a notification: ${message.notification}");
       }
+      await showLocalNotification(
+          id: message.messageId.hashCode,
+          title: message.notification!.title!,
+          body: message.notification!.body!,
+          payload: message.data.toString());
 
       _messageStreamController.sink.add(message);
     });
@@ -97,6 +119,7 @@ class PushNotificationService {
 
   Future<void> backgroundHandler(RemoteMessage message) async {
     await Firebase.initializeApp();
+    updateBadge(await _messageStreamController.length);
     if (kDebugMode) {
       print('Handling a background message :: :: ${message.messageId}');
     }
@@ -109,7 +132,63 @@ class PushNotificationService {
         message.notification?.body ?? "Check it out", generalNotificationDetails);
   }
 
-  void updateBadge(int badgeCount)async {
+  static void onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {
+    debugPrint('id :: :: $id');
+  }
+
+  static void backgroundNotificationHandler(NotificationResponse details) {
+    debugPrint("Background notification :: ${details.id}");
+  }
+
+  void selectNotification(RemoteMessage? message) {
+    if (message != null && message.notification != null) {
+      _messageStreamController.sink.add(message);
+    }
+  }
+
+  Future<NotificationDetails> _notificationDetails() async {
+    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      "channel id",
+      "channel name",
+      groupKey: 'com.example.bible_studies_wing',
+      channelDescription: "Bible lessons channel",
+      importance: Importance.max,
+      playSound: true,
+      priority: Priority.max,
+      ticker: 'ticker',
+      largeIcon: DrawableResourceAndroidBitmap('@mipmap/launcher_icon'),
+    );
+    const iosNotificationDetails = DarwinNotificationDetails(
+      threadIdentifier: "thread1",
+    );
+
+    // final details = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    // if (details != null && details.didNotificationLaunchApp) {
+    //   behaviorSubject.add(details.notificationResponse!.payload!);
+    // }
+    const platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iosNotificationDetails,
+    );
+    return platformChannelSpecifics;
+  }
+
+  Future<void> showLocalNotification(
+      {required int id,
+      required String title,
+      required String body,
+      required String payload}) async {
+    final platformChannelSpecifics = await _notificationDetails();
+    await flutterLocalNotificationsPlugin.show(
+      id,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: payload,
+    );
+  }
+
+  void updateBadge(int badgeCount) async {
     if (await FlutterAppBadger.isAppBadgeSupported()) {
       if (badgeCount > 0) {
         FlutterAppBadger.updateBadgeCount(badgeCount);
