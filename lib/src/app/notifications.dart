@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:bible_studies_wing/src/data/network/service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import "package:rxdart/rxdart.dart";
@@ -13,6 +14,8 @@ import "package:rxdart/rxdart.dart";
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   final _messageStreamController = BehaviorSubject<RemoteMessage>();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   Future initialize() async {
     final settings = await _fcm.requestPermission(
@@ -42,8 +45,6 @@ class PushNotificationService {
 
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
-    // get the token
-    await getToken();
     // subscribe to topic
     await _fcm.subscribeToTopic(AppService.announcementTopic);
     await _fcm.subscribeToTopic(AppService.eventTopic);
@@ -61,14 +62,12 @@ class PushNotificationService {
     final client = http.Client();
 
     try {
-      var url =
-          Uri.parse("https://fcm.googleapis.com/v1/projects/${AppService.projectId}/messages:send");
-
       final serviceAccountKey = await rootBundle.loadString("assets/config/serviceAccountKey.json");
+      final accountJson = jsonDecode(serviceAccountKey);
 
-      // implement oauth authentication for messaging
-
-      final credentials = ServiceAccountCredentials.fromJson(jsonDecode(serviceAccountKey));
+      final credentials = ServiceAccountCredentials.fromJson(accountJson);
+      var url = Uri.parse(
+          "https://fcm.googleapis.com/v1/projects/${accountJson["project_id"]}/messages:send");
       final scopes = ["https://www.googleapis.com/auth/firebase.messaging"];
       final accessCredentials =
           await obtainAccessCredentialsViaServiceAccount(credentials, scopes, client);
@@ -91,19 +90,32 @@ class PushNotificationService {
         debugPrint("Failed to send message. Status code: ${response.statusCode}");
         debugPrint("Response body: ${response.body}");
       }
-      
     } catch (e) {
       debugPrint("Error sending message: $e");
     }
   }
-}
 
-Future<void> backgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  if (kDebugMode) {
-    print('Handling a background message: ${message.messageId}');
-    print('message data: ${message.data}');
-    print('message notification: ${message.notification?.title}');
-    print('Message notification: ${message.notification?.body}');
+  Future<void> backgroundHandler(RemoteMessage message) async {
+    await Firebase.initializeApp();
+    if (kDebugMode) {
+      print('Handling a background message :: :: ${message.messageId}');
+    }
+    var androidDetails = const AndroidNotificationDetails("channelId", "Channel Name",
+        importance: Importance.high, priority: Priority.high);
+    var generalNotificationDetails = NotificationDetails(
+      android: androidDetails,
+    );
+    await flutterLocalNotificationsPlugin.show(0, message.notification?.title ?? "BS",
+        message.notification?.body ?? "Check it out", generalNotificationDetails);
+  }
+
+  void updateBadge(int badgeCount)async {
+    if (await FlutterAppBadger.isAppBadgeSupported()) {
+      if (badgeCount > 0) {
+        FlutterAppBadger.updateBadgeCount(badgeCount);
+      } else {
+        FlutterAppBadger.removeBadge();
+      }
+    }
   }
 }

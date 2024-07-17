@@ -15,8 +15,6 @@ class AppService extends GetxService {
   static const String lessonTopic = "lesson";
   static const String eventTopic = "event";
   static const String announcementTopic = "announcement";
-  static const projectId = "biblestudywing-32f3b";
-  static const serverKey = "bEhCWyKiJAQRjRJrgIHzVrWFR_CVfxTCGfhFcuzjlGs";
 
   static Member? currentMember;
   Future<void> init() async {
