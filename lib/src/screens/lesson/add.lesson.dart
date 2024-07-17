@@ -231,4 +231,17 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
       callback: () => Get.offNamed(Routes.lessonDetailRoute, arguments: lesson),
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 }

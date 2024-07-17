@@ -7,17 +7,18 @@ class CurvedScaffold extends StatelessWidget {
   final FloatingActionButton? floatingActionButton;
   final Widget? bottomNavigationBar;
   final Widget? action;
+  final Color? backgroundColor;
   const CurvedScaffold(
       {super.key,
       required this.child,
       required this.title,
       this.floatingActionButton,
       this.action,
-      this.bottomNavigationBar});
+      this.bottomNavigationBar, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

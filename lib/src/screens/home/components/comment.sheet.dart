@@ -1,6 +1,5 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
-import 'package:bible_studies_wing/src/resources/styles_manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
