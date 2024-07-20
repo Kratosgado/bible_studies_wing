@@ -75,7 +75,10 @@ void showCommentSheet(BuildContext context, Lesson lesson) {
                       );
                     } else if (!snapshot.hasData) {
                       return const Center(
-                        child: Text("No comment yet"),
+                        child: Text(
+                          "No comment yet",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       );
                     }
                     final comments =

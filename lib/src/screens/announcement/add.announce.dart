@@ -1,3 +1,4 @@
+import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
@@ -60,9 +61,26 @@ class AddAnnouncementScreen extends StatelessWidget {
   }
 
   void uploadAnnouncement() async {
-    FirebaseFirestore.instance.collection('once').doc("announcement").set({
-      'date': DateTime.now().toString(),
-      'body': _controller.document.toDelta().toJson(),
-    }).then((value) => Get.offNamed(Routes.announcementRoute));
+    await AppService.showLoadingPopup(
+      asyncFunction: () async {
+        FirebaseFirestore.instance
+            .collection('once')
+            .doc("announcement")
+            .set({
+              'date': DateTime.now().toString(),
+              'body': _controller.document.toDelta().toJson(),
+            })
+            .then((_) async => {
+                  await AppService.notificationService.sendMessageToTopic(
+                      message: "New announcement",
+                      topic: AppService.announcementTopic,
+                      title: "New Lesson"),
+                })
+            .catchError((err) => err);
+      },
+      message: "Updating announcement",
+      errorMessage: "Failed to update announcement",
+      callback: () => Get.offNamed(Routes.announcementRoute),
+    );
   }
 }

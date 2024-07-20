@@ -69,7 +69,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
-    final valueStyle = context.textTheme.bodyMedium;
+    final valueStyle = context.textTheme.titleSmall?.copyWith(color: Colors.black);
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: CurvedScaffold(
@@ -184,7 +184,7 @@ class MemberRegistrationFormState extends State<MemberRegistrationForm> {
                   controller: _hallController,
                   style: valueStyle,
                   decoration: const InputDecoration(
-                      suffixText: "Hall",
+                      suffixText: "Hall/Hostel",
                       prefixIcon: Icon(
                         Icons.home_outlined,
                         size: Spacing.s28,

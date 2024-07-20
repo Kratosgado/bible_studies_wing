@@ -26,27 +26,19 @@ class RegisterScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                height: Spacing.s190,
+                height: Spacing.s140,
                 // padding: const EdgeInsets.all(Spacing.s5),
                 margin: const EdgeInsets.all(3),
                 alignment: Alignment.center,
                 decoration: StyleManager.boxDecoration.copyWith(
                   shape: BoxShape.circle,
-                  // borderRadius: null,
-                  // boxShadow: [
-                  //   const BoxShadow(
-                  //     color: Colors.black,
-                  //     blurRadius: Spacing.s4,
-                  //     offset: Offset(2, 2),
-                  //   )
-                  // ],
                 ),
                 child: const CircleAvatar(
                     radius: Spacing.s90, backgroundImage: AssetImage(ImageAssets.bslogo)),
               ),
               Text(
                 "BIBLE STUDY WING",
-                style: context.textTheme.titleLarge,
+                style: context.textTheme.titleMedium,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),

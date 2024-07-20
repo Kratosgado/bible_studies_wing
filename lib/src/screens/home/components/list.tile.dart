@@ -22,7 +22,7 @@ class CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.1,
+      height: context.height * 0.08,
       width: context.height * 0.8,
       padding: const EdgeInsets.all(Spacing.s10),
       decoration: StyleManager.boxDecoration.copyWith(
@@ -32,18 +32,18 @@ class CustomListTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: Spacing.s70,
-            height: Spacing.s70,
+            width: Spacing.s50,
+            height: Spacing.s50,
             decoration: StyleManager.boxDecoration.copyWith(
               borderRadius: BorderRadius.circular(20),
             ),
             child: GestureDetector(
-              onTap: () =>
-                  AppService.viewPicture(CachedNetworkImage(imageUrl: imageUrl), title, imageUrl+title),
+              onTap: () => AppService.viewPicture(
+                  CachedNetworkImage(imageUrl: imageUrl), title, imageUrl + title),
               child: Hero(
-                tag: imageUrl+title,
+                tag: imageUrl + title,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(Spacing.s12),
                   child: CachedNetworkImage(
                     imageUrl: imageUrl,
                     fit: BoxFit.fill,
@@ -69,11 +69,11 @@ class CustomListTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: context.textTheme.titleMedium,
+                  style: context.textTheme.titleSmall?.copyWith(color: Colors.black),
                 ),
                 Text(
                   subTitle,
-                  style: context.textTheme.bodyMedium,
+                  style: context.textTheme.bodySmall?.copyWith(color: Colors.black),
                 ),
               ],
             ),

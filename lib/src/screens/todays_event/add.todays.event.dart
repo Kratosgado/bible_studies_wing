@@ -107,15 +107,28 @@ class _AddEventScreenState extends State<AddEventScreen> {
   }
 
   void submit() async {
-
-    String imageUrl = await uploadImage();
-    FirebaseFirestore.instance.collection('once').doc("event").set({
-      'date': DateTime.now().toString(),
-      'image': imageUrl,
-      'body': _controller.document.toDelta().toJson(),
-    }).then((value) => Get.offNamed(Routes.todaysEventRoute));
-    if (mounted) {
-      AppService.dismissPopup(context);
-    }
+    await AppService.showLoadingPopup(
+      asyncFunction: () async {
+        String imageUrl = await uploadImage();
+        FirebaseFirestore.instance
+            .collection('once')
+            .doc("event")
+            .set({
+              'date': DateTime.now().toString(),
+              'image': imageUrl,
+              'body': _controller.document.toDelta().toJson(),
+            })
+            .then(
+              (_) async => await AppService.notificationService.sendMessageToTopic(
+                  message: "New Today's Event",
+                  topic: AppService.eventTopic,
+                  title: "Announcement"),
+            )
+            .catchError((err) => err);
+      },
+      message: "Updating today's event",
+      errorMessage: "Failed to update today's event",
+      callback: () => Get.offNamed(Routes.todaysEventRoute),
+    );
   }
 }

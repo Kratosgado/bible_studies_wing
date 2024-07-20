@@ -1,12 +1,17 @@
 import 'dart:convert';
 
+import 'package:bible_studies_wing/src/data/models/lesson.dart';
 import 'package:bible_studies_wing/src/data/network/service.dart';
+import 'package:bible_studies_wing/src/resources/route.manager.dart';
+import 'package:bible_studies_wing/src/screens/gallery/gallery.screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import "package:rxdart/rxdart.dart";
@@ -24,6 +29,7 @@ class PushNotificationService {
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
+
     const initSettings = InitializationSettings(
       android: androidInitSettings,
       iOS: iosInitSettings,
@@ -35,6 +41,7 @@ class PushNotificationService {
       },
       onDidReceiveBackgroundNotificationResponse: backgroundNotificationHandler,
     );
+
     final settings = await _fcm.requestPermission(
       alert: true,
       announcement: true,
@@ -49,9 +56,15 @@ class PushNotificationService {
     if (kDebugMode) {
       print("Permission granted: ${settings.authorizationStatus}");
     }
+
+    RemoteMessage? initialMessage = await _fcm.getInitialMessage();
+    if (initialMessage != null) {
+      handleInitialMessage(initialMessage);
+    }
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       debugPrint("Got a message whilst in the foreground");
-      debugPrint("Message data:: :: ${message.data}");
+      debugPrint("Message data :: :: ${message.toMap().toString()}");
 
       if (message.notification != null) {
         debugPrint("Message also contained a notification: ${message.notification}");
@@ -64,6 +77,8 @@ class PushNotificationService {
 
       _messageStreamController.sink.add(message);
     });
+
+    FirebaseMessaging.onMessageOpenedApp.listen(handleInitialMessage);
 
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
@@ -80,7 +95,11 @@ class PushNotificationService {
   }
 
   Future<void> sendMessageToTopic(
-      {required String message, required String topic, required String title}) async {
+      {required String message,
+      required String topic,
+      required String title,
+      String? imageUrl,
+      String? payload}) async {
     final client = http.Client();
 
     try {
@@ -96,12 +115,23 @@ class PushNotificationService {
       final authClient =
           authenticatedClient(client, accessCredentials, closeUnderlyingClient: true);
 
+      Map<String, String> data = {"id": payload ?? ""};
       var body = jsonEncode({
         'message': {
+          "data": data,
           'topic': topic,
           'notification': {
             'body': message,
             'title': title,
+          },
+          "android": {
+            "notification": {"image": imageUrl}
+          },
+          "apns": {
+            "payload": {
+              "aps": {"mutable-content": 1}
+            },
+            "fcm_options": {"image": imageUrl}
           }
         }
       });
@@ -123,17 +153,6 @@ class PushNotificationService {
     if (kDebugMode) {
       print('Handling a background message :: :: ${message.messageId}');
     }
-    var androidDetails = const AndroidNotificationDetails("channelId", "Channel Name",
-        importance: Importance.high, priority: Priority.high);
-    var generalNotificationDetails = NotificationDetails(
-      android: androidDetails,
-    );
-    await flutterLocalNotificationsPlugin.show(0, message.notification?.title ?? "BS",
-        message.notification?.body ?? "Check it out", generalNotificationDetails);
-  }
-
-  static void onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {
-    debugPrint('id :: :: $id');
   }
 
   static void backgroundNotificationHandler(NotificationResponse details) {
@@ -146,8 +165,8 @@ class PushNotificationService {
     }
   }
 
-  Future<NotificationDetails> _notificationDetails() async {
-    const androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  Future<NotificationDetails> _notificationDetails({String? imageUrl, String? title}) async {
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       "channel id",
       "channel name",
       groupKey: 'com.example.bible_studies_wing',
@@ -156,7 +175,15 @@ class PushNotificationService {
       playSound: true,
       priority: Priority.max,
       ticker: 'ticker',
-      largeIcon: DrawableResourceAndroidBitmap('@mipmap/launcher_icon'),
+      largeIcon: const DrawableResourceAndroidBitmap('@mipmap/launcher_icon'),
+      styleInformation: imageUrl != null
+          ? BigPictureStyleInformation(
+              FilePathAndroidBitmap(
+                imageUrl,
+              ),
+              contentTitle: title,
+            )
+          : null,
     );
     const iosNotificationDetails = DarwinNotificationDetails(
       threadIdentifier: "thread1",
@@ -166,7 +193,7 @@ class PushNotificationService {
     // if (details != null && details.didNotificationLaunchApp) {
     //   behaviorSubject.add(details.notificationResponse!.payload!);
     // }
-    const platformChannelSpecifics = NotificationDetails(
+    final platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iosNotificationDetails,
     );
@@ -186,6 +213,31 @@ class PushNotificationService {
       platformChannelSpecifics,
       payload: payload,
     );
+  }
+
+  static void handleInitialMessage(RemoteMessage message) async {
+    try {
+      switch (message.from) {
+        case "/topics/${AppService.announcementTopic}":
+          await Get.toNamed(Routes.announcementRoute);
+          break;
+        case "/topics/${AppService.eventTopic}":
+          await Get.toNamed(Routes.todaysEventRoute);
+          break;
+        case "/topics/${AppService.lessonTopic}":
+          debugPrint("data :: :: ${message.data["id"]}");
+          final lessonId = message.data["id"];
+          final data = await FirebaseFirestore.instance.collection("lessons").doc(lessonId).get();
+          final lesson = Lesson.fromJson(data.data()!);
+          await Get.toNamed(Routes.lessonDetailRoute, arguments: lesson);
+          debugPrint(":: :: :: :: \n :: :: :: Not done");
+          break;
+        default:
+          debugPrint(":: :: ${message.from}");
+      }
+    } catch (e) {
+      AppService.showErrorSnackbar(errorMessage: "Error processing notification", e: e);
+    }
   }
 
   void updateBadge(int badgeCount) async {

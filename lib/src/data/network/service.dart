@@ -92,14 +92,7 @@ class AppService extends GetxService {
         colorText: ColorManager.deepBblue,
       );
     } catch (e) {
-      Get.snackbar(
-        errorMessage,
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
-      debugPrint(e.toString());
+      showErrorSnackbar(errorMessage: errorMessage, e: e);
     }
   }
 
@@ -117,6 +110,17 @@ class AppService extends GetxService {
             child: child,
           ),
         )));
+  }
+
+  static void showErrorSnackbar({required String errorMessage, dynamic e}) {
+    Get.snackbar(
+      errorMessage,
+      e.toString(),
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.redAccent,
+      colorText: Colors.white,
+    );
+    debugPrint(e.toString());
   }
 
   static Future<String?> selectDate(BuildContext context) async {
@@ -143,10 +147,6 @@ class AppService extends GetxService {
           addYear: false);
     }
     return null;
-  }
-
-  static void dismissPopup(BuildContext ctx) {
-    Navigator.of(ctx, rootNavigator: true).pop();
   }
 
   static int passcode = 1234;

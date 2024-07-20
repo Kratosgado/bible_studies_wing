@@ -221,6 +221,7 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                     .sendMessageToTopic(
                         message: newLesson.topic,
                         topic: AppService.lessonTopic,
+                        imageUrl: imageUrl,
                         title: "New Lesson")
                     .catchError((err) => err)
               },

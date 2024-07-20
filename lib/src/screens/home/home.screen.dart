@@ -19,6 +19,7 @@ class HomeScreen extends StatelessWidget {
       appBar: BackdropAppBar(
         toolbarHeight: Spacing.s90,
         backgroundColor: Colors.transparent,
+        title: Text('The Word our light our sword', style: context.textTheme.titleSmall),
         actions: [
           IconButton(
               onPressed: () => Get.toNamed(Routes.todaysEventRoute), icon: const Icon(Icons.event)),
@@ -29,11 +30,6 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () => Get.toNamed(Routes.announcementRoute),
                 icon: const Icon(Icons.notification_add)),
           ),
-          TextButton(
-            onPressed: () {},
-            child: Text('The Word our light our sword',
-                style: context.textTheme.displaySmall?.copyWith(fontSize: Spacing.s20)),
-          )
         ],
       ),
       stickyFrontLayer: true,

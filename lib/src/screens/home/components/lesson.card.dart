@@ -10,8 +10,8 @@ import '../../../data/models/lesson.dart';
 
 Widget lessonCard(BuildContext context, Lesson lesson) {
   return SizedBox(
-    height: 350,
-    width: 350,
+    height: context.height * 0.4,
+    width: context.width,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,13 +37,17 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              lesson.topic,
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+              AppService.formatDate(lesson.date),
+              style: context.textTheme.titleSmall
+                  ?.copyWith(color: Colors.blueGrey, fontWeight: FontWeight.normal),
             ),
             Text(
-              AppService.formatDate(lesson.date),
-              style: context.textTheme.titleMedium
+              lesson.topic,
+              style: context.textTheme.titleSmall?.copyWith(color: Colors.black),
+            ),
+            Text(
+              lesson.subtopic,
+              style: context.textTheme.titleSmall
                   ?.copyWith(color: Colors.blueGrey, fontWeight: FontWeight.normal),
             ),
             const SizedBox(
@@ -52,8 +56,8 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
             GestureDetector(
               onTap: () => Get.toNamed(Routes.lessonDetailRoute, arguments: lesson),
               child: SizedBox(
-                height: 200,
-                width: 300,
+                height: context.height * 0.25,
+                width: context.width * 0.75,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(Spacing.s10),
                   child: CachedNetworkImage(
@@ -72,24 +76,14 @@ Widget lessonCard(BuildContext context, Lesson lesson) {
             const SizedBox(
               height: Spacing.s5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Text(
-                  lesson.subtopic,
-                  style: context.textTheme.titleMedium
-                      ?.copyWith(color: Colors.blueGrey, fontWeight: FontWeight.normal),
-                ),
-                IconButton(
-                  onPressed: () => showCommentSheet(context, lesson),
-                  icon: const Icon(
-                    Icons.message_rounded,
-                    color: Colors.blueAccent,
-                  ),
-                  iconSize: 35,
-                )
-              ],
+            IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () => showCommentSheet(context, lesson),
+              icon: const Icon(
+                Icons.message_rounded,
+                color: Colors.blueAccent,
+              ),
+              iconSize: 35,
             ),
           ],
         ),

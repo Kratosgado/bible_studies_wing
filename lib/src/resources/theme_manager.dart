@@ -76,7 +76,7 @@ ThemeData getApplicationTheme(BuildContext context) {
         isDense: true,
         prefixIconColor: ColorManager.deepBblue,
         suffixIconColor: Colors.blue.shade100,
-        suffixStyle: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        suffixStyle: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         fillColor: ColorManager.faintWhite,
         filled: true,
         contentPadding: const EdgeInsets.all(Spacing.s20),

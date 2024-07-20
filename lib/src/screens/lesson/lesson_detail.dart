@@ -22,7 +22,7 @@ class LessonDetailScreen extends StatelessWidget {
       action: IconButton(
         icon: const Icon(
           Icons.delete,
-          color: Colors.redAccent,
+          color: Colors.red,
         ),
         onPressed: () async => {
           await AppService.showLoadingPopup(
@@ -66,10 +66,6 @@ class LessonDetailScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                'Subtopic: ${lesson.subtopic}',
-                style: context.textTheme.titleLarge,
-              ),
               const SizedBox(height: Spacing.s16),
               QuillEditor(
                 focusNode: FocusNode(),
@@ -78,9 +74,11 @@ class LessonDetailScreen extends StatelessWidget {
                   expands: false,
                   padding: const EdgeInsets.all(0),
                   scrollable: true,
+
                   controller: QuillController(
                     document: Document.fromJson(lesson.body),
                     selection: const TextSelection.collapsed(offset: 0),
+                    readOnly: true,
                   ),
                   // readOnly: true,
                   autoFocus: false,

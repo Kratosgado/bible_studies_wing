@@ -14,11 +14,12 @@ class CurvedScaffold extends StatelessWidget {
       required this.title,
       this.floatingActionButton,
       this.action,
-      this.bottomNavigationBar, this.backgroundColor});
+      this.bottomNavigationBar,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -26,7 +27,7 @@ class CurvedScaffold extends StatelessWidget {
           action ?? const SizedBox.shrink(),
           TextButton(
             onPressed: () {},
-            child: Text(title, style: context.textTheme.titleLarge?.copyWith(color: Colors.white)),
+            child: Text(title, style: context.textTheme.titleMedium?.copyWith(color: Colors.white)),
           )
         ],
       ),

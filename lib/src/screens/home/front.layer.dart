@@ -14,7 +14,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
       .orderBy('date', descending: true)
       .snapshots();
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: Spacing.s16),
+    padding: const EdgeInsets.symmetric(horizontal: Spacing.s16, vertical: Spacing.s16),
     child: StreamBuilder(
         stream: retrieveLessons,
         builder: (_, snapShot) {

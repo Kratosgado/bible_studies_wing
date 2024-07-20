@@ -11,6 +11,10 @@ class AboutUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bodyStyle = Theme.of(context)
+        .textTheme
+        .titleSmall
+        ?.copyWith(fontWeight: FontWeight.normal, color: Colors.black);
     return CurvedScaffold(
       title: "About Us",
       child: SingleChildScrollView(
@@ -24,7 +28,7 @@ class AboutUsScreen extends StatelessWidget {
                 AboutUs.aboutHeading,
                 textAlign: TextAlign.center,
                 softWrap: true,
-                style: context.textTheme.titleLarge,
+                style: context.textTheme.titleMedium,
               ),
               const SizedBox(
                 height: Spacing.s20,
@@ -32,24 +36,24 @@ class AboutUsScreen extends StatelessWidget {
               Text.rich(
                 TextSpan(
                   text: AboutUs.aboutUs,
-                  style: context.textTheme.bodyMedium,
+                  style: bodyStyle,
                   children: [
                     TextSpan(text: AboutUs.missionTitle, style: context.textTheme.titleMedium),
-                    TextSpan(text: AboutUs.missionText, style: context.textTheme.bodyMedium),
+                    TextSpan(text: AboutUs.missionText, style: bodyStyle),
                     TextSpan(text: AboutUs.purposeTitle, style: context.textTheme.titleMedium),
-                    TextSpan(text: AboutUs.purposeText, style: context.textTheme.bodyMedium),
+                    TextSpan(text: AboutUs.purposeText, style: bodyStyle),
                     TextSpan(text: AboutUs.call, style: context.textTheme.titleMedium),
-                    TextSpan(text: AboutUs.callvalue, style: context.textTheme.bodyMedium),
+                    TextSpan(text: AboutUs.callvalue, style: bodyStyle),
                     TextSpan(text: AboutUs.response, style: context.textTheme.titleMedium),
-                    TextSpan(text: AboutUs.responseValue, style: context.textTheme.bodyMedium),
+                    TextSpan(text: AboutUs.responseValue, style: bodyStyle),
                     TextSpan(text: AboutUs.bibleRef, style: context.textTheme.titleMedium),
-                    TextSpan(text: AboutUs.bibleRefValue, style: context.textTheme.bodyMedium),
+                    TextSpan(text: AboutUs.bibleRefValue, style: bodyStyle),
                   ],
                 ),
               ),
               Text(
                 AboutUs.godBless,
-                style: context.textTheme.displayMedium?.copyWith(color: Colors.black),
+                style: context.textTheme.headlineMedium?.copyWith(color: Colors.black),
               ),
               // const SizedBox(
               //   height: Spacing.s250,
