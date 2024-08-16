@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:bible_studies_wing/src/data/models/lesson.dart';
 import 'package:bible_studies_wing/src/data/network/service.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
-import 'package:bible_studies_wing/src/screens/gallery/gallery.screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

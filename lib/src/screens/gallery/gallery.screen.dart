@@ -7,7 +7,6 @@ import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.d
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:path_provider/path_provider.dart' as path_provider;

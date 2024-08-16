@@ -27,7 +27,7 @@ class RegisterScreen extends StatelessWidget {
             children: [
               Container(
                 height: Spacing.s140,
-                // padding: const EdgeInsets.all(Spacing.s5),
+                // padding: const EdgeInsets.all(Spacing.s5),faintWhite
                 margin: const EdgeInsets.all(3),
                 alignment: Alignment.center,
                 decoration: StyleManager.boxDecoration.copyWith(
@@ -43,7 +43,7 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: MaterialButton(
-                  color: ColorManager.faintWhite,
+                  color: Colors.white,
                   elevation: Spacing.s10,
                   splashColor: Colors.teal,
                   hoverElevation: Spacing.s20,
@@ -65,7 +65,7 @@ class RegisterScreen extends StatelessWidget {
                       const SizedBox(width: 20),
                       Text(
                         "Sign in with Google",
-                        style: context.textTheme.titleMedium?.copyWith(color: Colors.white),
+                        style: context.textTheme.titleMedium?.copyWith(color: ColorManager.bgColor),
                       ),
                     ],
                   ),

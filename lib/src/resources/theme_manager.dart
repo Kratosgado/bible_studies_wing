@@ -38,8 +38,8 @@ ThemeData getApplicationTheme(BuildContext context) {
         splashColor: Colors.blueAccent.shade400,
         foregroundColor: Colors.white,
       ),
-      cardTheme: CardTheme(
-        color: ColorManager.faintWhite,
+      cardTheme: const CardTheme(
+        color: Colors.white,
         // shadowColor: ColorManager.deepBblue,
 
         elevation: Spacing.s8,
