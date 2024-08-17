@@ -7,48 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:93150933206:android:10f34ab28c8311e750d977",
-        "android_client_info": {
-          "package_name": "com.kratosgado.bi"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDQEJ4BNqiZX_rvUvmx-x3jtf-V-3F29sg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "93150933206-5chpp3g7n6qf6gdt2u58820b2ln486ij.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.bibleStudiesWing"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:93150933206:android:fc1a1e418d5bfb7950d977",
         "android_client_info": {
-          "package_name": "com.example.bible_studies_wing"
+          "package_name": "com.kratosgado.biblestudies"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "93150933206-d80p6e5qn893s2jml6k4nsmdvfmj5ti3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kratosgado.biblestudies",
+            "certificate_hash": "a387673f986b0053b8e3e78c8872b92f696596a1"
+          }
+        },
         {
           "client_id": "93150933206-g54qqkt5lb4eg3js23ccoqotomhhee1m.apps.googleusercontent.com",
           "client_type": 3

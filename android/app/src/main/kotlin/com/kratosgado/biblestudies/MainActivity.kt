@@ -1,4 +1,4 @@
-package com.example.bible_studies_wing
+package com.kratosgado.biblestudies
 
 import io.flutter.embedding.android.FlutterActivity
 
