@@ -38,10 +38,9 @@ ThemeData getApplicationTheme(BuildContext context) {
         splashColor: Colors.blueAccent.shade400,
         foregroundColor: Colors.white,
       ),
-      cardTheme: const CardTheme(
+      cardTheme: const CardThemeData(
         color: Colors.white,
         // shadowColor: ColorManager.deepBblue,
-
         elevation: Spacing.s8,
       ),
       // App bar theme

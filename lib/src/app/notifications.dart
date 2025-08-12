@@ -8,7 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_app_badge_control/flutter_app_badge_control.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:googleapis_auth/auth_io.dart';
@@ -240,11 +240,11 @@ class PushNotificationService {
   }
 
   void updateBadge(int badgeCount) async {
-    if (await FlutterAppBadger.isAppBadgeSupported()) {
+    if (await FlutterAppBadgeControl.isAppBadgeSupported()) {
       if (badgeCount > 0) {
-        FlutterAppBadger.updateBadgeCount(badgeCount);
+        FlutterAppBadgeControl.updateBadgeCount(badgeCount);
       } else {
-        FlutterAppBadger.removeBadge();
+        FlutterAppBadgeControl.removeBadge();
       }
     }
   }
