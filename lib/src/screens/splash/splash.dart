@@ -21,11 +21,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashViewState extends State<SplashScreen> {
   Timer? timer;
 
-  startDelay() {
+  void startDelay() {
     timer = Timer(const Duration(seconds: 2), goNext);
   }
 
-  goNext() async {
+  void goNext() async {
     AppService.preferences.isUserLoggedIn().then((value) async {
       Map<Permission, PermissionStatus> statuses = await [
         Permission.storage,

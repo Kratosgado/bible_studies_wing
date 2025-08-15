@@ -50,17 +50,18 @@ class ProgramOutlineScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: QuillEditor.basic(
-                    configurations: QuillEditorConfigurations(
-                      controller: QuillController(
-                        document: doc,
-                        selection: const TextSelection.collapsed(offset: 0),
-                      ),
+                    controller: QuillController(
+                      document: doc,
+                      selection: const TextSelection.collapsed(offset: 0),
+                    ),
+                    config: QuillEditorConfig(
                       customStyles: DefaultStyles(
                         paragraph: DefaultTextBlockStyle(
                           TextStyle(
                             color: ColorManager.deepBblue,
                             fontSize: 18,
                           ),
+                          const HorizontalSpacing(1.0, 1),
                           const VerticalSpacing(1.0, 1),
                           const VerticalSpacing(1.0, 1),
                           const BoxDecoration(),

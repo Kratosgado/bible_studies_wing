@@ -27,8 +27,8 @@ class AuthController extends GetxController {
       asyncFunction: () async {
         try {
           // TODO: fix google auth
-          final GoogleSignInAccount? googleUser = await googleSignIn.authenticate();
-          final GoogleSignInAuthentication googleAuth =  googleUser!.authentication;
+          final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+          final GoogleSignInAuthentication googleAuth =  googleUser.authentication;
 
           final AuthCredential credential = GoogleAuthProvider.credential(
             accessToken: googleAuth.idToken,

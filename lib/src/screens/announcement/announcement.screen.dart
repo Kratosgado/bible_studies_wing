@@ -33,7 +33,7 @@ class AnnouncementScreen extends StatelessWidget {
           }
           var announcement = snapshot.data!.data();
           final doc = Document.fromJson(announcement?['body']);
-          QuillController _controller = QuillController(
+          QuillController controller = QuillController(
             document: doc,
             selection: const TextSelection.collapsed(offset: 0),
           );
@@ -52,10 +52,10 @@ class AnnouncementScreen extends StatelessWidget {
                 Divider(
                   color: ColorManager.faintWhite,
                 ),
-                QuillSimpleToolbar(controller: _controller),
+                QuillSimpleToolbar(controller: controller),
                 Expanded(
                   child: QuillEditor.basic(
-                    controller: _controller,
+                    controller:controller,
                     config: const QuillEditorConfig(
                       // customStyles: DefaultStyles(
                       //   paragraph: DefaultTextBlockStyle(

@@ -1,5 +1,4 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
-import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';

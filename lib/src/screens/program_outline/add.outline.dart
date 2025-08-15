@@ -22,9 +22,9 @@ class AddProgramOutlineScreen extends StatelessWidget {
           onPressed: uploadProgramOutline,
           child: const Icon(Icons.save),
         ),
-        bottomNavigationBar: QuillToolbar.simple(
-          configurations: QuillSimpleToolbarConfigurations(
-            controller: _controller,
+        bottomNavigationBar: QuillSimpleToolbar(
+          controller: _controller,
+          config: QuillSimpleToolbarConfig(
             multiRowsDisplay: false,
           ),
         ),
@@ -34,8 +34,8 @@ class AddProgramOutlineScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
                 child: QuillEditor.basic(
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
+                  controller: _controller,
+                  config: QuillEditorConfig(
                     autoFocus: true,
                     // readOnly: false,
                     customStyles: DefaultStyles(
@@ -44,6 +44,7 @@ class AddProgramOutlineScreen extends StatelessWidget {
                           color: ColorManager.deepBblue,
                           fontSize: 18,
                         ),
+                        const HorizontalSpacing(1.0, 1),
                         const VerticalSpacing(1.0, 1),
                         const VerticalSpacing(1.0, 1),
                         const BoxDecoration(),
