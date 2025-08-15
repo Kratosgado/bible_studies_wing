@@ -1,6 +1,7 @@
 import 'package:bible_studies_wing/src/resources/theme_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 
 /// The Widget that configures your application.
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.splashRoute,
+      localizationsDelegates: const [
+        FlutterQuillLocalizations.delegate,
+      ],
       getPages: getRoutes(),
     
     );

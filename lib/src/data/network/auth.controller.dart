@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
 
   static AuthController get to => Get.find();
 
@@ -26,11 +26,12 @@ class AuthController extends GetxController {
     await AppService.showLoadingPopup(
       asyncFunction: () async {
         try {
-          final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-          final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+          // TODO: fix google auth
+          final GoogleSignInAccount? googleUser = await googleSignIn.authenticate();
+          final GoogleSignInAuthentication googleAuth =  googleUser!.authentication;
 
           final AuthCredential credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken,
+            accessToken: googleAuth.idToken,
             idToken: googleAuth.idToken,
           );
 
