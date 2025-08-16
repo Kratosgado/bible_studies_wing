@@ -1,5 +1,4 @@
 import 'package:bible_studies_wing/src/data/network/service.dart';
-import 'package:bible_studies_wing/src/resources/color_manager.dart';
 import 'package:bible_studies_wing/src/resources/route.manager.dart';
 import 'package:bible_studies_wing/src/resources/values_manager.dart';
 import 'package:bible_studies_wing/src/screens/home/components/curved.scaffold.dart';
@@ -23,9 +22,9 @@ class AddAnnouncementScreen extends StatelessWidget {
           onPressed: uploadAnnouncement,
           child: const Icon(Icons.save),
         ),
-        bottomNavigationBar: QuillToolbar.simple(
-          configurations: QuillSimpleToolbarConfigurations(
-            controller: _controller,
+        bottomNavigationBar: QuillSimpleToolbar(
+          controller: _controller,
+          config: QuillSimpleToolbarConfig(
             multiRowsDisplay: false,
           ),
         ),
@@ -35,21 +34,10 @@ class AddAnnouncementScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
                 child: QuillEditor.basic(
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
+                  controller: _controller,
+                  config: QuillEditorConfig(
                     autoFocus: true,
                     // readOnly: false,
-                    customStyles: DefaultStyles(
-                      paragraph: DefaultTextBlockStyle(
-                        TextStyle(
-                          color: ColorManager.deepBblue,
-                          fontSize: 18,
-                        ),
-                        const VerticalSpacing(1.0, 1),
-                        const VerticalSpacing(1.0, 1),
-                        const BoxDecoration(),
-                      ),
-                    ),
                   ),
                 ),
               ),

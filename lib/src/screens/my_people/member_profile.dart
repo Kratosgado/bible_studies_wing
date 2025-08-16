@@ -66,7 +66,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                   AuthController.to.handleSignout();
                   return;
                 }
-                final googleSignIn = GoogleSignIn(clientId: member.id);
+                // final googleSignIn = GoogleSignIn(clientId: member.id);
+                final googleSignIn = GoogleSignIn.instance;
                 await googleSignIn.disconnect();
               } catch (e) {
                 rethrow;

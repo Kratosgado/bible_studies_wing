@@ -2,45 +2,46 @@ name: bible_studies_wing
 description: "a bible studies application for Methodist Wing"
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.2+1
 
 environment:
-  sdk: ">=3.4.0 <4.0.0"
+  sdk: ^3.8.1
+#  sdk: ">=3.4.0 <4.0.0"
 
 dependencies:
-  cached_network_image:
-  json_annotation: ^4.8.1
+  cached_network_image: ^3.4.1
+  json_annotation: ^4.9.0
   expandable: ^5.0.1
-  firebase_storage: ^11.2.5
+  firebase_storage: ^13.0.0
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
-  flutter_quill: ^9.2.3
-  google_sign_in: ^6.1.4
-  image_picker: ^1.0.7
+  flutter_quill: ^11.4.2
+  google_sign_in: ^7.1.1
+  image_picker: ^1.1.2
   # intl: ^0.19.0
   # share_plus: ^7.0.2
-  uuid: ^4.3.3
-  get: ^4.6.6
-  flutter_cache_manager: ^3.3.1
+  uuid: ^4.5.1
+  get: ^4.7.2
+  flutter_cache_manager: ^3.4.1
   backdrop: ^0.9.1
   get_storage: ^2.1.1
-  cloud_firestore:
-  firebase_auth: ^4.17.3
-  firebase_core: ^2.25.3
-  path_provider:
-  permission_handler: ^11.3.0
-  cupertino_icons: ^1.0.6
-  firebase_messaging: ^14.9.4
-  flutter_local_notifications: ^17.2.1
+  cloud_firestore: ^6.0.0
+  firebase_auth: ^6.0.1
+  firebase_core: ^4.0.0
+  path_provider: ^2.1.5
+  permission_handler: ^12.0.1
+  cupertino_icons: ^1.0.8
+  firebase_messaging: ^16.0.0
+  flutter_local_notifications: ^19.4.0
 
   http: any
   rxdart: any
   intl: any
-  googleapis_auth: ^1.6.0
-  extension_google_sign_in_as_googleapis_auth: ^2.0.12
-  flutter_app_badger: ^1.5.0
+  googleapis_auth: ^2.0.0
+  extension_google_sign_in_as_googleapis_auth: ^3.0.0
   flutter_swipe_detector: ^2.0.0
+  flutter_app_badge_control: ^0.0.2
 dependency_overrides:
   flutter_colorpicker:
     git:
@@ -52,9 +53,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^3.0.0
-  build_runner: ^2.4.8
-  json_serializable: ^6.7.1
+  flutter_lints: ^6.0.0
+  build_runner: ^2.6.0
+  json_serializable: ^6.10.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -78,4 +79,4 @@ flutter:
     - assets/icons/meeting.png
 
     # config
-    - assets/config/
+#    - assets/config/

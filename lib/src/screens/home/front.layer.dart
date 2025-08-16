@@ -33,7 +33,7 @@ Widget frontLayer(BuildContext context, String currentUserPhotoUrl) {
           try {
             final lessonsDocs = snapShot.data!.docs;
             return ListView.separated(
-              separatorBuilder: (_, __) => Divider(
+              separatorBuilder: (_, _) => Divider(
                 color: ColorManager.faintWhite,
               ),
               itemCount: lessonsDocs.length,

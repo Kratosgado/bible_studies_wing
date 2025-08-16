@@ -69,17 +69,16 @@ class LessonDetailScreen extends StatelessWidget {
               const SizedBox(height: Spacing.s16),
               QuillEditor(
                 focusNode: FocusNode(),
+                controller: QuillController(
+                  document: Document.fromJson(lesson.body),
+                  selection: const TextSelection.collapsed(offset: 0),
+                  readOnly: true,
+                ),
                 scrollController: ScrollController(),
-                configurations: QuillEditorConfigurations(
+                config: QuillEditorConfig(
                   expands: false,
                   padding: const EdgeInsets.all(0),
                   scrollable: true,
-
-                  controller: QuillController(
-                    document: Document.fromJson(lesson.body),
-                    selection: const TextSelection.collapsed(offset: 0),
-                    readOnly: true,
-                  ),
                   // readOnly: true,
                   autoFocus: false,
                 ),

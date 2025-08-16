@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 class AnnouncementScreen extends StatelessWidget {
   const AnnouncementScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return CurvedScaffold(
@@ -32,6 +33,10 @@ class AnnouncementScreen extends StatelessWidget {
           }
           var announcement = snapshot.data!.data();
           final doc = Document.fromJson(announcement?['body']);
+          QuillController controller = QuillController(
+            document: doc,
+            selection: const TextSelection.collapsed(offset: 0),
+          );
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: Spacing.s8, vertical: Spacing.s16),
             child: Column(
@@ -47,28 +52,25 @@ class AnnouncementScreen extends StatelessWidget {
                 Divider(
                   color: ColorManager.faintWhite,
                 ),
+                QuillSimpleToolbar(controller: controller),
                 Expanded(
                   child: QuillEditor.basic(
-                    configurations: QuillEditorConfigurations(
-                      controller: QuillController(
-                        document: doc,
-                        selection: const TextSelection.collapsed(offset: 0),
-                      ),
-                      customStyles: DefaultStyles(
-                        paragraph: DefaultTextBlockStyle(
-                          TextStyle(
-                            color: ColorManager.deepBblue,
-                            fontSize: 18,
-                          ),
-                          const VerticalSpacing(1.0, 1),
-                          const VerticalSpacing(1.0, 1),
-                          const BoxDecoration(),
-                        ),
+                    controller:controller,
+                    config: const QuillEditorConfig(
+                      // customStyles: DefaultStyles(
+                      //   paragraph: DefaultTextBlockStyle(
+                      //     TextStyle(
+                      //       color: ColorManager.deepBblue,
+                      //       fontSize: 18,
+                      //     )
+                          // const VerticalSpacing(1.0, 1),
+                          // const VerticalSpacing(1.0, 1),
+                          // const BoxDecoration(),
+                        // ),
                       ),
                       // readOnly: true,
                     ),
                   ),
-                ),
               ],
             ),
           );
