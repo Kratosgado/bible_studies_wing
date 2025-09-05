@@ -8,14 +8,11 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
-
   static AuthController get to => Get.find();
 
   Future handleSignout() async {
-    await auth.signOut();
-    await googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn.instance.signOut();
     await AppService.preferences.logout();
     AppService.currentMember = null;
     await Get.offNamed(Routes.registerRoute);
@@ -26,18 +23,18 @@ class AuthController extends GetxController {
     await AppService.showLoadingPopup(
       asyncFunction: () async {
         try {
+          debugPrint(" :: :: checking google auth");
           // TODO: fix google auth
-          final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+          final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate();
           final GoogleSignInAuthentication googleAuth =  googleUser.authentication;
           debugPrint(" :: :: checking google auth");
           debugPrint(googleAuth.idToken.toString());
 
           final AuthCredential credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.idToken,
             idToken: googleAuth.idToken,
           );
 
-          final UserCredential userCredential = await auth.signInWithCredential(credential);
+          final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
           final User? user = userCredential.user;
 
           debugPrint("checking credentials");

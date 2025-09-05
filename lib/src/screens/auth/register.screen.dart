@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
         height: double.infinity,
         child: Card(
           margin: const EdgeInsets.symmetric(vertical: 200, horizontal: 30),
-          elevation: 20,
+          elevation: Spacing.s1,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -44,7 +44,7 @@ class RegisterScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: MaterialButton(
                   color: Colors.white,
-                  elevation: Spacing.s10,
+                  elevation: Spacing.s1,
                   splashColor: Colors.teal,
                   hoverElevation: Spacing.s20,
                   hoverColor: Colors.teal,
