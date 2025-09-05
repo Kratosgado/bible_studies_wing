@@ -21,7 +21,7 @@ class AuthController extends GetxController {
     await Get.offNamed(Routes.registerRoute);
   }
 
-  void signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     User? newUser;
     await AppService.showLoadingPopup(
       asyncFunction: () async {
@@ -29,6 +29,8 @@ class AuthController extends GetxController {
           // TODO: fix google auth
           final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
           final GoogleSignInAuthentication googleAuth =  googleUser.authentication;
+          debugPrint(" :: :: checking google auth");
+          debugPrint(googleAuth.idToken.toString());
 
           final AuthCredential credential = GoogleAuthProvider.credential(
             accessToken: googleAuth.idToken,

@@ -69,8 +69,8 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  onPressed: () {
-                    AuthController.to.signInWithGoogle();
+                  onPressed: () async {
+                    await AuthController.to.signInWithGoogle();
                     // appState.signInWithGoogle(context);
                   },
                 ),
