@@ -10,7 +10,8 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GoogleSignIn.instance.initialize(serverClientId: '1:93150933206:web:2375ad25f117dba150d977');
+  await GoogleSignIn.instance.initialize(clientId: '93150933206-nm87qdjqd50roeud31qgcs7h0no963mt.apps.googleusercontent.com',
+      serverClientId: '93150933206-rbchbttoqgobsvi0pa79oq66sqokmnmn.apps.googleusercontent.com');
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

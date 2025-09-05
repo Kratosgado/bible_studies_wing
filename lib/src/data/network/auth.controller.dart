@@ -52,13 +52,14 @@ class AuthController extends GetxController {
               // Navigate to the MemberRegistrationForm and pass user data as arguments
               newUser = user;
               debugPrint(" :: :: saved form data");
-              return;
+              return null;
             }
             // update our shared preferences
             await AppService.preferences
                 .login()
                 .then((_) async => await Get.put(AppService()).init());
           }
+
         } catch (e) {
           Text(e.toString());
           Get.snackbar(
@@ -69,6 +70,7 @@ class AuthController extends GetxController {
             colorText: Colors.white,
           );
           debugPrint(e.toString());
+          return e.toString();
         }
       },
       message: "Signing in with Google",

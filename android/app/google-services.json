@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "93150933206-d80p6e5qn893s2jml6k4nsmdvfmj5ti3.apps.googleusercontent.com",
+          "client_id": "93150933206-nm87qdjqd50roeud31qgcs7h0no963mt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.kratosgado.biblestudies",
-            "certificate_hash": "a387673f986b0053b8e3e78c8872b92f696596a1"
+            "certificate_hash": "aac8ef31bf51660dafa6b8f7675fac8098e0da97"
           }
         },
         {

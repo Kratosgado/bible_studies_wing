@@ -41,13 +41,13 @@ ThemeData getApplicationTheme(BuildContext context) {
       cardTheme: const CardThemeData(
         color: Colors.white,
         // shadowColor: ColorManager.deepBblue,
-        elevation: Spacing.s8,
+        elevation: Spacing.s1,
       ),
       // App bar theme
       appBarTheme: const AppBarTheme(
         color: Colors.transparent,
         foregroundColor: Colors.white,
-        elevation: Spacing.s8,
+        elevation: Spacing.s1,
       ),
       // Button theme
       buttonTheme: ButtonThemeData(
